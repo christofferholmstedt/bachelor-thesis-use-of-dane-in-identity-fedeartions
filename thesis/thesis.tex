@@ -1,0 +1,102 @@
+%% Example document for the eis_msc_thesis document class. Compile with
+%% pdfLaTeX or LaTeX.
+%%
+%% Created: April 7, 2004, by Johan Carlson
+%% Last modified: June 7, 2009, by Johan Carlson
+
+
+%% Pick one of the following depending on the language of the report, and if 
+%% you want twosided or onesided print.
+%% Also change language definition after \begin{document}
+
+% English, twosided
+\documentclass[12pt,a4paper,openright,final,twoside,en]{csee_msc_thesis} 
+
+% English, onesided    
+%\documentclass[12pt,a4paper,openright,final,oneside,en]{csee_msc_thesis}     
+
+% Swedish, twosided
+%\documentclass[12pt,a4paper,openright,final,twoside,sv]{csee_msc_thesis}     
+
+% Swedish, onesided
+%\documentclass[12pt,a4paper,openright,final,oneside,sv]{csee_msc_thesis}     
+
+%%==================================================================
+%% Class options specific to this class
+%%==================================================================
+%%   en, sv  - Swedish or English
+%%   parskip - Use blank row instead of indentation for
+%%             new paragraphs
+%%==================================================================
+
+%% These packages are not required in general,
+%% only for some examples in this document.
+\usepackage{fancybox}
+\usepackage{verbatim}
+
+\begin{document}
+
+%%==================================================================
+%% Define variables here
+%%==================================================================
+
+\def\thesistitle{Bachelor Thesis\\
+                DANE and identity federations}
+\def\theauthor{Sophia Bergendahl, Christoffer Holmstedt}
+\def\theaddress{Luleå University of Technology\\
+            Dept.\ of Computer Science and Electrical Engineering}
+
+% Define the English abstract
+\def\theabstract{\input{Abstract/abstract.tex}}
+\def\thepreface{\input{Preface/preface.tex}}
+\def\thedate{\today}
+%\def\thedate{Template version: \theclassversion , \theclassdate}
+
+% Use this if you want a Swedish abstract
+\def\theswedishabstract{\input{SweAbstract/sweabstract.tex}}
+
+%%==================================================================
+%% Generate preamble pages here (This should not need any changes)
+%%==================================================================
+\startpreamble
+  {\thesistitle}
+  {\theauthor}
+  {\theaddress}
+  {\theabstract}
+  {\thepreface}
+  {\thedate}
+  {\theswedishabstract} % use this for Swedish abstract, leave empty for English
+
+%%==================================================================
+%% Start including the chapters
+%%==================================================================
+% First argument is the "running titles", second is the chapter name.
+\makechapter{Introduction}{Introduction\label{ch1}}
+\input{Chapter1/chapter1.tex}
+
+\makechapter{The second chapter}{The second chapter\label{ch2}}
+\input{Chapter2/chapter2.tex}
+
+%%==================================================================
+%% Include any appendices here.
+%%==================================================================
+\appendix % This command initializes the appendix part, Don't change!
+
+%% Include appendix A, add more if needed
+\makeappendix{Appendix A}{Titel på appendix A\label{appA}}
+\input{Appendices/appendixA.tex}
+
+%%==================================================================
+%% Include bibliography references here
+%% Replace the "thesisreferences" with your
+%% own reference database
+%%==================================================================
+\bibliographystyle{ieeetr}
+
+\fancyhead[LO]{}%
+\fancyhead[RE]{}%
+\fancyhead[LE]{\thepage}%
+\fancyhead[RO]{\thepage}
+\bibliography{thesisreferences}
+
+\end{document}
