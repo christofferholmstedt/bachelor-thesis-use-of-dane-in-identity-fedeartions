@@ -3,6 +3,6 @@
 *.bbl
 *.blg
 *.dvi
-*.cls
 *.ldf
 *.toc
+*.log
