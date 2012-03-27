@@ -1,0 +1,139 @@
+This document serves both as an example of the \LaTeX\ template
+for Master's theses, and at the same time as documentation
+on how to use it.
+
+\section{General principles}
+Use a main document to set up title page and chapters. In this way
+you can compile a subset of the entire thesis by simply commenting
+the \texttt{$\backslash$input\{...\}} commands in the main document.
+Typeset the document by compiling the main document. The
+subdocuments can not be compiled by themselves.
+
+The subdocuments should not contain any document style
+information. Just start writing the contents as in this file
+(\texttt{Chapter1/chapter1.tex})
+
+\section{Revision history}
+The list below shows changes made to the template for each version
+and what (if any) changes you will need to do in your main
+document after upgrading the .cls file. The main document of this
+example will always be written for the current release of the
+template.
+%
+\begin{itemize}
+    \item Version 0.9: First version.
+    \item Version 1.0, released November 17, 2004.
+    \begin{itemize}
+        \item Various bug fixes (e.g.\ running headers,
+        float-to-text spacing)
+        \item Changed typeface for body text to \textit{Computer
+        Modern}. Heading font still \textit{Helvetica}.
+        \item Increased line spacing (5 \%) for improved
+        readability.
+        \item New language option for the document class. You can
+        now select Swedish (sv) or English (en). See main document
+        for changes. Note that the
+        \texttt{$\backslash$makepreamble} command now requires an
+        additional argument, containing a Swedish abstract. If you
+        write the report in English, just leave this argument
+        empty. For Swedish reports, the English abstract is still
+        mandatory.
+        \item Added support for onesided or twosided print. See
+        main document for class declaration options.
+    \end{itemize}
+    \item Version 1.01, released November 19, 2004.
+    \begin{itemize}
+        \item Fixed bug in formatting of Bibliography list
+        heading.
+        \item Added possibility to change the paragraph
+        separation (and updated the .cls to manage this. See main
+        document for more information.
+        \item Two more files (swedish.ldf and english.ldf) are now needed and should be placed
+        in the same directory as the document. They contain
+        updates for the ``babel" package used to manage multiple
+        languages.
+    \end{itemize}
+    \item Version 1.02, released February 22, 2005.
+    \begin{itemize}
+        \item Fixed a bug in the bibliography list (occurs if the list is more than one page). There is no
+        change to the document class, but to the main document. See
+        the main document of this example.
+    \end{itemize}
+    \item Version 1.03, released March 17, 2005.
+    \begin{itemize}
+        \item Fixed minor page numbering bug.
+    \end{itemize}
+    \item Version 1.04, released March 17, 2005.
+    \begin{itemize}
+        \item Fixed row spacing (paragraph breaking) class option
+        (see this document for info).
+        \item Fixed language selection. Only class header
+        declaration necessary now. Previous versions required a
+        separate \texttt{$\backslash$selectlanguage} command.
+    \end{itemize}
+    \item Version 1.05, released March 24, 2005.
+    \begin{itemize}
+        \item Fixed the \texttt{$\backslash$cleardoublepage} command so that cleared
+        pages are completely empty. Thanks David!
+        \item Fixed figure and table numbering issue in appendices.
+        \item Fixed a bug that caused page numbers to mysteriously
+        disappear. 
+    \end{itemize}
+	 \item Version 1.06, released November 20, 2008.
+	 \begin{itemize}
+		  \item Fixed a bug regarding \texttt{$\backslash$belowcaptionskip} and 
+			the \texttt{listings} package. Thanks to the guys at the latex-community forum!
+	 \end{itemize}
+	 \item Version 1.5, released June 7, 2009.
+    \begin{itemize}
+        \item Various minor bug fixes (hardly anyone even noticed). 
+        \item Name change! The template is now called \texttt{csee\_msc\_thesis}
+	 \end{itemize}
+	 \item Version 1.6, released October 28, 2009.
+	 \begin{itemize}
+			\item Table of contents heading is now right-justified, just like all other chapter headings.
+	  \end{itemize}
+	 \item Version 1.7, released November 27, 2009.
+	 \begin{itemize}
+	    \item Fixed a bug in the numbering of tables.
+		 \item Increased the number of section levels included in the table of contents.
+	 \end{itemize}
+\end{itemize}
+
+\section{Making the document preamble}
+The document preamble is a series of pages containing:
+\begin{itemize}
+    \item A title page,
+    \item an abstract (or two if you use the \textit{Swedish} class option,
+    \item and a preface page.
+\end{itemize}
+
+The title, author, address, abstract, preface are defined in the
+main document. To actually include it into the thesis, use the
+\texttt{$\backslash$startpreamble} command provided by the
+document class. See the code of the main document for an example
+of how to use this. In this example, the abstract and preface are
+stored in separate files (containing only the actual text).
+
+\section{Writing the rest of the report}
+To add chapters, simply include one more in the main document. The
+chapter headings are automatically generated by the document
+template. See Chapter \ref{ch2} on how to include graphics.
+
+\section{Including appendices}
+At the end of the thesis, after all chapters but before the
+reference list, you might want to add some appendices. To do this,
+simply type \texttt{$\backslash$appendix} before the
+\texttt{$\backslash$thebibliography} command and then add each
+appendix with the \texttt{$\backslash$makeappendix} command
+(identical syntax as the \texttt{$\backslash$makechapter}
+command). See Appendix \ref{appA} for a completely meaningless
+mathematical derivation.
+
+\section{Including bibliography references}
+At the end of the document you will have the list of bibliography
+references. In this thesis the \textsc{BibTeX} reference system is
+used. Add your references to a database file and the reference
+list will be generated automatically. For more details on how to
+use the \textsc{BibTeX} system, please refer to any good \LaTeX\
+documentation, e.g.\ \cite{Lamport} or \cite{Goossens}.\nocite{*}

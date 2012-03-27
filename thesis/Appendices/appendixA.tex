@@ -1,0 +1,79 @@
+If the number of experiments, $n$, exceed the number of model
+parameters, $p$, there will always be some aberrations between the
+model and the experimental data, i.e.\ there will be at least some
+residuals which are different from zero. Here is shown that the
+relation
+%
+\begin{equation}
+\left(\mathbf{X}^T\mathbf{X}\right)^{-1} \mathbf{X}^T \mathbf{y} = \mathbf{b}
+\end{equation}
+%
+will always give the least squares estimate of the model parameters.
+
+Let $\mathbf{X}$ be the model matrix for a series of n experiments; let $\mathbf{b}$ be the vector of model parameters to be estimated; let $\mathbf{y}$ be the vector of measured responses, such that $\mathbf{y}^T = [y_1, y_2, \ldots, y_n]$; and let $\mathbf{e}$ be the vector of
+unknown residuals, $\mathbf{e}^T = [e_1, e_2, \ldots, e_n]$. For the series of experiments, the following relation applies
+%
+\begin{equation}
+\mathbf{y} = \mathbf{Xb + e},
+\end{equation}
+%
+i.e.\
+%
+\begin{equation}
+\mathbf{e = y - Xb}.
+\label{3A:eq:eqA}
+\end{equation}
+%
+%
+\begin{equation}
+\sum e_i^2 = \mathbf{e}^T\mathbf{e} \textnormal{ (a scalar product)}.
+\end{equation}
+%
+Develop the right part of (Eq.\ \ref{3A:eq:eqA}) as a scalar product. This gives
+%
+\begin{eqnarray}
+\sum e_i^2 & = & (\mathbf{y - Xb})^T \mathbf{(y - Xb)}\\%
+\sum e_i^2 & = & \mathbf{y}^T\mathbf{y} - 2\mathbf{y}^T\mathbf{Xb} + (\mathbf{Xb})^T\mathbf{Xb}\\%
+\sum e_i^2 & = & \mathbf{y}^T \mathbf{y} - 2\mathbf{y}^T\mathbf{Xb} + \mathbf{b}^T \mathbf{X}^T \mathbf{Xb}.
+\end{eqnarray}
+%
+We wish to determine which set of model parameters minimizes the sum of squared residuals. This
+minimum can be found by solving the following systems of equations
+%
+\begin{equation}
+\frac{\partial}{\partial \beta_j}\sum e_i^2 = 0,   \textnormal{ for all parameters } \beta_j.
+\end{equation}
+%
+In matrix notation (see Appendix: Matrix calculus), the above expression can be written
+%
+\begin{equation}
+\frac{\partial \mathbf{e}^T\mathbf{e}}{\partial \bfbeta} =
+\mathbf{0},
+\end{equation}
+which corresponds to
+%
+\begin{equation}
+\frac{\partial}{\partial \bfbeta} \left( \mathbf{y}^T \mathbf{y} -
+2\mathbf{y}^T\mathbf{X}\bfbeta +
+\bfbeta^T\mathbf{X}^T\mathbf{X}\bfbeta \right) = \mathbf{0}.
+\end{equation}
+%
+This gives
+%
+\begin{equation}
+2(\mathbf{y}^T\mathbf{X})^T + \left[\mathbf{X}^T\mathbf{X} + (\mathbf{X}^T\mathbf{X})^T\right]\mathbf{b}  = \mathbf{0}.
+\end{equation}
+%
+The matrix $\mathbf{X}^T\mathbf{X}$ is symmetric and $\mathbf{X}^T\mathbf{X} = (\mathbf{X}^T\mathbf{X})^T$ and the above expression is equivalent to
+%
+\begin{equation}
+\mathbf{X}^T\mathbf{y} = \mathbf{X}^T\mathbf{Xb}.
+\end{equation}
+%
+Provided that $(\mathbf{X}^T\mathbf{X})^{-1}$ exists, a multiplication of both sides by $(\mathbf{X}^T\mathbf{X})^{-1}$ affords the least squares relation
+%
+\begin{equation}
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} = \mathbf{b}.
+\end{equation}
+%
+Q.E.D.
