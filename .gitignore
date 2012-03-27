@@ -6,3 +6,5 @@
 *.ldf
 *.toc
 *.log
+*.out
+*.swp
