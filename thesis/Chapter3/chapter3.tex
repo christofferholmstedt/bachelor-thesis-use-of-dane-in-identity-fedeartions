@@ -1,66 +1,28 @@
-\section{Approch}
+\section{Approach}
 
 The approach was to first read up about Identity Federations, SAML 2.0, Shibboleth, DNSSEC and DANE. This continued with setting up a test environment using Shiboleth to start analyzing how the Identity Federation works and if or where DANE can be implemented. The analysis provided information about possible places and the implementation started.  
 
-\section{Investigation description}
+It was due to recommendation the software choice to use Shibboleth was made, insteed of simpleSAMLphp or equivalent software to improve the security for an identity federation. Shibboleth is a standard based, open source software package for web single sign-on across or within organizational boundaries. It allows sites to make informed authorization decisions for individual access of protected online resources in a privacy-preserving manner \cite{website:Shibboleth}.
+
+An identity federation protects the user, the identity information can be anything. It could be the user's full identity, or simply the fact that the user can authenticate successfully, leaving the user anonymous. This policy is written per user and per provider to ensure privacy is respected while still delivering all the information an application needs \cite{website:ShibbolethHighLevelIntro}.
+
+An identity federation is built up with several component. An identity provider (IdP), which authenticates users and releases selected information about them, and a service provider (SP) that accepts and processes the user data before making access control decisions or passing the information to protected applications. These entities trust each other to properly safeguard user data and sensitive resources \cite{website:ShibbolethHighLevelIntro}. Furthermore,  an identity federation can have more then one Idp and SP, with more then one a discovery service is needed, where the right SP or Idp can be chosen. However in our implementation only one Idp and one SP is implemented, this choice does not affect the analysis result in our opinion, however no discover service is needed. 
 
 
-\section{Discussion of alternative methods}
+%\section{Investigation description}
+
+%\section{Discussion of alternative methods}
+
+%\section{Reliability and validity}
 
 
-\section{Reliability and validity}
-
-
-Joppe (2000) defines reliability as:
-
-
-...The extent to which results are consistent over time and an accurate representation of
-the total population under study is referred to as reliability and if the results of a study
-can be reproduced under a similar methodology, then the research instrument is
-considered to be reliable. (p. 1)
-
-
-
-
-Joppe (2000) provides the following explanation of what validity is in quantitative
-research:
-
-
-Validity determines whether the research truly measures that which it was intended to
-measure or how truthful the research results are. In other words, does the research
-instrument allow you to hit 'the bull's eye' of your research object? Researchers
-generally determine validity by asking a series of questions, and will often look for the
-answers in the research of others. (p. 1)
-
-
-
--
--
--
--
--
-METHOD in longer theses, it is appropriate for the author to define; 
--
--
-- his or her approach.
--
--
-- 
--All reports must contain a sufficiently detailed description of; 
--
--
-- how the investigation was carried out as to allow it to be repeated by someone else and 
--
--
-- a discussion of alternative methods(strengths and weaknesses). 
--
--
--
--
--The concepts; 
--
--
-- reliability and validity have a given place when issues of method are dealt with.
+%METHOD in longer theses, it is appropriate for the author to define; 
+% his or her approach.
+% All reports must contain a sufficiently detailed description of; 
+% how the investigation was carried out as to allow it to be repeated by someone else and 
+% a discussion of alternative methods(strengths and weaknesses). 
+% The concepts; 
+% reliability and validity have a given place when issues of method are dealt with.
 
 
 
