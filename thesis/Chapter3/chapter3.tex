@@ -1,37 +1,32 @@
-\section{Approach}
+\section{Identity federations}
 
-The approach was to first read up about Identity Federations, SAML 2.0, Shibboleth, DNSSEC and DANE. 
-This continued with setting up a test environment using Shiboleth to start analyzing how the Identity Federation works and if or where DANE can be implemented. 
-The analysis provided information about possible places and the implementation started.  
+\section{Certificates}
 
-It was due to recommendation the software choice to use Shibboleth was made, insteed of simpleSAMLphp or equivalent software. 
-“Shibboleth is a standard based, open source software package for web single sign-on across or within organizational boundaries. 
-It allows sites to make informed authorization decisions for individual access of protected online resources in a privacy-preserving manner” \cite{website:Shibboleth}.
+\section{DANE}
 
-An identity federation protects the user, the “identity information can be anything. 
-It could be the user's full identity, or simply the fact that the user can authenticate successfully, leaving the user anonymous. 
-This policy is written per user and per provider to ensure privacy is respected while still delivering all the information an application needs” \cite{website:ShibbolethHighLevelIntro}.
+Technical view, what do we have?, how do they work one by one? DNS, DNSSEC, DANE, Identity Federations (SP, IDP)...?
 
-An identity federation is built up with several component. “An identity provider (IdP), which authenticates users and releases selected information about them, and a service provider (SP) that accepts and processes the user data before making access control decisions or passing the information to protected applications. 
-These entities trust each other to properly safeguard user data and sensitive resources” \cite{website:Shibboleth}. 
-Furthermore,  an identity federation can have more then one Idp and SP, with more then one a discovery service is needed, where the right SP or Idp can be chosen. However in our implementation only one Idp and one SP is implemented, this choice does not affect the analysis result in our opinion, however no discover service is needed. 
+This investigation 
 
+DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
 
-%\section{Investigation description}
-
-%\section{Discussion of alternative methods}
-
-%\section{Reliability and validity}
-
-
-%METHOD in longer theses, it is appropriate for the author to define; 
-% his or her approach.
-% All reports must contain a sufficiently detailed description of; 
-% how the investigation was carried out as to allow it to be repeated by someone else and 
-% a discussion of alternative methods(strengths and weaknesses). 
-% The concepts; 
-% reliability and validity have a given place when issues of method are dealt with.
+DNSSEC (Domain Name Security Extensions) is a securitylayer added to DNS to secure system against assults like cachingpoisning through signing DNS-data digitaly.\cite[p.~64]{book:guide_dns}
 
 
 
+%\section{Theories}
 
+%How do they work together?
+
+%\section{Tools}
+
+%Software? Shibboleth?
+
+
+%THEORY 
+%Background, 
+%theories, 
+%tools, 
+%and anything else that can be used in your work.
+%These are largely determined by your purpose and delimitations. This puts your investigation
+%in its scientific context.
