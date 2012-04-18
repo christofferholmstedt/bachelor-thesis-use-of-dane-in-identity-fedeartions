@@ -7,8 +7,17 @@ DANE, DNS-based Authentication of Named Entities, is as of writing still a new c
 It's introduced with the informational RFC document\cite{rfc:6394} describing some use cases and specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"\cite{rfc:draft-dane}.
 Make note that the Internet-Draft from the Internet Engineering Task Force (IETF) is still "work in progress" as it's still a draft.
 
+The problem that DANE tries to solve is the current issue with Certificate Authorities (CA) where anyone of them may give out a certificate for any domain name.
+It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key. 
+This would give the hacker the ability to create a new signed certificate for any domain of his/hers choice.
+As the model with CAs works today where they can sign any domain name and the webbrowsers trust most of these CAs the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
+The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
+This is where DANE comes in as a solution.
 
-
+If the client connecting to the false server could get some information about which certificate is the true one to use, the client would know that the false certificate is a false one and not to trust it.
+In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record which tells the client which certificate is the correct one to use.
+If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker(fake server) is actually a false one.
+The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
 
 
 %Technical view, what do we have?, how do they work one by one? DNS, DNSSEC, DANE, Identity Federations (SP, IDP)...?
