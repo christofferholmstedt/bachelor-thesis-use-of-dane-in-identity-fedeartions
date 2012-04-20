@@ -1,9 +1,26 @@
-\section{Temporary section }
-DISCUSSION Your conclusions, where you link your findings to your theories and purpose,
-will discuss whether you achieved your purpose and what opportunities exist for further
-development. An analysis and interpretation of your results may often correspond to the
-frame of reference and the theoretical models you have used. Using models, checklists etc,
-you broke down your task into manageable questions. Now you reverse your approach and
-use them to build general conclusions and recommendations that correspond to your
-purpose and your client's decision situation.
+\section{Our conclussions}
+Connect back to the topic under "Chapter 1: Purpose". Do we reach our purpose?
+% TODO: Make comments about that if we can secure the transmission of Metadata between all entities (FOs, IdPs, AAs, SPs and Discos) we can deem that the data integrity of all messages transmitted between them(the entities) is not lost or tampered with. As long as all entities do a proper check for each SAML2 message.
+
+\section{How to continue with further research}
+\subsection{Communication with a federation provider}
+The communication between the federation provider and the other entities such as identity providers and service providers has no standardized way in how it should work.
+How does the federation provider know that it really is the right identity provider it's talking with without any prior communication?
+Should the federation provider be the one that initiate connection to the other entities or vice versa?
+Last, but no least, how should this be solved technically to minimize the manual labour and automate as much as possible?
+
+\subsection{SAML2 certificates in CERT resource records}
+In section \ref{subsec:saml2-certs-in-cert-rr} it's mentioned that SAML2 certificates could be stored in CERT RRs.
+Further research need to be done to establish exactly how this could be accomplished.
+With CERT RR it's possible to store the certificate in it's full format, only a hash of it or just a url to the location where it's stored\cite[ch. 2.1]{rfc:4398}.
+What would be suitable for SAML2 certificates and is this really a viable solution for the identity federation scheme?
+
+%\section{Temporary section }
+%DISCUSSION Your conclusions, where you link your findings to your theories and purpose,
+%will discuss whether you achieved your purpose and what opportunities exist for further
+%development. An analysis and interpretation of your results may often correspond to the
+%frame of reference and the theoretical models you have used. Using models, checklists etc,
+%you broke down your task into manageable questions. Now you reverse your approach and
+%use them to build general conclusions and recommendations that correspond to your
+%purpose and your client's decision situation.
 

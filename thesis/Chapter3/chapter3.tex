@@ -1,16 +1,157 @@
 \section{Identity federations}
+A simple identity federation example is when signing in to antagning.se. 
+The user visits antagning.se, needs to visit "my pages", to do so he or she presses "Log in". 
+Assuming the user is already studying in Sweden perhaps at Lulea University of Technology he or 
+she can select this university among the listed universities. 
+The user has made his or her choice and is redirected to the selected university's student portal and is identified through the university. 
+
+An identity federation can be based on different standards, for example OAuth, OpenID and SAML. 
+The identity federation used in the thesis work testing environment is based on (OASIS Security Assertion Markup Language) SAML 2.0. 
+In the SAML technical overvew the SAML "standard defines an XML-based framework for describing and exchanging security information 
+between on-line business partners"
+\cite[p.~8]{pdf:oasis-open}.    
+
+In SAML standard antagning.se is a service provider (SP)\cite[p.~11]{pdf:oasis-open-glossary}, 
+the identification at Lulea University of Technology is the identity provider (IdP) \cite[p.~7]{pdf:oasis-open-glossary}
+and the discovery service (disco) is where the user could chose from several 
+universities or IdP's at antagning.se. Furthermore, SAML also specifies the Attribute Authority (AA) that provides 
+a "ticket" containing information about the user. An AA example is "Skatteverket", it wants to 
+allow private-persons to see their tax account, both the business as well the people it involves. 
+"Skatteverket" sends an attribute request to the "Bolagsverket" that will answer this request 
+with a "ticket" containing information that allows or disallows the private-person to see the tax account \cite[p.~284]{pdf:SOU}.
+
+Both the SP and the IdP holds metadata, it is in the metadata that for example the certificates 
+(key information and public keys) that the SP and IdP has shared with each other is held. 
+"Metadata defines a way to express and share configuration information between SAML parties. 
+For instance, an entity's supported SAML bindings, operational roles (IDP, SP, etc), identifier information, 
+supporting identity attributes, and key information for encryption and signing can be expressed using SAML 
+metadata XML documents. SAML Metadata is defined by its own XML schema" \cite[p.~16]{pdf:oasis-open}. 
+Bindings is where the details about how "SAML protocol messages can be carried over underlying transport protocols" 
+\cite[p.~18]{pdf:oasis-open}.  
+The certificates are used when connecting and sending requests and responses messages between the entities.
+
+The identity federation can also use a Federation Provider (FP), the FP provides digitally signed aggregated metadata 
+\cite[p.~3]{pdf:Skolfederation}. The federation provider is not a part of the SAML standard although it provides the 
+possibility to build the federation with and without an FP. However, since every SP and IdP has to hold its shared 
+certificates in the metadata, with few SP's and IdP's the need of a FP is small, 
+but with larger group of SP's and IdP's the federation provider provides an advantage. 
+The advantage is that every IdP and SP can turn to the FP to keep metadata up to date instead of having to turn to all 
+the other SP's and IdP's for metadata update. Although, with a FP the SP's and IdP's has to keep track of the shared 
+certificate with the FP meanwhile each others certificates are already stored in the metadata.
+
+Furthermore, SAML describes Single Sign-On similar to the antagning.se example, the user is "visiting an SP site through 
+a browser bookmark, possibly first accessing resources that require no special authentication or authorisation. 
+In a SAML-enabled deployment, when they subsequently attempt to access a protected resource at the SP, the SP will send 
+the user to the IdP with an authentication request in order to have the user log in. 
+Thus this scenario is referred to as SP-initiated web SSO. Once logged in, the IdP can produce an assertion that 
+can be used by the SP to validate the user's access rights to protected resource" \cite[p.~12]{pdf:oasis-open}. 
+
+In addition, SP-initiated web SSO uses The Web Browser SSO Profile that says that "to implement this scenario, 
+a profile of the SAML Authentication Request protocol is used, in conjunction with the HTTP Redirect, HTTP POST and 
+HTTP Artifact bindings" \cite[p.~14]{pdf:oasis-open-profiles}. 
+In more technical terms this scenario can be described as the client (principal) sends through an HTTP user agent 
+an HTTP request asking to access a protected resource at the SP. The client is not authenticated and therefore the SP 
+obtains with the authentication request protocol the location to the IdP. The SP then issues an <AuthnRequest> message 
+that the user agent deliver to the IdP through an HTTP redirect, post or artifact binding. 
+At the IdP the client is identified, in this thesis work through some back-end engine with user credentials, in 
+our testing environment Lightweight Directory Access Protocol (LDAP) is used. 
+The IdP then issues a <Response> message that the user agent deliver to the SP through HTTP post or artifact binding, 
+this message may hold an error or it holds at least one authentication assertion. Depending on the respons message the client will 
+receive access to the SP or not. \cite[p.~15]{pdf:oasis-open-profiles}
 
 \section{Certificates}
+\subsection{Certificates in general}
 
-\section{DANE}
+Public key cryptography algorithm transforms a message from for example Alice in to a private (encrypted) message to Bob, 
+the message is unreadable until it is decrypted. 
+Encrypted message can only be decrypted with a secret key, in public key cryption two keys are used that both can encrypt and 
+decrypt messages. 
+However if one key is used to encrypt the message only the other key can decrypt it, which make publications of the public key 
+possible while keeping the private key secret. 
+Additionally, if Alice and Bob has shared a key-pair, Alice can encrypt the private message with the public key and only Bob 
+with the private key can decrypt the message.
 
-Technical view, what do we have?, how do they work one by one? DNS, DNSSEC, DANE, Identity Federations (SP, IDP)...?
+The possibility that someone has tampered with the message for example switches the message with another still exist since the public 
+key is public. Message Digest even called one-way function or hash function can be used guarante that the message sent to Bob is 
+from Alice. Message digest creates a short, fixed-length representation of the message about to be sent and sends the message and
+the summery to Bob. Then Bob when receives the message he makes a summery as well and compares it with Alice's.
 
-This investigation 
+In addition, the message digest has to be securley sent as well, which is made possible with digital signatures. A digital signature
+is made by the private key by encrypting a digest of the message and other information as well, sequence number for example.
+It is Alice that creates the digital signature and included in the message digest to Bob and since no one can change the digest and still 
+sign it, the integrity is keept. Moreover, to make sure reuse of the signature can be made at a later date, the signature contains a 
+sequence number that is unique. 
 
-DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
+Furthermore, Alice needs to know that the shared public key is with Bob as well as Bob needs to verify that the message signature 
+really was signed by Alice's private key. With a certificate that validates the other's identity, confirms the public key and
+is signed by a Certificate Authority (CA), Alice can be sure she is taking to Bob and vice versa.
 
-DNSSEC (Domain Name Security Extensions) is a securitylayer added to DNS to secure system against assults like cachingpoisning through signing DNS-data digitaly.\cite[p.~64]{book:guide_dns}
+\subsection{Certificates in SAML}
+
+Saml2int\cite{website:saml2int} descirbes an Interoperable SAML V2.0 Web Browser SSO Deployment Profile that describes behaviour and
+options that deployments of the SAML Web Browser SSO Profile in the SAML Profiles document {pdf:oasis-open-profiles} are requires or 
+permitted to rely on. The profile addresses the content, exchange and processing of SAML messages. 
+
+To be continued...
+
+
+\section{DANE} 
+DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
+It's introduced with the informational RFC document\cite{rfc:6394} describing some use cases and specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"\cite{rfc:draft-dane}.
+Make note that the Internet-Draft from the Internet Engineering Task Force (IETF) is still "work in progress" as it's still a draft.
+
+The problem that DANE tries to solve is the current issue with Certificate Authorities (CA) where anyone of them may give out a certificate for any domain name.
+It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key. 
+This would give the hacker the ability to create a new signed certificate for any domain of his/hers choice.
+As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
+The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
+This is where DANE comes in as a solution.
+
+If the client connecting to the false server could get some information about which certificate is the true one to use, the client would know that the false certificate is a false one and not to trust it.
+In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record which tells the client which certificate is the correct one to use.
+If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker(fake server) is actually a false one.
+The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
+
+This effectively moves some responsiblity from the CAs to the domain owner.
+The domain owner now has full control of which TLS certificates are the valid ones.
+
+\subsection{The technical point of view}
+How DANE works in detail for TLS communication is specified in the Internet-Draft earlier mentioned\cite{rfc:draft-dane} but to be able to follow later reasoning a short presentation will be given here.
+Let's take an example, Alice wants to get hold of some resource from Bob that needs to be protected so only Alice and Bob knows about it and noone tampers with it while in transit.
+This is where TLS comes into play.
+Alice initiate a TLS handshake as a TLS client with Bob which in this example is acting as TLS server. 
+Everything works fine and with TLS they setup a secure channel between themselves.
+
+But hold on, how does Alice know that she is communicating with "the Bob" she believes it is or is it someone else that is trying to set her up?
+In the initial TLS handshake Alice retrieves a server certificate that she needs to validate with a third party, a CA.
+This is a signed certificate from the CA, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
+
+In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server/domain owner to limit which certificates that is allowed to be used for his domain.
+A hacker with any well-known CAs private keys can sign a perfectly valid certificate and setup his/her valid TLS server in the name of Bob.
+Alice will then never know if it really is "the Bob" she is communicating with next time.
+
+To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
+Alice can then when initiating the TLS handshake she also asks for the TLSA RRs from Bob.
+With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the right Bob" she is opening a secure channel.
+Depending on the TLSA RR information and local policies Alice might have to do the the normal certificate chaining to some trusted anchor aswell or she will accept a self-signed certificate from Bob.
+
+% TODO: Give more in depth presentation about certificate here?
+% TODO: Mention anywhere what root certificates are and how they're used?
+% TODO: What is well-known CAs?
+
+TLSA resource records is a new DNS record type that is still not approved as a standard so it might change in the future before being approved.
+% Removed by Christoffer, 2012-04-19: As the Internet-Draft specifies the first octet in the TLSA RR is allocated for "certificate usage", the parts concerning TLS only allocates five out of these 256 possible values so future standards can use the same resource record type and only allocating one of the free "certificate usage" fields.
+% Removed by Christoffer, 2012-04-19: This means that if a new standard is created that doesn't make use of TLS but needs certificate in some other way it might make sense to allocate a "certificate usage" number within the TLS RR instead of creating whole new resource record type.
+
+% TODO: ADD: With DANE the CA system remains the same with two big differences.
+% (1) Without DANE all CAs are as weak as the weakest CA. Every CA needs to make sure to keep their private keys/certificate safe.
+% If anyone of them brakes, all CAs lose trust. With DANE only domains originally signed by themselves is in danger for false certificate so if a warning goes out fast when the break-in is noticed...zone administrators in danger can revoke their certificates asap and publish a new in the DNS system. (Though even the false certificate from the hackers may not be of any help)...though better be safe than sorry if any private key from a CA is lost.
+% (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
+
+
+%DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
+
+%DNSSEC (Domain Name Security Extensions) is a securitylayer added to DNS to secure system against assults like cachingpoisning through signing DNS-data digitaly.\cite[p.~64]{book:guide_dns}
 
 
 
