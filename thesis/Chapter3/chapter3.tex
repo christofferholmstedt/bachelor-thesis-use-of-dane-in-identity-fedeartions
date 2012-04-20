@@ -1,6 +1,81 @@
 \section{Identity federations}
+A simple identity federation example is when signing in to antagning.se. 
+The user visits antagning.se, needs to visit "my pages", to do so he or she presses "Log in". 
+Assuming the user is already studying in Sweden perhaps at Lulea University of Technology he or 
+she can select this university among the listed universities. 
+The user has made his or her choice and is redirected to the selected university's log in page and signs in through the university. 
+
+An identity federation can be based on different standards, for example OAuth, OpenID and SAML. 
+The identity federation used in this theses work is based on (OASIS Security Assertion Markup Language) SAML 2.0. 
+The SAML "standard defines an XML-based framework for describing and exchanging security information between on-line business partners"
+\cite[p.~8]{pdf:oasis-open}.    
+
+In SAML standard antagning.se is a service provider (SP), the identification at Lulea University of Technology 
+is the identity provider (IdP) and the discovery service (disco) is where the user could chose from several 
+universities or IdP's at antagning.se. Furthermore, SAML also specifies the Attribute Authority (AA) that provides 
+a "ticket" containing information about the user. An AA example is "Skatteverket", it wants to 
+allow private-persons to see their tax account, both the business as well the people it involves. 
+"Skatteverket" sends an attribute request to the "Bolagsverket" that will answer this request 
+with a "ticket" containing information that allows or disallows the private-person to see the tax account \cite[p.~284]{pdf:SOU}.
+
+Both the SP and the IdP holds metadata, it is in the metadata that for example the certificates 
+(key information or public keys) that the SP and IdP has shared with each other is held. 
+"Metadata defines a way to express and share configuration information between SAML parties. 
+For instance, an entity's supported SAML bindings, operational roles (IDP, SP, etc), identifier information, 
+supporting identity attributes, and key information for encryption and signing can be expressed using SAML 
+metadata XML documents. SAML Metadata is defined by its own XML schema" \cite[p.~16]{pdf:oasis-open}. 
+Bindings is where the details about how "SAML protocol messages can be carried over underlying transport protocols" 
+\cite[p.~18]{pdf:oasis-open}.  
+The certificates are used when connecting and sending requests and responses messages between the entities.
+
+The identity federation can also use a Federation Operator (FO), the FO provides digitally signed aggregated metadata 
+\cite[p.~3]{pdf:Skolfederation}. The FO is not apart of the SAML standard although it provides the possibility to building up 
+a federation with and without an FO. However, since every SP and IdP has to hold its shared certificates in the metadata, 
+with few SP's and IdP's the need of a FO is small, but with larger group of SP's and IdP's the FO provides an advantage. 
+The FO provides that every IdP and SP can turn to the FO to keep metadata up to date instead of having to turn to all 
+the other SP's and IdP's for metadata update. Although, with a FO the SP's and IdP's has to keep track of the shared 
+certificate with the FO meanwhile each others certificates are already stored in the metadata.
+
+Furthermore, SAML describes Single Sign-On similar to the antagning.se example, the user is "visiting an SP site through 
+a browser bookmark, possibly first accessing resources that require no special authentication or authorisation. 
+In a SAML-enabled deployment, when they subsequently attempt to access a protected resource at the SP, the SP will send 
+the user to the IdP with an authentication request in order to have the user log in. 
+Thus this scenario is referred to as SP-initiated web SSO. Once logged in, the IdP can produce an assertion that 
+can be used by the SP to validate the user's access rights to protected resource" \cite[p.~12]{pdf:oasis-open}. 
+
+In addition, SP-initiated web SSO uses The Web Browser SSO Profile that stats that "to implement this scenario, 
+a profile of the SAML Authentication Request protocol is used, in conjunction with the HTTP Redirect, HTTP POST and 
+HTTP Artifact bindings" \cite[p.~14]{pdf:oasis-open-profiles}. 
+In more technical terms this scenario can be descirbed as the client (principal) sends through an HTTP user agent 
+an HTTP request asking to access a protected resource at the SP. The client is not authenticated and therefore the SP 
+obtains with the authentication request protocol the location to the IdP. The SP then issues an <AuthnRequest> message 
+that the user agent deliver to the IdP through an HTTP redirect, post or artifact binding. 
+At the IdP the client is identified, in this thesis work through LDAP Lightweight Directory Access Protocol. 
+The IdP then issues a <Response> message that the user agent deliver to the SP through HTTP post or artifact binding, 
+not a redirect binding since the response most often is longer than the URL permitted by most user agents. 
+The response message from the IdP may hold an error or will include at least one authentication assertion and fallows 
+with the client receiving access to the SP or not depending on the response. \cite[p.~15]{pdf:oasis-open-profiles}
 
 \section{Certificates} 
+The SAML messages that are sent between the SAML entities depend on the SAML infrastructure, the most difficult part 
+about setting up the infrastructure is the first exchanging of public keys to set up the first trust relationship between entities. 
+There are various mechanisms described that are not particularly specified which one "to aid in establishing trust in the accuracy 
+and legitimacy of metadata, including use of XML signatures, SSL/TLS server authentication, and DNS signatures. 
+Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information 
+before relying on it" \cite[p.~29]{pdf:oasis-open-metadata}. 
+
+SSL 3.0 or TLS 1.0 that is used in SAML is defined in the SAML binding's that use of SSL 3.0 or TLS 1.0 servers, 
+if nothing else is specified "MUST authenticate to clients using a X.509 v3 certificate. The client MUST establish 
+server identity based on contents of the certificate (typically through examination of the certificate's subject DN field, 
+subjectAltName attribute, etc.)" \cite[p.~8]{pdf:oasis-open-bindings}. 
+
+Additionally, with the self-signed X.509 certificates that are used today, the infrastructure in SAML keeps the data integrity 
+when up and running, however, an higher standard could be set in the SAML standard since "in the case of an X.509 certificate, 
+there are no requirements as to the content of the certificate apart from the requirement that it contain the appropriate public key. 
+Specifically, the certificate may be expired, not yet valid, carry critical or non-critical extensions or usage flags, and contain 
+any subject or issuer. The use of the certificate structure is merely a matter of notational convenience to communicate a key and 
+has no semantics in this profile apart from that. However, it is RECOMMENDED that certificates be unexpired"  
+\cite[p.~11]{pdf:oasis-open-metadata-profile}.
 
 \section{DANE} 
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
