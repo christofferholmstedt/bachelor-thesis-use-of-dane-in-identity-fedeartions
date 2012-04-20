@@ -10,7 +10,7 @@ Make note that the Internet-Draft from the Internet Engineering Task Force (IETF
 The problem that DANE tries to solve is the current issue with Certificate Authorities (CA) where anyone of them may give out a certificate for any domain name.
 It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key. 
 This would give the hacker the ability to create a new signed certificate for any domain of his/hers choice.
-As the model with CAs works today where they can sign any domain name and the webbrowsers trust most of these CAs the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
+As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
 The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
 This is where DANE comes in as a solution.
 
@@ -19,10 +19,42 @@ In short, this works by trusting the DNSSEC infrastructure and the owner of a do
 If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker(fake server) is actually a false one.
 The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
 
+This effectively moves some responsiblity from the CAs to the domain owner.
+The domain owner now has full control of which TLS certificates are the valid ones.
 
-%Technical view, what do we have?, how do they work one by one? DNS, DNSSEC, DANE, Identity Federations (SP, IDP)...?
+\subsection{The technical point of view}
+How DANE works in detail for TLS communication is specified in the Internet-Draft earlier mentioned\cite{rfc:draft-dane} but to be able to follow later reasoning a short presentation will be given here.
+Let's take an example, Alice wants to get hold of some resource from Bob that needs to be protected so only Alice and Bob knows about it and noone tampers with it while in transit.
+This is where TLS comes into play.
+Alice initiate a TLS handshake as a TLS client with Bob which in this example is acting as TLS server. 
+Everything works fine and with TLS they setup a secure channel between themselves.
 
-%This investigation 
+But hold on, how does Alice know that she is communicating with "the Bob" she believes it is or is it someone else that is trying to set her up?
+In the initial TLS handshake Alice retrieves a server certificate that she needs to validate with a third party, a CA.
+This is a signed certificate from the CA, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
+
+In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server/domain owner to limit which certificates that is allowed to be used for his domain.
+A hacker with any well-known CAs private keys can sign a perfectly valid certificate and setup his/her valid TLS server in the name of Bob.
+Alice will then never know if it really is "the Bob" she is communicating with next time.
+
+To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
+Alice can then when initiating the TLS handshake she also asks for the TLSA RRs from Bob.
+With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the right Bob" she is opening a secure channel.
+Depending on the TLSA RR information and local policies Alice might have to do the the normal certificate chaining to some trusted anchor aswell or she will accept a self-signed certificate from Bob.
+
+% TODO: Give more in depth presentation about certificate here?
+% TODO: Mention anywhere what root certificates are and how they're used?
+% TODO: What is well-known CAs?
+
+TLSA resource records is a new DNS record type that is still not approved as a standard so it might change in the future before being approved.
+% Removed by Christoffer, 2012-04-19: As the Internet-Draft specifies the first octet in the TLSA RR is allocated for "certificate usage", the parts concerning TLS only allocates five out of these 256 possible values so future standards can use the same resource record type and only allocating one of the free "certificate usage" fields.
+% Removed by Christoffer, 2012-04-19: This means that if a new standard is created that doesn't make use of TLS but needs certificate in some other way it might make sense to allocate a "certificate usage" number within the TLS RR instead of creating whole new resource record type.
+
+% TODO: ADD: With DANE the CA system remains the same with two big differences.
+% (1) Without DANE all CAs are as weak as the weakest CA. Every CA needs to make sure to keep their private keys/certificate safe.
+% If anyone of them brakes, all CAs lose trust. With DANE only domains originally signed by themselves is in danger for false certificate so if a warning goes out fast when the break-in is noticed...zone administrators in danger can revoke their certificates asap and publish a new in the DNS system. (Though even the false certificate from the hackers may not be of any help)...though better be safe than sorry if any private key from a CA is lost.
+% (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
+
 
 %DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
 
