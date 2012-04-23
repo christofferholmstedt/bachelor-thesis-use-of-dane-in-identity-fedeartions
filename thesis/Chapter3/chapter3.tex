@@ -62,6 +62,9 @@ receive access to the SP or not. \cite[p.~15]{pdf:oasis-open-profiles}
 \section{Certificates}
 \subsection{Certificates in general}
 
+This section describes how certificates is used to send a private message from Alice to Bob, the technical steps from encryption 
+of the message to the validation of Alice and Bob with the help of a signed certificates and is based on\cite{website:ssl_intro}. 
+
 Public key cryptography algorithm transforms a message from for example Alice in to a private (encrypted) message to Bob, 
 the message is unreadable until it is decrypted. 
 Encrypted message can only be decrypted with a secret key, in public key cryption two keys are used that both can encrypt and 
@@ -72,11 +75,11 @@ Additionally, if Alice and Bob has shared a key-pair, Alice can encrypt the priv
 with the private key can decrypt the message.
 
 The possibility that someone has tampered with the message for example switches the message with another still exist since the public 
-key is public. Message Digest even called one-way function or hash function can be used guarante that the message sent to Bob is 
+key is public. Message Digest even called one-way function or hash function can be used guarantee that the message sent to Bob is 
 from Alice. Message digest creates a short, fixed-length representation of the message about to be sent and sends the message and
 the summery to Bob. Then Bob when receives the message he makes a summery as well and compares it with Alice's.
 
-In addition, the message digest has to be securley sent as well, which is made possible with digital signatures. A digital signature
+In addition, the message digest has to be securely sent as well, which is made possible with digital signatures. A digital signature
 is made by the private key by encrypting a digest of the message and other information as well, sequence number for example.
 It is Alice that creates the digital signature and included in the message digest to Bob and since no one can change the digest and still 
 sign it, the integrity is keept. Moreover, to make sure reuse of the signature can be made at a later date, the signature contains a 
@@ -88,12 +91,25 @@ is signed by a Certificate Authority (CA), Alice can be sure she is taking to Bo
 
 \subsection{Certificates in SAML}
 
-Saml2int\cite{website:saml2int} descirbes an Interoperable SAML V2.0 Web Browser SSO Deployment Profile that describes behaviour and
-options that deployments of the SAML Web Browser SSO Profile in the SAML Profiles document {pdf:oasis-open-profiles} are requires or 
-permitted to rely on. The profile addresses the content, exchange and processing of SAML messages. 
+Saml2int\cite{website:saml2int} describes an Interoperable SAML V2.0 Web Browser SSO Deployment Profile that is based on 
+SAML Web Browser SSO Profile in the SAML Profiles document\cite{pdf:oasis-open-profiles}. 
+The deployment profile describes the behaviour and options that it is requires or permitted to rely on. 
+Furthermore, it addresses the content, exchange and processing of SAML messages.
+For example\cite{website:saml2int}, the Service Provider should at endpoint protect response 
+messages using Transport Secure Layer (TLS) or Secure Sockets Layer (SSL)  and Identity Providers should do the same when receiving 
+authentication request. 
+However, if IdP does not use TLS/SSL, XML Encryption should be used and in its response 
+message return encrypted assertion in the message. 
+In addition, if the SP does not use TLS/SSL as recommended for Assertion Consumer Service
+endpoints, then the SP's metadata should include a suitable key descriptor for XML Encryption.
 
-To be continued...
-
+A TLS/SSL handshake example adapted to the identity federation influenced by \cite{website:ssl_explained}.
+The client initiates the handshake by connecting to the service provider with TLS/SSL on port 443. 
+Continues with sending basic information to the service provider, whom respond with sending basic 
+information as well as its certificate and public key back. 
+The client validates the certificate and public key with the CA as mentioned in certificates in general above. 
+Additionally, if the validation was successful the client generates a secret key to be used during the session and 
+sends the key encrypted to the service provider completing the handshake. 
 
 \section{DANE} 
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
