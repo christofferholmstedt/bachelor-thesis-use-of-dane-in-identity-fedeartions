@@ -164,7 +164,7 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % If anyone of them brakes, all CAs lose trust. With DANE only domains originally signed by themselves is in danger for false certificate so if a warning goes out fast when the break-in is noticed...zone administrators in danger can revoke their certificates asap and publish a new in the DNS system. (Though even the false certificate from the hackers may not be of any help)...though better be safe than sorry if any private key from a CA is lost.
 % (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
 
-
+\section{How DANE can be implemented in Shibboleth}
 %DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
 
 %DNSSEC (Domain Name Security Extensions) is a securitylayer added to DNS to secure system against assults like cachingpoisning through signing DNS-data digitaly.\cite[p.~64]{book:guide_dns}
