@@ -1,10 +1,4 @@
 \section{Background}
-The topic of this thesis was chosen after discussion with Staffan Hagnell (.SE), Jakob Schlyter (Kirei), Rickard Bellgrim (Certezza AB) and Carl Ljungqvist (Certezza AB).
-Interesting topics are most of the time found at the leading edge of research, this was also true with this thesis.
-The discussion started out with trying to find a current problem with DNSSEC \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} that would be suitable for a thesis.
-In the end, the topic on how to use DANE \cite{rfc:6394,rfc:draft-dane} to improve security for identity federations was chosen.
-
-\section{Problem description}
 In todays society more and more information is shared through internet.
 A lot of the communication consist of sharing pictures, stories and information with friends and family.
 The online websites that allow and promote these services are often very easy to use and especially easy to register a new account for.
@@ -20,9 +14,22 @@ The new solution will be built upon the concept of identity federations\cite[p.~
 As of today two major identity federations exists in Sweden.
 Those are SWAMID for students in higher education run by SUNET and "Skolfederation.se" for pupils/parents and teachers in compulsary primary and secondary school run by .SE and SUNET. "Skolfederation.se" is planned to go into production during 2013.
 
+Furthermore, in our thesis we dig deeper into the identity federation and examine how DNS-Based Authentication of Named Entities (DANE) 
+\cite{rfc:6394,rfc:draft-dane} can be used to improve the security in identity federations.
+
+\section{Problem description}
+The subject of the thesis can then be devided in to smaller subsection. 
+Firsly, an analysis of the security mechanism used to achieve data integrity in an identity federation and 
+specifically the use of X.509 certificates.
+Secondly, two separate evaluation one aboute the possibility to use DANE to improve the security for an identity federation
+and another one about the possibility to implement support for DANE in the open source software package Shibboleth.
+Thirdly, and finally the last subsection, the implementation of DANE in Shibboleth, simpleSAMLphp or equivalent software to improve
+the security for an identity federation.
+
 \section{Purpose}
 The purpose with this thesis is to show proof of concept, that DANE (DNS-based Authentication of Named Entities) can be used to improve security for identity federations.
-In the same time proving DNSSEC (DNS Security Extenstion) useful, since DANE is depending on the use of DNSSEC.
+In the same time proving DNSSEC DNSSEC \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} (DNS Security Extenstion) useful, since DANE is 
+depending on the use of DNSSEC.
 
 \section{Project delimitations}
 As stated above this project will be about DANE and identity federations and as with most, if not all implementation of different protocols and standards, alot of underlying technology is used.
