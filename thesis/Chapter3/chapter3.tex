@@ -113,18 +113,20 @@ sends the key encrypted to the service provider completing the handshake.
 
 \section{DANE} 
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
-It's introduced with the informational RFC document\cite{rfc:6394} describing some use cases and specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"\cite{rfc:draft-dane}.
-Make note that the Internet-Draft from the Internet Engineering Task Force (IETF) is still "work in progress" as it's still a draft.
+It's introduced with the informational RFC document\cite{rfc:6394} describing some use cases and one use case specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"\cite{rfc:draft-dane}.
+After the specfication for TLS communication, S/MIME is up next, which will describe how to map emailadresses to some resource record.
+Exactly how this will work and which resource record type that must be used is not yet clear according the to the draft\cite{rfc:draft-smime}.
+Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 
 The problem that DANE tries to solve is the current issue with Certificate Authorities (CA) where anyone of them may give out a certificate for any domain name.
-It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key. 
-This would give the hacker the ability to create a new signed certificate for any domain of his/hers choice.
+It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is than used for something else.
+A hacker that gets the private key of a CA in his/her own possession would get the ability to create a new signed certificate for any domain of his/hers choice.
 As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
 The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
 This is where DANE comes in as a solution.
 
 If the client connecting to the false server could get some information about which certificate is the true one to use, the client would know that the false certificate is a false one and not to trust it.
-In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record which tells the client which certificate is the correct one to use.
+In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record (for TLS communication) which tells the client which certificate is the correct one to use.
 If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker(fake server) is actually a false one.
 The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
 
@@ -144,11 +146,11 @@ This is a signed certificate from the CA, which basically says that the CA in qu
 
 In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server/domain owner to limit which certificates that is allowed to be used for his domain.
 A hacker with any well-known CAs private keys can sign a perfectly valid certificate and setup his/her valid TLS server in the name of Bob.
-Alice will then never know if it really is "the Bob" she is communicating with next time.
+Alice will then never know if it really is "the" Bob she is communicating with next time.
 
 To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
 Alice can then when initiating the TLS handshake she also asks for the TLSA RRs from Bob.
-With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the right Bob" she is opening a secure channel.
+With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the right" Bob she is opening a secure channel.
 Depending on the TLSA RR information and local policies Alice might have to do the the normal certificate chaining to some trusted anchor aswell or she will accept a self-signed certificate from Bob.
 
 % TODO: Give more in depth presentation about certificate here?
@@ -165,6 +167,11 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
 
 \section{How DANE can be implemented in Shibboleth}
+
+%Migh be implemented as a filter in shibboleth IdP
+%There are several "layers" in the Shibboleth software
+%Shibboleth uses OpenSAML and OpenSAML uses OpenSSL(confirm this later on.)
+
 %DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
 
 %DNSSEC (Domain Name Security Extensions) is a securitylayer added to DNS to secure system against assults like cachingpoisning through signing DNS-data digitaly.\cite[p.~64]{book:guide_dns}
