@@ -1,5 +1,33 @@
 \section{Our conclussions}
-Connect back to the topic under "Chapter 1: Purpose". Do we reach our purpose?
+\subsection{Identity federations with SAML2 and DANE}
+We started out with the task to identify where we could improve security within Idenitity federations.
+We were tasked specifically to look at the data integrity part of SAML2 and how X.509 certificates are used and in the end, if and how, it would be possible to improve security with the help of DANE.
+
+Our conclussions are that as soon as the initial configuration for each entity in an identity federation is done and all entities are up and running, data integrity is as secure as the public/private key cryptography scheme.
+The hard part is still the initial setup on how to decide who to trust when you don't trust anyone online.
+Procedures for this is as of today not specified in any detail, it's up to each federation to decide on their own.
+Common practice is as said in earlier chapters to share key or certificate information in some out-of-band way e.g. meeting in person or call each other.
+We believe that it's this initial sharing of information that would benefit the most if it could be done solely over the internet and it's possible if we put trust in the DNSSEC infrastructure.
+
+DANE is one way to go and is a valid solution for identity federations.
+Exactly how to store SAML2 certificates and how to retrieve the correct certificate for each validation of metadata is still an open question we haven't been able to reach that far.
+We have listed some solutions such as using CERT resource records and perhaps locating the correct one with some NAPTR resource record procedures.
+
+Our belief is that within future SAML specifications and/or when establishing new federations, more strict rules concerning metadata must be agreed upon to secure the data integrity of the metadata.
+Future agreements should include requirements that TLS with TLSA validation is used when sharing metadata.
+Another requirement should be to publish the certificate within the DNS/DNSSEC infrastructure.
+This is to make sure that both the channel that the communication is taking part over is secure aswell as the data stored on the webserver accessed is the proper one e.g. if downloading a certificate over a HTTPS connection.
+DANE may be used, instead of, or as an addition to current procedures.
+
+
+\subsection{Proof of concept}
+TODO - Implementation
+
+%DANE
+%Säkra både TLS och certifikat eftersom webbserver kan hackas men inte så troligt att även zonen blir hackad eftersom det är vanligt att placera en master server bakom många slav-servrar som är blåttade mot omvärlden.
+
+
+%Connect back to the topic under "Chapter 1: Purpose". Do we reach our purpose?
 % TODO: Make comments about that if we can secure the transmission of Metadata between all entities (FOs, IdPs, AAs, SPs and Discos) we can deem that the data integrity of all messages transmitted between them(the entities) is not lost or tampered with. As long as all entities do a proper check for each SAML2 message.
 
 \section{How to continue with further research}
