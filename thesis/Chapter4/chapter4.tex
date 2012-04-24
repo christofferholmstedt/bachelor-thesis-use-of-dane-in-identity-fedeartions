@@ -1,5 +1,26 @@
 \section{How to improve security for Identity federations}
-The communication standard described in SAML could be more restricted. 
+Security in identity federations involves both having and holding data integrity, which is said to be true when
+the federations entities can share trusted metadata between each other. 
+The metadata is said to be trusted when the entities in the federation can identify each other with the help of 
+certificates within the metadata file.
+
+Messages sent between entities depend on the data integrity being held.
+However, the most difficult part is setting up SAML's first trust relationship between entities, the first exchanging of keys.
+The SAML metadata document talks about various mechanisms "to aid in establishing trust in the accuracy and legitimacy of metadata,
+including use of XML signatures, SSL/TLS server authentication, and DNS signatures.
+Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
+before relying on it" \cite[p.~29]{pdf:oasis-open-metadata}.
+
+Moreover, when the first exchange is made, a trust relationship is built and the data integrity is up and running.
+However, to ensure the set up was made secure is not that easy, 
+one solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
+Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to encrypt and send the certificate.
+Additionally, with this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
+information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
+to confirming the message sender and key used in the PGP message.
+When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
+
+Furthermore, the communication standard described in SAML could be more restricted. 
 For example the SAML bindings document says \cite[p.~8]{pdf:oasis-open-bindings} 
 that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate and the metadata profile document says that 
 "in the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
@@ -15,22 +36,6 @@ For example to not recommend that the certificates has not expired, but express 
 Moreover, it is a vulnerability that the metadata file can contain expired certificates, but 
 without stricter guidelines an online check of the certificate could also be a solution to the expired certificates problem. 
 The Online Certificate Status Protocol (OCSP) \cite{rfc:6277} could be used to perform the certificates revoked check.  
-
-Furthermore, the messages that is sent between entities depend on the infrastructure and that data integrity is held.  
-The most difficult part about setting up the infrastructure is the first exchanging of keys to set up the first trust 
-relationship between entities. 
-The SAML metadata document talks about various mechanisms "to aid in establishing trust in the accuracy and legitimacy of metadata, 
-including use of XML signatures, SSL/TLS server authentication, and DNS signatures. 
-Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information 
-before relying on it" \cite[p.~29]{pdf:oasis-open-metadata}.
-Moreover, when the first exchange is made, a trust relationship is built and the data integrity is up and running. 
-However, to come to this is not that easy, one solution might be a third party, a CA or the use of DNSSEC or maybe both to 
-validates that the certificates is the right ones. 
-Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to encrypt and send the certificate. 
-Additionally, with this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact 
-information to the certificate sender, that calls the receiver to make sure the message came from him or her by confirming the key used 
-in the PGP message. 
-When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver. 
 
 \section{How to combine Identity federations and DANE}
 As stated earlier it's possible to divide federations into two categories, those with a federation provider and those without.
