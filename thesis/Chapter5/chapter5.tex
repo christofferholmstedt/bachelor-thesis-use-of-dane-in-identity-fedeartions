@@ -15,6 +15,10 @@ Further research need to be done to establish exactly how this could be accompli
 With CERT RR it's possible to store the certificate in it's full format, only a hash of it or just a url to the location where it's stored\cite[ch. 2.1]{rfc:4398}.
 What would be suitable for SAML2 certificates and is this really a viable solution for the identity federation scheme?
 
+\subsection{How to use NAPTR RRs to find the correct SAML2 certificate}
+In section \ref{subsec:matching-dilemma} "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403} is mentioned as a possible solution to the "matching problem".
+How does an entitiy that has recieved a signed metadata file locate the correct certificate within the DNS/DNSSEC system?
+
 %\section{Temporary section }
 %DISCUSSION Your conclusions, where you link your findings to your theories and purpose,
 %will discuss whether you achieved your purpose and what opportunities exist for further

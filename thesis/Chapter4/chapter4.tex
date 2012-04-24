@@ -86,26 +86,36 @@ When the metadata is recieved the federation provider can publish it with the me
 
 \subsubsection{Publishing SAML2 certificate as CERT RR, is it viable?}
 \label{subsec:saml2-certs-in-cert-rr}
-Earlier in subsection \ref{subsec:saml2-certificate-as-tlsa} the question arose if it is practical to store SAML2 certificates in the DNS system.
+Earlier in this chapter the question arose if it is practical to store SAML2 certificates in the DNS system.
 As this is out of scope of this report further investigations has to be done in this area.
 For further discussions it's assumed that it's a viable solution to store SAML2 certificates in the DNS system as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
-It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication as described in section \ref{subsec:only-tlsa-rr-with-tls} together with the SAML2 certificates in CERT RRs explained in section \ref{subsec:saml2-certificate-as-tlsa}?
+It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
 To simplify the view an argument could be made that the validity check on the SAML2 certficate downloaded over the https secure channel and then verified against the CERT RR is just another safety check within the same "layer" as the secure channel was established in.
 The reason for this is that the TLS connection is validated first with information from the DNSSEC infrastructure, when requesting the TLSA RR.
 The second validation is made depending on the TLSA RR information and local policies, it confirms that the TLS server certificate chain is to be trusted or not.
 The third validation would be when the SAML2 certificate is compared against the CERT RR available within the DNSSEC infrastructure.
 
-As noted the first and the third validation are both trusting the DNSSEC infrastructure, and therefore the combination of both using TLS with TLSA and SAML2 certificate with CERT RRs would probably not add any extra benefits.
-Under some circumstances someone might be able to hack into a webserver for some entity and change the SAML2 certificate, the third validation check against the CERT RR would in this case fail.
-Though, if someone is able to hack into a webserver and change a SAML2 certificate it's not far fetched that the CERT RR within the zone is compromised aswell.
-\subsection{The connecting problem - (Working title)}
-\subsubsection{TEST}
-tesakjdfsaksdj fklasj fkasj ft
+As noted the first and the third validation are both trusting the DNSSEC infrastructure, and therefore the combination of both using TLS with TLSA and SAML2 certificate with CERT RRs would at first glance not add any extra benefits.
+Though under some circumstances someone might be able to hack into a webserver for some entity and change the SAML2 certificate, the third validation check against the CERT RR would in this case fail.
+So in the end the question boils down to if the communication is secure to the correct host is this enough to trust everything that the host send?
+
+\subsection{The matching dilemma}
+\label{subsec:matching-dilemma}
+The last section was about how to distribute the certificate within the DNS system and if it's necessary or not.
+The CERT RR is mentioned as a possible solution and there might be several other solutions aswell.
+If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published aswell in the DNS system.
+With a single or just a few certificates that signs all metadata files for the federation provider it's relatively easy to publish the certificates in the DNS system and fetch all of them based on the domain/subdomain.
+Though it would put an unwanted limit that the federation provider is only allowed to use a few certificates per DNS zone.
+Of course it would work with several hundred certificates but it wouldn't be a very good solution.
+This is because each time some entity would check if the certificate is the correct one the requesting entity would have to download all certificates through the DNS system and then one by one try to match them against the certificate used in the metadata file.
+
+This means that somekind of general algorithm/solution is required to locate the correct certificate published in the DNS system when an entity recieves a signed metadata file.
+One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}. Exactly how this could be done is out of the scope of this report.
+
 \section{How DANE can be implemented in Shibboleth} 
-\subsection{TEST}
-tesatasf atsklajsefkljasdlfkjk
+Test
 % TODO: More research into this? Perhaps we will give an answer to this that is enough.
 
 %\section{Temporary section}
