@@ -10,7 +10,8 @@ It's with this configuration in mind the following evaluation has been made.
 With a federation provider publishing all the metadata about all service providers, identity providers and other entities how do the trusting entites rely on the federation provider?
 Is it the correct federation provider the trusting entities connect to or is it someone trying to "impersonate" the role of the federation provider as a man-in-the-middle attack.
 
-As of now the trust must be made in some out-of-band way e.g. a simple download of the federation provider's certificate and then confirm it's the correct one via telephone or email communcation between administrators.  This is not very practical when the federation grows bigger with tenths or hundreds of service and identity providers.  
+As of now the trust must be made in some out-of-band way e.g. a simple download of the federation provider's certificate and then confirm it's the correct one via telephone, email communcation between administrators or meet in person.
+This is not very practical when the federation grows bigger with tenths or hundreds of service- and identity providers or is it the only way?
 \subsection{The publishing problem}
 \subsubsection{SAML2 certificate as CERT resource record}
 \label{subsec:saml2-certificate-as-tlsa}
@@ -21,6 +22,7 @@ When both the metadata and the CERT RR is retrieved, a comparison can be made an
 
 A problem that still exists with this approach is how will the metadata about each entity be transmitted to the federation provider and validated by the federation provider.
 To keep building on the same solution each entity would have to publish respective certificate as a CERT RR themselves in their own domain zone.
+They would also need sign their own metadata which is not the case at the moment. 
 Now the initial upload of metadata from an entity to the federation provider could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
 % TODO: Add use cases from registry->registrar in DNS and how it is used their.
 The federation provider than fetches the metadata aswell as the corresponding CERT RR from the entity and if it's the correct signature on it the federation provider can publish it with the metadata from all other entities.
@@ -53,7 +55,7 @@ When the metadata is recieved the federation provider can publish it with the me
 \label{subsec:saml2-certs-in-cert-rr}
 Earlier in subsection \ref{subsec:saml2-certificate-as-tlsa} the question arose if it is practical to store SAML2 certificates in the DNS system.
 As this is out of scope of this report further investigations has to be done in this area.
-For further discussions it's assumed that it's a viable solution to store SAML2 certificates as a whole or some hash value from it in the DNS system as CERT RRs.
+For further discussions it's assumed that it's a viable solution to store SAML2 certificates in the DNS system as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
 It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication as described in section \ref{subsec:only-tlsa-rr-with-tls} together with the SAML2 certificates in CERT RRs explained in section \ref{subsec:saml2-certificate-as-tlsa}?
