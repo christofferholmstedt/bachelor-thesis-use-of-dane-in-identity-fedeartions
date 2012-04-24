@@ -53,12 +53,12 @@ When the metadata is recieved the federation provider can publish it with the me
 
 \subsubsection{Publishing SAML2 certificate as CERT RR, is it viable?}
 \label{subsec:saml2-certs-in-cert-rr}
-Earlier in subsection \ref{subsec:saml2-certificate-as-tlsa} the question arose if it is practical to store SAML2 certificates in the DNS system.
+Earlier in this chapter the question arose if it is practical to store SAML2 certificates in the DNS system.
 As this is out of scope of this report further investigations has to be done in this area.
 For further discussions it's assumed that it's a viable solution to store SAML2 certificates in the DNS system as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
-It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication as described in section \ref{subsec:only-tlsa-rr-with-tls} together with the SAML2 certificates in CERT RRs explained in section \ref{subsec:saml2-certificate-as-tlsa}?
+It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
 To simplify the view an argument could be made that the validity check on the SAML2 certficate downloaded over the https secure channel and then verified against the CERT RR is just another safety check within the same "layer" as the secure channel was established in.
 The reason for this is that the TLS connection is validated first with information from the DNSSEC infrastructure, when requesting the TLSA RR.
 The second validation is made depending on the TLSA RR information and local policies, it confirms that the TLS server certificate chain is to be trusted or not.
