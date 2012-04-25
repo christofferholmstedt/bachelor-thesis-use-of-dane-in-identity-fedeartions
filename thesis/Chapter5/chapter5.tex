@@ -1,7 +1,7 @@
 \section{Our conclussions}
 \subsection{Identity federations with SAML2 and DANE}
-We started out with the task to identify where we could improve security within Idenitity federations.
-We were tasked specifically to look at the data integrity part of SAML2 and how X.509 certificates are used and in the end, if and how, it would be possible to improve security with the help of DANE.
+We started out with the task to identify where we could improve security within idenitity federations.
+We were tasked specifically to look at the data integrity part of SAML2, how X.509 certificates are used and how it would be possible to improve security with the help of DNS-Based Authentication of Named Entities.
 
 Our conclussions are that as soon as the initial configuration for each entity in an identity federation is done and all entities are up and running, data integrity is as secure as the public/private key cryptography scheme.
 The hard part is still the initial setup on how to decide who to trust when you don't trust anyone online.
@@ -11,11 +11,11 @@ We believe that it's this initial sharing of information that would benefit the 
 
 DANE is one way to go and is a valid solution for identity federations.
 Exactly how to store SAML2 certificates and how to retrieve the correct certificate for each validation of metadata is still an open question we haven't been able to reach that far.
-We have listed some solutions such as using CERT resource records and perhaps locating the correct one with some NAPTR resource record procedures.
+We have listed some solutions such as using CERT resource records and perhaps locating the correct certificate with ”Dynamic Delegation Discovery System (DDDS)” procedures.
 
 Our belief is that within future SAML specifications and/or when establishing new federations, more strict rules concerning metadata must be agreed upon to secure the data integrity of the metadata.
 Future agreements should include requirements that TLS with TLSA validation is used when sharing metadata.
-Another requirement should be to publish the certificate within the DNS/DNSSEC infrastructure.
+Another requirement should be to publish the certificates within the DNS/DNSSEC infrastructure.
 This is to make sure that both the channel that the communication is taking part over is secure aswell as the data stored on the webserver accessed is the proper one e.g. if downloading a certificate over a HTTPS connection.
 DANE may be used, instead of, or as an addition to current procedures.
 
@@ -33,7 +33,7 @@ TODO - Implementation
 \section{How to continue with further research}
 \subsection{Communication with a federation provider}
 The communication between the federation provider and the other entities such as identity providers and service providers has no standardized way in how it should work.
-How does the federation provider know that it really is the right identity provider it's talking with without any prior communication?
+How does the federation provider know that it really is the right identity provider it's talking with, without any prior communication?
 Should the federation provider be the one that initiate connection to the other entities or vice versa?
 Last, but no least, how should this be solved technically to minimize the manual labour and automate as much as possible?
 
@@ -45,7 +45,7 @@ What would be suitable for SAML2 certificates and is this really a viable soluti
 
 \subsection{How to use NAPTR RRs to find the correct SAML2 certificate}
 In section \ref{subsec:matching-dilemma} "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403} is mentioned as a possible solution to the "matching problem".
-How does an entitiy that has recieved a signed metadata file locate the correct certificate within the DNS/DNSSEC system?
+How does an entitiy that has recieved a signed metadata file locate the correct certificate within the Domain Name System?
 
 %\section{Temporary section }
 %DISCUSSION Your conclusions, where you link your findings to your theories and purpose,
