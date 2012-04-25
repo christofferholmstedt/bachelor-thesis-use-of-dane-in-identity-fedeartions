@@ -1,7 +1,7 @@
-\section{How to improve security for Identity federations}
-Security in identity federations involves both having and holding data integrity, which is said to be true when
+\section{How to improve security for identity federations}
+Security in identity federations involves data integrity, which is said to be true when
 the federations entities can share trusted metadata between each other. 
-The metadata is said to be trusted when the entities in the federation can identify each other with the help of 
+The metadata is trusted when the entities in the federation can identify each other with the help of 
 certificates within the metadata file.
 
 Messages sent between entities depend on the data integrity being held.
@@ -14,15 +14,15 @@ before relying on it" \cite[p.~29]{pdf:oasis-open-metadata}.
 Moreover, when the first exchange is made, a trust relationship is built and the data integrity is up and running.
 However, to ensure the set up was made secure is not that easy, 
 one solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
-Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to encrypt and send the certificate.
-Additionally, with this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
+Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
+With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
 information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
-to confirming the message sender and key used in the PGP message.
+to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
 Furthermore, the communication standard described in SAML could be more restricted. 
-For example the SAML bindings document says \cite[p.~8]{pdf:oasis-open-bindings} 
-that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate and the metadata profile document says that 
+For example the SAML bindings document says  
+that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says that 
 "in the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
 that it contain the appropriate public key. 
 Specifically, the certificate may be expired, not yet valid, carry critical or non-critical extensions or usage flags, and contain 
@@ -31,13 +31,14 @@ The use of the certificate structure is merely a matter of notational convenienc
 profile apart from that. 
 However, it is RECOMMENDED that certificates be unexpired" \cite[p.~11]{pdf:oasis-open-metadata-profile}. 
 
-In addition, by changing the SAML documents guidelines to be less open for interpretation it could improve the security. 
+By changing the SAML documents guidelines to be less open for interpretation it could improve the security. 
 For example to not recommend that the certificates has not expired, but express that they should or must not be expired. 
-Moreover, it is a vulnerability that the metadata file can contain expired certificates, but 
-without stricter guidelines an online check of the certificate could also be a solution to the expired certificates problem. 
-The Online Certificate Status Protocol (OCSP) \cite{rfc:6277} could be used to perform the certificates revoked check.  
+Moreover, it is a vulnerability that the metadata file can contain expired certificates.
 
-\section{How to combine Identity federations and DANE}
+Without stricter guidelines an online check of the certificate could also be a solution to the expired certificate problem. 
+The Online Certificate Status Protocol (OCSP) \cite{rfc:6277} could be used to perform this online check.
+
+\section{How to combine identity federations and DANE}
 As stated earlier it's possible to divide federations into two categories, those with a federation provider and those without.
 In the analysis that has been done the solution with a federation provider is the most probable and viable setup in the long run, it's basiclly much easier to scale, both technically and non-technically.
 It's with this configuration in mind the following evaluation has been made.
@@ -53,14 +54,14 @@ This is not very practical when the federation grows bigger with tenths or hundr
 \subsection{The publishing problem}
 \subsubsection{SAML2 certificate as CERT resource record}
 \label{subsec:saml2-certificate-as-tlsa}
-The first solution that comes into mind is that it might be possible to publish the federation provider's certificate in the DNS system and more specifically as a CERT RR\cite{rfc:4398}.
+The first solution that comes into mind is that it might be possible to publish the federation provider's certificate in the Domain Name System and more specifically as a CERT RR\cite{rfc:4398}.
 This would mean that when a requesting entity (service provider, identity provider or any other entity) needs to update the metadata about all other entities it connects to the federation provider and downloads the metadata.
 At the same time the requesting entity sends out a DNS lookup (with DNSSEC active) for a corresponding CERT RR.
 When both the metadata and the CERT RR is retrieved, a comparison can be made and confirm or dismiss the validity of the metadata.
 
 A problem that still exists with this approach is how will the metadata about each entity be transmitted to the federation provider and validated by the federation provider.
 To keep building on the same solution each entity would have to publish respective certificate as a CERT RR themselves in their own domain zone.
-They would also need sign their own metadata which is not the case at the moment. 
+They would also need sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation provider could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
 % TODO: Add use cases from registry->registrar in DNS and how it is used their.
 The federation provider than fetches the metadata aswell as the corresponding CERT RR from the entity and if it's the correct signature on it the federation provider can publish it with the metadata from all other entities.
@@ -69,7 +70,7 @@ Within one cache interval all entities will now fetch the complete updated metad
 % TODO: What is a cache interval?
 % TODO: What is a domain zone?
 
-New questions arises here, is it practical to store SAML2 certificates in the DNS system as a CERT RR?
+New questions arises here, is it practical to store SAML2 certificates in the Domain Name System as a CERT RR?
 The second question that comes to mind is more related to DANE.
 If CERT RRs is used as stated above it would require DNSSEC otherwise its value would be of no use.
 Is it not possible to just use the TLSA RR with TLS certificates as it is and not introduce another layer that CERT RRs would become within the same system (DNS and DNSSEC)?
@@ -78,11 +79,11 @@ Is it not possible to just use the TLSA RR with TLS certificates as it is and no
 \label{subsec:only-tlsa-rr-with-tls}
 Let's start with the second question and get back to the first one later on.
 The solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
-Instead of publishing SAML2 certificates in the DNS system it might be possible to just use the TLSA RRs with TLS and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
+Instead of publishing SAML2 certificates in the Domain Name System it might be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
 
 This would mean that when a new entity, let's say a service provider, joins a federation the service provider must send its metadata to the federation provider.
-As an example the administrator for the service provider might visit a webpage over https(with validity check for TLSA RR) to initiate the transfer of metadata.
-The federation provider than opens a new connection over https(with validity check for TLSA RR) for the metadata from the service provider.
+As an example the administrator for the service provider might visit a webpage over HTTPS (with validity check for TLSA RR) to initiate the transfer of metadata.
+The federation provider than opens a new connection over HTTPS (with validity check for TLSA RR) for the metadata from the service provider.
 This request from the frederation provider back to the requesting service provider is to make sure that the metadata that is fetched is from the right service provider. 
 When the metadata is recieved the federation provider can publish it with the metadata for all other entities.
 
@@ -91,32 +92,33 @@ When the metadata is recieved the federation provider can publish it with the me
 
 \subsubsection{Publishing SAML2 certificate as CERT RR, is it viable?}
 \label{subsec:saml2-certs-in-cert-rr}
-Earlier in this chapter the question arose if it is practical to store SAML2 certificates in the DNS system.
+Earlier in this chapter the question arose if it is practical to store SAML2 certificates in the Domain Name System.
 As this is out of scope of this report further investigations has to be done in this area.
-For further discussions it's assumed that it's a viable solution to store SAML2 certificates in the DNS system as CERT RRs.
+For further discussions it's assumed that it's a viable solution to store SAML2 certificates in the Domain Name System as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
 It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
-To simplify the view an argument could be made that the validity check on the SAML2 certficate downloaded over the https secure channel and then verified against the CERT RR is just another safety check within the same "layer" as the secure channel was established in.
+
+To simplify the view an argument could be made that the validity check on the SAML2 certficate downloaded over the HTTPS secure channel and then verified against the CERT RR is just another safety check within the same "layer" as the secure channel was established in.
 The reason for this is that the TLS connection is validated first with information from the DNSSEC infrastructure, when requesting the TLSA RR.
 The second validation is made depending on the TLSA RR information and local policies, it confirms that the TLS server certificate chain is to be trusted or not.
 The third validation would be when the SAML2 certificate is compared against the CERT RR available within the DNSSEC infrastructure.
 
 As noted the first and the third validation are both trusting the DNSSEC infrastructure, and therefore the combination of both using TLS with TLSA and SAML2 certificate with CERT RRs would at first glance not add any extra benefits.
 Though under some circumstances someone might be able to hack into a webserver for some entity and change the SAML2 certificate, the third validation check against the CERT RR would in this case fail.
-So in the end the question boils down to if the communication is secure to the correct host is this enough to trust everything that the host send?
+So in the end the question boils down to if the communication is secure to the correct host is this enough to trust everything that the host sends?
 
 \subsection{The matching dilemma}
 \label{subsec:matching-dilemma}
-The last section was about how to distribute the certificate within the DNS system and if it's necessary or not.
+The last section was about how to distribute the certificate within the Domain Name System and if it's necessary or not.
 The CERT RR is mentioned as a possible solution and there might be several other solutions aswell.
-If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published aswell in the DNS system.
-With a single or just a few certificates that signs all metadata files for the federation provider it's relatively easy to publish the certificates in the DNS system and fetch all of them based on the domain/subdomain.
+If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published aswell in the Domain Name System.
+With a single or just a few certificates that signs all metadata files for the federation provider it's relatively easy to publish the certificates in the Domain Name System and fetch all of them based on the domain/subdomain.
 Though it would put an unwanted limit that the federation provider is only allowed to use a few certificates per DNS zone.
 Of course it would work with several hundred certificates but it wouldn't be a very good solution.
-This is because each time some entity would check if the certificate is the correct one the requesting entity would have to download all certificates through the DNS system and then one by one try to match them against the certificate used in the metadata file.
+This is because each time some entity would check if the certificate is the correct one the requesting entity would have to download all certificates through the Domain Name System and then one by one try to match them against the certificate used in the metadata file.
 
-This means that somekind of general algorithm/solution is required to locate the correct certificate published in the DNS system when an entity recieves a signed metadata file.
+This means that somekind of general algorithm/solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
 One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}. Exactly how this could be done is out of the scope of this report.
 
 \section{How DANE can be implemented in Shibboleth} 
