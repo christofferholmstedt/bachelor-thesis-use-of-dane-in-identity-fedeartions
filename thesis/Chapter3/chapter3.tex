@@ -111,15 +111,17 @@ In addition, if service providers does not use TLS/SSL as recommended, then the 
 %sends the key encrypted to the service provider completing the handshake. 
 
 \section{DNS-Based Authentication of Named Entities} 
+\subsection{In general}
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
 It's introduced with the informational RFC document\cite{rfc:6394} describing some use cases and one use case specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"\cite{rfc:draft-dane}.
-After the specfication for TLS communication, S/MIME is up next, which will describe how to map emailadresses to some resource record.
+After the specfication for TLS communication, S/MIME is up next, which will describe how to map an emailaddresses to a resource record.
 Exactly how this will work and which resource record type that must be used is not yet clear according the to the draft\cite{rfc:draft-smime}.
 Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 
 The problem that DANE tries to solve is the current issue with Certificate Authorities (CA) where anyone of them may give out a certificate for any domain name.
 It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is than used for something else.
-A hacker that gets the private key of a CA in his/her own possession would get the ability to create a new signed certificate for any domain of his/hers choice.
+
+A hacker that gets the private key of a CA in his/her own possession would get the ability to create a new signed certificate for any domain of his/her choice.
 As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
 The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
 This is where DANE comes in as a solution.
@@ -132,7 +134,7 @@ The client would in this case immidiately drop all established connections, if a
 This effectively moves some responsiblity from the CAs to the domain owner.
 The domain owner now has full control of which TLS certificates are the valid ones.
 
-\subsection{The technical point of view}
+\subsection{An example}
 How DANE works in detail for TLS communication is specified in the Internet-Draft earlier mentioned\cite{rfc:draft-dane} but to be able to follow later reasoning a short presentation will be given here.
 Let's take an example, Alice wants to get hold of some resource from Bob that needs to be protected so only Alice and Bob knows about it and noone tampers with it while in transit.
 This is where TLS comes into play.
