@@ -59,7 +59,7 @@ This would mean that when a requesting entity (service provider, identity provid
 At the same time the requesting entity sends out a DNS lookup (with DNSSEC active) for a corresponding CERT RR.
 When both the metadata and the CERT RR is retrieved, a comparison can be made and confirm or dismiss the validity of the metadata.
 
-A problem that still exists with this approach is how will the metadata about each entity be transmitted to the federation provider and validated by the federation provider.
+A problem that still exists with this approach is how will each entity transmit metadata about itself to the federation provider and how will the metadata be validated by the federation provider.
 To keep building on the same solution each entity would have to publish respective certificate as a CERT RR themselves in their own domain zone.
 They would also need sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation provider could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
@@ -119,7 +119,10 @@ Of course it would work with several hundred certificates but it wouldn't be a v
 This is because each time some entity would check if the certificate is the correct one the requesting entity would have to download all certificates through the Domain Name System and then one by one try to match them against the certificate used in the metadata file.
 
 This means that somekind of general algorithm/solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
-One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}. Exactly how this could be done is out of the scope of this report.
+One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}.
+Exactly how this could be done is out of the scope of this report.
+
+The main issue in this section on how to find the "right" certificate if it's decided upon to publish SAML2 certificates within the Domain Name System was originally formulated by Leif Johansson (SUNET).
 
 \section{How DANE can be implemented in Shibboleth} 
 Temporary text.
