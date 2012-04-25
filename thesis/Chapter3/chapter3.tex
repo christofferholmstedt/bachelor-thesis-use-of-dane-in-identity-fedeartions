@@ -118,10 +118,10 @@ After the specfication for TLS communication, S/MIME is up next, which will desc
 Exactly how this will work and which resource record type that must be used is not yet clear according the to the draft\cite{rfc:draft-smime}.
 Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 
-The problem that DANE tries to solve is the current issue with Certificate Authorities (CA) where anyone of them may give out a certificate for any domain name.
-It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is than used for something else.
+The problem that DANE tries to solve is the current issue with Certificate Authorities (CAs) where anyone of them may give out a certificate for any domain name.
+It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is then used for something else.
 
-A hacker that gets the private key of a CA in his/her own possession would get the ability to create a new signed certificate for any domain of his/her choice.
+A hacker that gets hold of the private key of a CA would get the ability to create a new signed certificate for any domain of his/her choice.
 As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
 The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
 This is where DANE comes in as a solution.
