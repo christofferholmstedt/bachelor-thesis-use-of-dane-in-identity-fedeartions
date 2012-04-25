@@ -11,8 +11,8 @@ including use of XML signatures, SSL/TLS server authentication, and DNS signatur
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
 before relying on it" \cite[p.~29]{pdf:oasis-open-metadata}.
 
-Moreover, when the first exchange is made, a trust relationship is built and the data integrity is up and running.
-However, to ensure the set up was made secure is not that easy, 
+With that said, a trust relationship is built and the data integrity is up and running after the first certificate exchange has been made. 
+The question is, how can this certificate exchange be made securely? 
 one solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
 With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
@@ -20,8 +20,9 @@ information to the certificate sender, that decrypts the message. Finds out the 
 to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
-Furthermore, the communication standard described in SAML could be more restricted. 
-For example the SAML bindings document says  
+Furthermore, the communication standard described in SAML could be more restricted.
+That involves the first certificate exchange just mentioned. 
+Another example is the certificate itself, the SAML bindings document says  
 that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says that 
 "in the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
 that it contain the appropriate public key. 
@@ -31,7 +32,7 @@ The use of the certificate structure is merely a matter of notational convenienc
 profile apart from that. 
 However, it is RECOMMENDED that certificates be unexpired" \cite[p.~11]{pdf:oasis-open-metadata-profile}. 
 
-By changing the SAML documents guidelines to be less open for interpretation it could improve the security. 
+By changing the SAML documents guidelines in general to be less open for interpretation it could improve the security. 
 For example to not recommend that the certificates has not expired, but express that they should or must not be expired. 
 Moreover, it is a vulnerability that the metadata file can contain expired certificates.
 
