@@ -126,9 +126,17 @@ As the model with CAs works today where they can sign any domain name and the mo
 The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
 This is where DANE comes in as a solution.
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/daneWithTlsa.png}
+\end{center}
+\caption{A client connect to either a real or fake server. The third and fourth step is done within the Domain Name System and requires DNSSEC active. (It is assumed that both the real and the fake server has a server certificate signed by some well-known CA for the same domain.)\label{ch3:daneWithTlsa}}
+\end{figure}
+
 If the client connecting to the false server could get some information about which certificate is the true one to use, the client would know that the false certificate is a false one and not to trust it.
 In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record (for TLS communication) which tells the client which certificate is the correct one to use.
 If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker(fake server) is actually a false one.
+This is what happens in figure \ref{ch3:daneWithTlsa} when the client can compare the server certificate (recieved in step 2) with the TLSA resource record (recieved in step 4).
 The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
 
 This effectively moves some responsiblity from the CAs to the domain owner.
@@ -141,9 +149,18 @@ This is where TLS comes into play.
 Alice initiate a TLS handshake as a TLS client with Bob which in this example is acting as TLS server. 
 Everything works fine and with TLS they setup a secure channel between themselves.
 
-But hold on, how does Alice know that she is communicating with "the" Bob she believes it is or is it someone else that is trying to fake the identity of Bob?
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/daneWithAndWithoutDane.png}
+\end{center}
+\caption{Without DANE the connecting client can't be sure without some out-of-band procedure or prior communication who is the real Bob. With DANE "the" Bob can publish a TLSA RR which will determine which TLS server certificate is the real one. (This assumes that both the client and "the" Bob trust the DNSSEC infrastructure).\label{ch3:daneWithAndWithoutDane}}
+\end{figure}
+
+
+But hold on, how does Alice know that she is communicating with "the" Bob she believes it is or is it someone else that is trying to fake the identity of "the" Bob?
+To perhaps give a better explanation figure \ref{ch3:daneWithAndWithoutDane} describe this dilemma.
 In the initial TLS handshake Alice retrieves a server certificate that she needs to validate with a third party, a CA.
-This is a signed certificate from the CA, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
+This is a certificate from Bob that is signed by his CA of choice, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
 
 In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server/domain owner to limit which certificates that is allowed to be used for his domain.
 A hacker with any well-known CAs private keys can sign a perfectly valid certificate and setup his/her valid TLS server in the name of Bob.
