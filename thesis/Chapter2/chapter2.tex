@@ -1,23 +1,20 @@
 \section{Approach}
 
-The approach was to first read up about identity federations, SAML 2.0, Shibboleth, DNSSEC and DANE. 
-This continued with setting up a test environment using Shibboleth to start analyzing how the identity federation works and if or where DANE can be implemented. 
-The analysis provided information about possible places and the implementation started.  
+The approach was to first read up about the subject, identity federations as well as talk to experts. 
+Identity federations is based on the SAML 2.0 standard, other standards as well,
+but we chose to read up about SAML because it is what is used in both SWAMID and skolfederation.se. 
 
-It was due to recommendation the software choice to use Shibboleth was made, insteed of simpleSAMLphp or equivalent software. 
-"Shibboleth is a standard based, open source software package for web single sign-on across or within organizational boundaries. 
-It allows sites to make informed authorization decisions for individual access of protected online resources in a privacy-preserving manner" \cite{website:Shibboleth}.
+It was due to recommendations the software choice to use Shibboleth was made, 
+instead of simpleSAMLphp or equivalent software.
+ 
+To understand identity federations, SAML and Shibboleth better, we set up a test environment using Shibboleth. 
+In the test environment only one service provider and one identity provider is implemented, 
+this choice does not affect the analysis result in our opinion. 
+More about the service- and identity provider and other entities in the identity federation is described in the thesis. 
 
-An identity federation protects the user, the "identity information can be anything. 
-It could be the user's full identity, or simply the fact that the user can authenticate successfully, leaving the user anonymous. 
-This policy is written per user and per provider to ensure privacy is respected while still delivering all the information an application needs" \cite{website:ShibbolethHighLevelIntro}.
+After reading up on identity federations, we read up about DANE, through drafts, by following the DANE mailing list and by talking to experts. DANE demands that DNSSEC is used and therefore some reading was also done about DNSSEC. We also read up more about TLS/SSL to easier understand where DANE is needed in the identity federation.
 
-An identity federation is built up with several components. 
-"An identity provider (IdP), which authenticates users and releases selected information about them, and a service provider (SP) that accepts and processes the user data before making access control decisions or passing the information to protected applications. 
-These entities trust each other to properly safeguard user data and sensitive resources" \cite{website:Shibboleth}. 
-Furthermore,  an identity federation can have more then one IdP and SP, with more then one a discovery service is needed, where the right SP or IdP can be chosen.
-However in our implementation only one IdP and one SP is implemented, this choice does not affect the analysis result in our opinion, however no discovery service is needed. 
-
+When the analysis was finished, we had found possible places where DANE could be used and we could start implementing.
 
 %\section{Investigation description}
 
