@@ -1,5 +1,6 @@
 \section{Identity federations}
 \subsection{What is an identity federation?}
+
 A simple identity federation example is when signing in to "antagning.se". 
 The user visits "antagning.se", needs to visit "my pages", to do so he or she presses "Log in". 
 Assuming the user is already studying in Sweden perhaps at Lule\r{a} University of Technology he or 
@@ -11,6 +12,14 @@ The identity federation used in the thesis work testing environment is based on 
 In the SAML technical overvew it says "...standard defines an XML-based framework for describing and exchanging security information 
 between on-line business partners"
 \cite[p.~8]{pdf:oasis-open}.    
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/identityFed.png}
+\end{center}
+\caption{\label{ch3:IdentityFed}}
+\end{figure}
+
 
 In SAML standard "antagning.se" is a service provider (SP) \cite[p.~11]{pdf:oasis-open-glossary}, the identification at Lule\r{a} University 
 of Technology is the identity provider (IdP) \cite[p.~7]{pdf:oasis-open-glossary} and the discovery service (Disco) is where the user could 
@@ -133,10 +142,11 @@ This is where DANE comes in as a solution.
 \caption{A client connect to either a real or fake server. The third and fourth step is done within the Domain Name System and requires DNSSEC active. (It is assumed that both the real and the fake server has a server certificate signed by some well-known CA for the same domain.)\label{ch3:daneWithTlsa}}
 \end{figure}
 
+The following explanation is also presented in figure \ref{ch3:daneWithTlsa}.
 If the client connecting to the false server could get some information about which certificate is the true one to use, the client would know that the false certificate is a false one and not to trust it.
 In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record (for TLS communication) which tells the client which certificate is the correct one to use.
-If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker(fake server) is actually a false one.
-This is what happens in figure \ref{ch3:daneWithTlsa} when the client can compare the server certificate (recieved in step 2) with the TLSA resource record (recieved in step 4).
+If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker (fake server) is actually a false one.
+%This is what happens in figure \ref{ch3:daneWithTlsa} when the client can compare the server certificate (recieved in step 2) with the TLSA resource record (recieved in step 4).
 The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
 
 This effectively moves some responsiblity from the CAs to the domain owner.
@@ -159,6 +169,7 @@ Everything works fine and with TLS they setup a secure channel between themselve
 
 But hold on, how does Alice know that she is communicating with "the" Bob she believes it is or is it someone else that is trying to fake the identity of "the" Bob?
 To perhaps give a better explanation figure \ref{ch3:daneWithAndWithoutDane} describe this dilemma.
+
 In the initial TLS handshake Alice retrieves a server certificate that she needs to validate with a third party, a CA.
 This is a certificate from Bob that is signed by his CA of choice, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
 
@@ -167,8 +178,8 @@ A hacker with any well-known CAs private keys can sign a perfectly valid certifi
 Alice will then never know if it really is "the" Bob she is communicating with next time.
 
 To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
-Alice can then when initiating the TLS handshake she also asks for the TLSA RRs from Bob.
-With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the right" Bob she is opening a secure channel.
+Alice can when initiating the TLS handshake also ask for the TLSA RRs from Bob.
+With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the" Bob she is opening a secure channel.
 Depending on the TLSA RR information and local policies Alice might have to do the the normal certificate chaining to some trusted anchor aswell or she will accept a self-signed certificate from Bob.
 
 % TODO: Give more in depth presentation about certificate here?
