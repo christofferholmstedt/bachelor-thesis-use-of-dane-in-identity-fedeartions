@@ -2,10 +2,10 @@
 \subsection{What is an identity federation?}
 
 A simple identity federation example is when signing in to "antagning.se". 
-The user visits "antagning.se", needs to visit "my pages", to do so he or she presses "Log in". 
-Assuming the user is already studying in Sweden perhaps at Lule\r{a} University of Technology he or 
-she can select this university among the listed universities. 
-The user has made his or her choice and is redirected to the selected university's student portal and is identified through the university. 
+The user visits "antagning.se", needs to visit "my pages", to do so he/she presses "Log in". 
+Assuming the user is already studying in Sweden perhaps at Lule\r{a} University of Technology he/she 
+can select this university among the listed universities. 
+The user has made his/her choice and is redirected to the selected university's student portal and is identified through the university. 
 
 An identity federation can be based on different standards.
 The identity federation used in the thesis work testing environment is based on OASIS Security Assertion Markup Language (SAML 2.0) \cite{pdf:oasis-open-core,pdf:oasis-open-metadata,pdf:oasis-open-metadata-profile,pdf:oasis-open-bindings,pdf:oasis-open-profiles,pdf:oasis-open-glossary,pdf:oasis-open}. 
@@ -30,7 +30,7 @@ The discovery service (Disco) is where the user could chose from several univers
 Furthermore, SAML also specifies the Attribute Authority (AA) that provides 
 a "ticket" containing information about the user. An AA example is "Skatteverket", it wants to 
 allow an individual to see their tax account, both the business as well the people it involves. 
-"Skatteverket" sends an attribute request to the "Bolagsverket" that will answer this request 
+"Skatteverket" sends an attribute request to "Bolagsverket" that will answer this request 
 with a "ticket" containing information that allows or disallows the individual to see his/her tax account \cite[p.~284]{pdf:SOU}.
 
 Outside the SAML standard, the identity federation can also have a federation provider. It is possible to have an identity federation both 
@@ -60,7 +60,7 @@ SP-initiated web SSO uses The Web Browser SSO Profile that says that "to impleme
 a profile of the SAML Authentication Request protocol is used, in conjunction with the HTTP Redirect, HTTP POST and
 HTTP Artifact bindings" \cite[p.~14]{pdf:oasis-open-profiles}.
 
-In more technical terms the SP-initiated web SSO scenario can be described as the client (principal) sends through an HTTP user agent
+In more technical terms the SP-initiated web SSO scenario, see figure \ref{ch3:IdentityFed} can be described as the client (principal) sends through an HTTP user agent
 an HTTP request asking to access a protected resource at the SP. The client is not authenticated and therefore the SP
 obtains with the authentication request protocol the location to the IdP. The SP then issues an "AuthnRequest" message
 that the user agent deliver to the IdP through an HTTP redirect, post or artifact binding.
