@@ -11,9 +11,9 @@ including use of XML signatures, SSL/TLS server authentication, and DNS signatur
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
 before relying on it" \cite[p.~29]{pdf:oasis-open-metadata}.
 
-With that said, a trust relationship is built and the data integrity is up and running after the first certificate exchange has been made. 
-The question is, how can this certificate exchange be made securely? 
-one solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
+With that said, after the first certificate exchange has been made a trust relationship is built and the data integrity is up and running. 
+The question is, how can the first certificate exchange be made securely? 
+One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
 With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
 information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
