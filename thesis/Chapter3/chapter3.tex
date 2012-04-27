@@ -67,8 +67,8 @@ that the user agent deliver to the IdP through an HTTP redirect, post or artifac
 At the IdP the client is identified through some back-end engine with user credentials, in
 our testing environment Lightweight Directory Access Protocol (LDAP) is used more specifically OpenLDAP \cite{website:openldap}.
 The IdP then issues a "Response" message that the user agent deliver to the SP through HTTP post or artifact binding,
-this message may hold an error or it holds at least one authentication assertion. Depending on the respons message the client will
-receive access to the SP or not. \cite[p.~15]{pdf:oasis-open-profiles}
+this message may hold an error or it holds at least one authentication assertion. 
+Depending on the respons message the client will receive access to the SP or not. \cite[p.~15]{pdf:oasis-open-profiles}
 \section{Certificates}
 \subsection{Certificates in general}
 
@@ -87,7 +87,7 @@ Additionally, if Alice and Bob has shared a key-pair, Alice can encrypt the priv
 with the private key can decrypt the message.
 
 The possibility that someone switches the message with another still exist since the public 
-key is public. "Message digest" even called one-way function or hash function can be used guarantee that the message sent to Bob is 
+key is public. "Message digest" even called one-way function or hash function can be used to guarantee that the message sent to Bob is 
 from Alice. Message digest creates a short, fixed-length representation of the message about to be sent and sends the message and
 the summary to Bob.
 Then Bob when receives the message he makes a summary as well and compares it with Alice's.
@@ -95,7 +95,7 @@ Then Bob when receives the message he makes a summary as well and compares it wi
 In addition, the message digest has to be securely sent as well, which is made possible with digital signatures. A digital signature
 is made by the private key by encrypting a digest of the message and other information as well, sequence number for example.
 It is Alice that creates the digital signature and includes it in the message digest to Bob and since no one can change the digest and still 
-sign it, the integrity is keept. Moreover, to make sure reuse of the signature can not be made at a later date, the signature contains a 
+sign it, the integrity is kept. Moreover, to make sure reuse of the signature can not be made at a later date, the signature contains a 
 sequence number that is unique. 
 
 Furthermore, Alice needs to know that the shared public key is with Bob aswell as Bob needs to verify that the message signature 
@@ -126,7 +126,7 @@ In addition, if service providers does not use TLS/SSL as recommended, then the 
 \subsection{In general}
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
 It's introduced with the informational RFC document\cite{rfc:6394} describing some use cases and one use case specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"\cite{rfc:draft-dane}.
-After the specfication for TLS communication, S/MIME is up next, which will describe how to map an emailaddresses to a resource record.
+After the specfication for TLS communication, S/MIME is up next, which will describe how to map an emailaddress to a resource record.
 Exactly how this will work and which resource record type that must be used is not yet clear according the to the draft\cite{rfc:draft-smime}.
 Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 
@@ -183,13 +183,14 @@ Alice will then never know if it really is "the" Bob she is communicating with n
 To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
 Alice can when initiating the TLS handshake also ask for the TLSA RRs from Bob.
 With DNSSEC in place she can be sure that she recieves the TLSA RR from the true Bob and if the resource records matches the given certificate that was given in the TLS handshake Alice is sure it's to "the" Bob she is opening a secure channel.
+
 Depending on the TLSA RR information and local policies Alice might have to do the the normal certificate chaining to some trusted anchor aswell or she will accept a self-signed certificate from Bob.
+TLSA resource records is a new DNS record type that is still not approved as a standard so it might change in the future before being approved.
 
 % TODO: Give more in depth presentation about certificate here?
 % TODO: Mention anywhere what root certificates are and how they're used?
 % TODO: What is well-known CAs?
 
-TLSA resource records is a new DNS record type that is still not approved as a standard so it might change in the future before being approved.
 % Removed by Christoffer, 2012-04-19: As the Internet-Draft specifies the first octet in the TLSA RR is allocated for "certificate usage", the parts concerning TLS only allocates five out of these 256 possible values so future standards can use the same resource record type and only allocating one of the free "certificate usage" fields.
 % Removed by Christoffer, 2012-04-19: This means that if a new standard is created that doesn't make use of TLS but needs certificate in some other way it might make sense to allocate a "certificate usage" number within the TLS RR instead of creating whole new resource record type.
 
