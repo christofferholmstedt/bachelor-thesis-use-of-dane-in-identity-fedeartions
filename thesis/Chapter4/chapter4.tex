@@ -1,10 +1,11 @@
 \section{How to improve security for identity federations}
-Security in identity federations involves data integrity, which is said to be true when
-the federations entities can share trusted metadata between each other. 
-The metadata is trusted when the entities in the federation can identify each other with the help of 
-certificates within the metadata file.
+%Security in identity federations involves data integrity, which is said to be true when
+%the federations entities can share trusted metadata between each other. 
+%The metadata is trusted when the entities in the federation can identify each other with the help of 
+%certificates within the metadata file.
 
-Messages sent between entities depend on the data integrity being held.
+%Messages sent between entities depend on the data integrity being held.
+Messages sent between entities within the identity federations depends on the data integrity being held.
 However, the most difficult part is setting up SAML's first trust relationship between entities, the first exchanging of keys.
 The SAML metadata document talks about various mechanisms "to aid in establishing trust in the accuracy and legitimacy of metadata,
 including use of XML signatures, SSL/TLS server authentication, and DNS signatures.
@@ -62,7 +63,7 @@ When both the metadata and the CERT RR is retrieved, a comparison can be made an
 
 A problem that still exists with this approach is how will each entity transmit metadata about itself to the federation provider and how will the metadata be validated by the federation provider.
 To keep building on the same solution each entity would have to publish respective certificate as a CERT RR themselves in their own domain zone.
-They would also need sign their own metadata which is not the case in current standards. 
+They would also need to sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation provider could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
 % TODO: Add use cases from registry->registrar in DNS and how it is used their.
 The federation provider than fetches the metadata aswell as the corresponding CERT RR from the entity and if it's the correct signature on it the federation provider can publish it with the metadata from all other entities.
