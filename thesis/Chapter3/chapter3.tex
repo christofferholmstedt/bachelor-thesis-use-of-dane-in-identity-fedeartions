@@ -28,7 +28,7 @@ In SAML standard "antagning.se" is a service provider (SP) \cite[p.~11]{pdf:oasi
 Lule\r{a} University of Technology is the identity provider (IdP) \cite[p.~7]{pdf:oasis-open-glossary}, see figure \ref{ch3:IdentityFed}.
 The discovery service (Disco) is where the user could chose from several universities at "antagning.se".
 Furthermore, SAML also specifies the Attribute Authority (AA) that provides 
-a "ticket" containing information about the user. An AA example is "Skatteverket", it wants to 
+a "ticket" containing information about the user from a third party perspective. A theoretical AA example is "Skatteverket", it wants to 
 allow an individual to see their tax account, both the business as well the people it involves. 
 "Skatteverket" sends an attribute request to "Bolagsverket" that will answer this request 
 with a "ticket" containing information that allows or disallows the individual to see his/her tax account \cite[p.~284]{pdf:SOU}.
@@ -60,15 +60,17 @@ SP-initiated web SSO uses The Web Browser SSO Profile that says that "to impleme
 a profile of the SAML Authentication Request protocol is used, in conjunction with the HTTP Redirect, HTTP POST and
 HTTP Artifact bindings" \cite[p.~14]{pdf:oasis-open-profiles}.
 
-In more technical terms the SP-initiated web SSO scenario, see figure \ref{ch3:IdentityFed} can be described as the client (principal) sends through an HTTP user agent
-an HTTP request asking to access a protected resource at the SP. The client is not authenticated and therefore the SP
+In more technical terms the SP-initiated web SSO scenario, see figure \ref{ch3:IdentityFed} 
+is in the SAML Profiles document \cite[p.~15]{pdf:oasis-open-profiles} described 
+as the client (principal) sends an HTTP request via an HTTP user agent asking to access a protected 
+resource at the SP. The client is not authenticated and therefore the SP
 obtains with the authentication request protocol the location to the IdP. The SP then issues an "AuthnRequest" message
 that the user agent deliver to the IdP through an HTTP redirect, post or artifact binding.
 At the IdP the client is identified through some back-end engine with user credentials, in
 our testing environment Lightweight Directory Access Protocol (LDAP) is used more specifically OpenLDAP \cite{website:openldap}.
-The IdP then issues a "Response" message that the user agent deliver to the SP through HTTP post or artifact binding,
-this message may hold an error or it holds at least one authentication assertion. 
-Depending on the respons message the client will receive access to the SP or not. \cite[p.~15]{pdf:oasis-open-profiles}
+The IdP then issues a "Response" message that the user agent deliver to the SP through HTTP post or artifact binding.
+This message holds at least one authentication assertion as well as attributes that describes the user or it may hold an error.
+Depending on the respons message the client will receive access to the SP or not.
 \section{Certificates}
 \subsection{Certificates in general}
 
@@ -86,9 +88,9 @@ possible while keeping the private key secret.
 Additionally, if Alice and Bob has shared a key-pair, Alice can encrypt the private message with the public key and only Bob 
 with the private key can decrypt the message.
 
-The possibility that someone switches the message with another still exist since the public 
-key is public. "Message digest" even called one-way function or hash function can be used to guarantee that the message sent to Bob is 
-from Alice. Message digest creates a short, fixed-length representation of the message about to be sent and sends the message and
+The possibility that someone has made changes to the message still exist since the public key is public. 
+"Message digest" even called one-way function or hash function can be used to guarantee that the message has not changed. 
+Message digest creates a short, fixed-length representation of the message about to be sent and sends the message and
 the summary to Bob.
 Then Bob when receives the message he makes a summary as well and compares it with Alice's.
 
