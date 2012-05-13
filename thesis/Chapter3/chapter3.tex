@@ -133,7 +133,8 @@ Exactly how this will work and which resource record type that must be used is n
 Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 
 The problem that DANE tries to solve is the current issue with Certificate Authorities (CAs) where anyone of them may give out a certificate for any domain name.
-It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is then used for something else.
+It might not be likely that a CA loses its private key but might sign a certificate with information that is not correct or the CA might sign a key that is intended for signing/encrypting emails but is than used in other settings.
+%It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is then used for something else.
 
 A hacker that gets hold of the private key of a CA would get the ability to create a new signed certificate for any domain of his/her choice.
 As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the new signed certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
@@ -179,7 +180,7 @@ In the initial TLS handshake Alice retrieves a server certificate that she needs
 This is a certificate from Bob that is signed by his CA of choice, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
 
 In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server/domain owner to limit which certificates that is allowed to be used for his domain.
-A hacker with any well-known CAs private keys can sign a perfectly valid certificate and setup his/her valid TLS server in the name of Bob.
+A hacker with a certificate for Bob's domain signed by any well-known CA will be able to set up his/her valid TLS server in the name of Bob.
 Alice will then never know if it really is "the" Bob she is communicating with next time.
 
 To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
