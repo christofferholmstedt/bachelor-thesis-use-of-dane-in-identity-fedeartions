@@ -131,14 +131,14 @@ DANE as a technology is on the way to becoming a standard within TLS communicati
 There is not even a draft available for the use together with certificates concerning other usages than those, therefore there is no way to "implement" DANE for Shibboleth (concerning the SAML2 certificates that is).
 What has been implemented is more of a proof-of-concept for future reference if/when there is a standard available.
 
-The implementation has been solely done on the Identity provider to keep our focus on one implementation instead of trying to implement it on both the service provider and identity provider software.
-Main reason for this has beeen time constrains.
+The implementation has been solely done on the Identity provider to keep the focus on one implementation instead of trying to implement it on both the service provider and identity provider software.
+Main reason for this has beeen time constraints.
 
 As stated in previous chapter the software for the identity provider part is written in Java.
 It has several API access points aswell as several extension points where the functionality of different parts can be extended.
 The implementation finally made was a "TrustEngine"-extension.
 A TrustEngine is a part of Shibboleth that processes either metadata or other messages to validate it or dismiss the message.
-A example TrustEngine is the "ExplicitKeySignatureTrustEngine" that takes one or more certificates and some signed metadata and confirms that the signature is the right one. 
+An example TrustEngine is the "ExplicitKeySignatureTrustEngine" that takes one or more certificates and some signed metadata and confirms that the signature is the right one. 
 
 % TODO: More research into this? Perhaps we will give an answer to this that is enough.
 

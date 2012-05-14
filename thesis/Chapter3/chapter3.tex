@@ -203,18 +203,18 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
 
 \section{How DANE can be implemented in Shibboleth}
-% TODO: Kolla upp exakt vad OpenSAML är skrivit i för språk och hur det används i Shibboleth.
-Shibboleth is not a single program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts in the package.
-As dependency for the identity provider and service provider software, Opensaml exist both in Java and C.
+Shibboleth is not a single computer program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts in the package.
+As dependency for the identity provider and service provider software, Opensaml exist both in Java and C++.
 Other projects are a centralized discovery service, embedded discovery service and  metadata aggregator among others.
-Even if Shibboleth can be viewed as a software package, all parts can, and usually are, installed seperately on different machines.
+Even if Shibboleth can be viewed as a software package, all parts can and usually are installed seperately on different machines.
+
+DNS-Based Authentication of Named Entities (DANE) is still a draft for TLS and S/MIME communication and the RFC available is only an informational RFC focusing mainly on TLS use cases.
+The main concept is that with DNSSEC in place it's possible to use the DNS system as a trusted source for retrieval of some extra information that confirms what earlier was made in some other out-of-band way.
+As an example it's possible to trust a TLS certificate retrieved when establishing that connection because it's possible to retrieve extra information through the DNS system that proves it's the right certificate in use.
+
+Focus in this project has been on the identity provider part in Shibboleth.
+It has good documentation on how to extend it. 
 Make note that the identity provider software is currently at version 2.3.6 and a new major version is on the way as 3.0.0.
-
-DNS-Based Authentication of Named Entities (DANE) is still a draft for TLS and S/MIME communication and is only available as an informational RFC focusing mainly on TLS use cases.
-The main concept is that with DNSSEC in place it's possible to use the DNS system as a trusted source for retrieval of some extra information that confirms what earlier was just a guess work.
-As an example it's possible to trust a TLS certificate retrieved when establishing that connection cause it's possible to retrieve extra information through the DNS system that proves it's the right certificate in use.
-
-
 %Migh be implemented as a filter in shibboleth IdP
 %There are several "layers" in the Shibboleth software
 %Shibboleth uses OpenSAML and OpenSAML uses OpenSSL(confirm this later on.)
@@ -222,8 +222,6 @@ As an example it's possible to trust a TLS certificate retrieved when establishi
 %DNS (Domain Name System) is the Internets domain name system, a hierarchic and distributed database that makes it possible to quickly find information about which IP-address (and other information) that is connected to a domain name. \cite[p.~64]{book:guide_dns}
 
 %DNSSEC (Domain Name Security Extensions) is a securitylayer added to DNS to secure system against assults like cachingpoisning through signing DNS-data digitaly.\cite[p.~64]{book:guide_dns}
-
-
 
 %\section{Theories}
 
