@@ -22,12 +22,14 @@ DANE may be used, instead of, or as an addition to current procedures.
 \subsection{How to implement DANE}
 To start of at the right level we need to restate that DANE as of today, has no standard nor draft available outside the topic of TLS or S/MIME communication.
 What we have implemented is more of a proof-of-concept that when/if there is a standard available for SAML certificates, or perhaps certificates in general, our implementation might be a solution to build upon.
-It's also important to remember that we have only looked at the identity provider software out of all softwares available under the Shibboleth name.
-When/If this will become a part of the distribution, development has to be made to all parts that consume somekind of metadata.
+It's also important to remember that we have only looked at the identity provider software out of all computer programs available under the Shibboleth name.
+When/If DANE would be implemented into Shibboleth, development has to be made to all parts that consume metadata.
 
-We started out with focus on the metadata and somekind of metadata extension for Shibboleth.
+We started out with focus on the developing an metadata extension for Shibboleth.
 After some digging it became clear that it would be a TrustEngine extension that was better suited for our purpose.
-The TrustEngine is configureable from the standard xml-configuration files and takes a certificate as parameter.
+
+% TODO: Is this the right way to go?
+Our "DANETrustEngine" is configurable from the standard xml-configuration files and takes a certificate as parameter.
 It then request a CERT RR from the domain name system with the DNSSEC flags set. 
 If the reponse comes back without DNSSEC flags set the information is not to be trusted otherwise it will compare the certificate retrieved with the one supplied as parameter in the configuration.
 Depending on the outcome of that comparison the TrustEngine will either confirm or dismiss trust for the metadata.
