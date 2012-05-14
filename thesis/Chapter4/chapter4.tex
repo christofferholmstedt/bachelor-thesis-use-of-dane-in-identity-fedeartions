@@ -53,7 +53,7 @@ Is it the correct federation provider the trusting entities connect to or is it 
 
 As of now the trust must be made in some out-of-band way e.g. a simple download of the federation provider's certificate and then confirm it's the correct one via telephone, email communcation between administrators or meet in person.
 This is not very practical when the federation grows bigger with tenths or hundreds of service- and identity providers or is it the only way?
-\subsection{The publishing problem}
+\subsection{How to publish certificates}
 \subsubsection{SAML2 certificate as CERT resource record}
 \label{subsec:saml2-certificate-as-tlsa}
 The first solution that comes into mind is that it might be possible to publish the federation provider's certificate in the Domain Name System and more specifically as a CERT RR\cite{rfc:4398}.
@@ -66,8 +66,22 @@ To keep building on the same solution each entity would have to publish respecti
 They would also need to sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation provider could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
 % TODO: Add use cases from registry->registrar in DNS and how it is used their.
-The federation provider than fetches the metadata aswell as the corresponding CERT RR from the entity and if it's the correct signature on it the federation provider can publish it with the metadata from all other entities.
+The federation provider then fetches the metadata aswell as the corresponding CERT RR from the entity and if it's the correct signature on it the federation provider can publish it with the metadata from all other entities.
 Within one cache interval all entities will now fetch the complete updated metadata from the federation provider.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/saml2certsascertrr.png}
+\end{center}
+\caption{A complete cycle of transmitting metadata securely from the Service provider to the Identity provider via a federation operator.
+Step 1, the service provider initiate an update of metadata.
+Step 2, the federation operator requests the metadata from some well known location.
+Step 3, the identity provider updates the local metadata cache when the cache timer has expired by requesting new metadata from the federation operator.
+Step 4, the federation operator respond with the new metadata.
+After each response that includes a certificate in some form another request is made to the domain name system for CERT RRs to be able to validate the original certificate. 
+\label{ch4:saml2certsascertrr}}
+\end{figure}
+
 
 % TODO: What is a cache interval?
 % TODO: What is a domain zone?
@@ -85,7 +99,7 @@ Instead of publishing SAML2 certificates in the Domain Name System it might be p
 
 This would mean that when a new entity, let's say a service provider, joins a federation the service provider must send its metadata to the federation provider.
 As an example the administrator for the service provider might visit a webpage over HTTPS (with validity check for TLSA RR) to initiate the transfer of metadata.
-The federation provider than opens a new connection over HTTPS (with validity check for TLSA RR) for the metadata from the service provider.
+The federation provider then opens a new connection over HTTPS (with validity check for TLSA RR) for the metadata from the service provider.
 This request from the frederation provider back to the requesting service provider is to make sure that the metadata that is fetched is from the right service provider. 
 When the metadata is recieved the federation provider can publish it with the metadata for all other entities.
 
@@ -108,7 +122,15 @@ The third validation would be when the SAML2 certificate is compared against the
 
 As noted the first and the third validation are both trusting the DNSSEC infrastructure, and therefore the combination of both using TLS with TLSA and SAML2 certificate with CERT RRs would at first glance not add any extra benefits.
 Though under some circumstances someone might be able to hack into a webserver for some entity and change the SAML2 certificate, the third validation check against the CERT RR would in this case fail.
-So in the end the question boils down to if the communication is secure to the correct host is this enough to trust everything that the host sends?
+So in the end the question boils down to if the communication is secure to the correct host, is this enough to trust everything that the host sends?
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/onlyUseTLS.png}
+\end{center}
+\caption{If the communication between two hosts is deemed secure with TLS and TLSA, how much trust can be put in the information that is exchanged between them?
+\label{ch4:onlyUseTLS}}
+\end{figure}
 
 \subsection{The matching dilemma}
 \label{subsec:matching-dilemma}
