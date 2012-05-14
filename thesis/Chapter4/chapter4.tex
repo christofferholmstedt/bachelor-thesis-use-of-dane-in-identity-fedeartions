@@ -67,7 +67,7 @@ To keep building on the same solution each entity would have to publish respecti
 They would also need to sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation operator could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
 % TODO: Add use cases from registry->registrar in DNS and how it is used their.
-The federation operator than fetches the metadata aswell as the corresponding CERT RR from the entity and if it's the correct signature on it the federation operator can publish it with the metadata from all other entities.
+The federation operator than fetches the metadata as well as the corresponding CERT RR from the entity and if it's the correct signature on it the federation operator can publish it with the metadata from all other entities.
 Within one cache interval all entities will now fetch the complete updated metadata from the federation operator.
 
 \begin{figure}[ht]
@@ -150,8 +150,8 @@ Step 5 and 6 is the last validation step when the Service Provider requests corr
 \subsection{How to locate the correct certificate in DNS}
 \label{subsec:matching-dilemma}
 The last section was about how to distribute the certificate within the Domain Name System and if it's necessary or not.
-The CERT RR is mentioned as a possible solution and there might be several other solutions aswell.
-If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published aswell in the Domain Name System.
+The CERT RR is mentioned as a possible solution and there might be several other solutions as well.
+If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published as well in the Domain Name System.
 With a single or just a few certificates that signs all metadata files for the federation operator it's relatively easy to publish the certificates in the Domain Name System and fetch all of them based on the domain/subdomain.
 Though it would put an unwanted limit that the federation operator is only allowed to use a few certificates per DNS zone.
 Of course it would work with several hundred certificates but it wouldn't be a very good solution.
@@ -172,7 +172,7 @@ The implementation has been solely done on the Identity provider to keep the foc
 Main reason for this has beeen time constraints.
 
 As stated in previous chapter the software for the identity provider part is written in Java.
-It has several API access points aswell as several extension points where the functionality of different parts can be extended.
+It has several API access points as well as several extension points where the functionality of different parts can be extended.
 The implementation finally made was a "TrustEngine"-extension.
 A TrustEngine is a part of Shibboleth that processes either metadata or other messages to validate it or dismiss the message.
 An example TrustEngine is the "ExplicitKeySignatureTrustEngine" that takes one or more certificates and some signed metadata and confirms that the signature is the right one. 
