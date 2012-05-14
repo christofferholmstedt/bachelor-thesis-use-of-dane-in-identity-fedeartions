@@ -206,8 +206,14 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % TODO: Kolla upp exakt vad OpenSAML är skrivit i för språk och hur det används i Shibboleth.
 Shibboleth is not a single program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts in the package.
 As dependency for the identity provider and service provider software, Opensaml exist both in Java and C.
-Other projects are ...
+Other projects are a centralized discovery service, embedded discovery service and  metadata aggregator among others.
 Even if Shibboleth can be viewed as a software package, all parts can, and usually are, installed seperately on different machines.
+Make note that the identity provider software is currently at version 2.3.6 and a new major version is on the way as 3.0.0.
+
+DNS-Based Authentication of Named Entities (DANE) is still a draft for TLS and S/MIME communication and is only available as an informational RFC focusing mainly on TLS use cases.
+The main concept is that with DNSSEC in place it's possible to use the DNS system as a trusted source for retrieval of some extra information that confirms what earlier was just a guess work.
+As an example it's possible to trust a TLS certificate retrieved when establishing that connection cause it's possible to retrieve extra information through the DNS system that proves it's the right certificate in use.
+
 
 %Migh be implemented as a filter in shibboleth IdP
 %There are several "layers" in the Shibboleth software
