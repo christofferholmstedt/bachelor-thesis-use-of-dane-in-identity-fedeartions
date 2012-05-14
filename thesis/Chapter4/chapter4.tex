@@ -60,8 +60,9 @@ The first solution that comes into mind is that it might be possible to publish 
 This would mean that when a requesting entity (service provider, identity provider or any other entity) needs to update the metadata about all other entities it connects to the federation operator and downloads the metadata.
 At the same time the requesting entity sends out a DNS lookup (with DNSSEC active) for a corresponding CERT RR.
 When both the metadata and the CERT RR is retrieved, a comparison can be made and confirm or dismiss the validity of the metadata.
+This is done in step 3 and 4 in figure \ref{ch4:saml2certsascertrr}.
 
-A problem that still exists with this approach is how will each entity transmit metadata about itself to the federation operator and how will the metadata be validated by the federation operator.
+A problem that still exists with this approach is how will each entity transmit metadata about itself to the federation operator and how will the metadata be validated by the federation operator (Step 1 and 2 in figure \ref{ch4:saml2certsascertrr}).
 To keep building on the same solution each entity would have to publish respective certificate as a CERT RR themselves in their own domain zone.
 They would also need to sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation operator could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
@@ -78,7 +79,7 @@ Step 1, the service provider initiate an update of metadata.
 Step 2, the federation operator requests the metadata from some well known location.
 Step 3, the identity provider updates the local metadata cache when the cache timer has expired by requesting new metadata from the federation operator.
 Step 4, the federation operator respond with the new metadata.
-After each response that includes a certificate in some form another request is made to the domain name system for CERT RRs to be able to validate the original certificate. 
+After each response that includes a certificate in some form another request is made to the domain name system for CERT RRs to be able to validate the original certificate.
 \label{ch4:saml2certsascertrr}}
 \end{figure}
 
@@ -99,11 +100,20 @@ The solution is already at the point where all entities within a federation need
 Instead of publishing SAML2 certificates in the Domain Name System it might be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
 
 This would mean that when a new entity, let's say a service provider, joins a federation the service provider must send its metadata to the federation operator.
-As an example the administrator for the service provider might visit a webpage over HTTPS (with validity check for TLSA RR) to initiate the transfer of metadata.
-The federation operator than opens a new connection over HTTPS (with validity check for TLSA RR) for the metadata from the service provider.
-This request from the frederation provider back to the requesting service provider is to make sure that the metadata that is fetched is from the right service provider. 
-When the metadata is recieved the federation operator can publish it with the metadata for all other entities.
+As an example the administrator for the service provider might visit a webpage over HTTPS (with validity check for TLSA RR) to initiate the transfer of metadata, step 1 in figure \ref{ch4:onlyUseTLS}.
+The federation operator than opens a new connection over HTTPS (with validity check for TLSA RR) for the metadata from the service provider, step 2 in figure \ref{ch4:onlyUseTLS}.
+This request from the frederation provider back to the service provider that initiated the communication the first time is to make sure that the metadata that is fetched is from the right service provider. 
+When the metadata is recieved the federation operator can publish it with the metadata for all other entities, step 3 in \ref{ch4:onlyUseTLS}
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/onlyUseTLS.png}
+\end{center}
+\caption{A simple procedure to establish first time communication with a new member in an identity federation.
+\label{ch4:onlyUseTLS}}
+\end{figure}
+
+%
 % TODO: What is metadata?
 % TODO: What is an entity?
 
@@ -127,10 +137,13 @@ So in the end the question boils down to if the communication is secure to the c
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[scale=1]{Figures/onlyUseTLS.png}
+\includegraphics[scale=1]{Figures/bestOfTwoWorlds.png}
 \end{center}
-\caption{If the communication between two hosts is deemed secure with TLS and TLSA, how much trust can be put in the information that is exchanged between them?
-\label{ch4:onlyUseTLS}}
+\caption{Three validation checks divided into 6 different requests/responses.
+Step 1 and 2 is the initial communication when the TLS communication is established with TLSA.
+Step 3 and 4 is when local policy demands that the certificate recieved within the metadata has to be validated that it chains to a CA.
+Step 5 and 6 is the last validation step when the Service Provider requests corresponding CERT reosource records from the federation operator and checks that the certificate used to sign the metadata is available as a CERT RR.
+\label{ch4:bestOfTwoWorlds}}
 \end{figure}
 
 %\subsection{The matching dilemma}
