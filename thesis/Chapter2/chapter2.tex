@@ -1,17 +1,39 @@
 \section{Approach}
-The approach was to first read up about identity federations as well as talk to experts. 
-The identity federations in this report are based on the SAML 2.0 standard which is the standard used for both SWAMID and skolfederation.se.
- 
-To understand identity federations, SAML and Shibboleth better, a test environment using Shibboleth was put online at "danetest.se". 
-In the test environment one service provider and one identity provider was used to keep it as simple as possible while still being able to see and log all data flows.
+
+To be able to implement a proof of concept that DANE can be used improve the security in identity fedetaion, 
+we needed to gain more knowledge.
+
+We started with reading up about DANE, identity federations and the SAML 2.0 standard, which our federation is based on. 
+We discussed between ourselves and talked to experts.
+
+A test environment was set up to develop a deeper understanding about identity federations and SAML, as well as the software 
+Shibboleth that was used. 
 It was by recommendations the software choice to use Shibboleth was made, instead of simpleSAMLphp or equivalent software.
 The test environment also included OpenLDAP as user credential storage, Bind as DNS server and OpenDNSSEC to be able to sign all DNS resource records.
 
-When basic understanding of the identity federation and SAML had been achieved DANE was up next.
-As with identity federation most information is available in standard documents such as RFCs and drafts.
+With an improved understanding and knowledge, an analysis was possible and conclusions from the analysis could be used 
+to start the implementaion phase. During the entire project a few hours per week were dedicated for writing this report.
 
-An analysis of all aquired information took place before transitioning in to the implementation phase.
-During the entire project a few hours per week were dedicated for writing this report.
+%  Before -----------------------------
+
+
+%The approach was to first read up about identity federations as well as talk to experts. 
+%The identity federations in this report are based on the SAML 2.0 standard which is the standard used for both SWAMID and skolfederation.se.
+ 
+%To understand identity federations, SAML and Shibboleth better, a test environment using Shibboleth was put online at "danetest.se". 
+%In the test environment one service provider and one identity provider was used to keep it as simple as possible while still being able to see and log all data flows.
+%It was by recommendations the software choice to use Shibboleth was made, instead of simpleSAMLphp or equivalent software.
+%The test environment also included OpenLDAP as user credential storage, Bind as DNS server and OpenDNSSEC to be able to sign all DNS resource records.
+
+%When basic understanding of the identity federation and SAML had been achieved DANE was up next.
+%As with identity federation most information is available in standard documents such as RFCs and drafts.
+
+%An analysis of all aquired information took place before transitioning in to the implementation phase.
+%During the entire project a few hours per week were dedicated for writing this report.
+
+
+%--------------------------------------------------------------------------------------------------------------
+
 % More about the service- and identity provider and other entities in the identity federation is described in the thesis. 
 
 % After reading up on identity federations, we read up about DANE, through drafts, by following the DANE mailing list and by talking to experts. DANE demands that DNSSEC is used and therefore some reading was also done about DNSSEC. We also read up more about TLS/SSL to easier understand where DANE is needed in the identity federation.
