@@ -10,20 +10,22 @@ A solution to this problem is "BankID" which was introduced in 2003 \cite{websit
 Other solutions comes from Nordea, SEB, Telia, Posten and Steria \cite[p.~256]{pdf:SOU}.
 All listed solutions have their pros and cons and a new solution is in the horizon.
 A new solution will be built upon the concept of identity federations \cite[p.~23]{pdf:SOU}.
-This will not make it more secure
 
 As of today one major identity federations exists in Sweden, but serveral new federations is being established.
 SWAMID exists and is for students in higher education and is run by SUNET. 
 "Skolfederation.se" is planned to go into production during 2013.
 "Skolfederation.se" is for pupils/parents and teachers in compulsary primary and secondary school run by .SE and SUNET. 
-Other federations that soon will come in to production is "E-legitimationsn{\"a}mden" and "V\r{a}rd, h{\"a}lsa, omsorg" according to .SE.
+Other federations that soon will come in to production is "E-legitimationsn{\"a}mden" and "V\r{a}rd, h{\"a}lsa, omsorg" according to .SE.  
+
+An identity federation does not have the goal to increase security and therefore will probably continue to use username and password. 
+However, the federation provides user friendliness since the user only has to have one username and one password to all services within the federation. 
 
 %As of today two major identity federations exists in Sweden.
 %Those are SWAMID for students in higher education run by SUNET and "Skolfederation.se" for pupils/parents and teachers in compulsary primary and secondary school run by .SE and SUNET. "Skolfederation.se" is planned to go into production during 2013.
 
 
-In our thesis we dig deeper into the identity federation and examine how DNS-Based Authentication of Named Entities (DANE) 
-\cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} can be used to improve the security in identity federations.
+%In our thesis we dig deeper into the identity federation and examine how DNS-Based Authentication of Named Entities (DANE) 
+%\cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} can be used to improve the security in identity federations.
 
 \section{Problem description}
 The subject of the thesis is divided into smaller subsection. 
@@ -43,7 +45,7 @@ and another one concern the possibility to implement support for DANE in the ope
 %the security for an identity federation.
 
 \section{Purpose}
-The purpose with this thesis is to show proof of concept, that DNS-Based Authentication of Named Entities (DANE) can be used to improve security for identity federations.
+The purpose with this thesis is to show proof of concept, that DNS-Based Authentication of Named Entities (DANE) \cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} can be used to improve security for identity federations.
 In the same time proving DNS Security Extension (DNSSEC) \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} useful, since DANE is 
 depending on the use of DNSSEC.
 
