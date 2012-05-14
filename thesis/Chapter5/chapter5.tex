@@ -53,13 +53,13 @@ How does the federation operator know that it really is the right identity provi
 Should the federation operator be the one that initiate connection to the other entities or vice versa?
 Last, but not least, how should this be solved technically to minimize the manual labour and automate as much as possible?
 
-\subsection{SAML2 certificates in CERT resource records}
+\subsection{Publishing SAML2 certificate as CERT RR, is it viable?}
 In section \ref{subsec:saml2-certs-in-cert-rr} it's mentioned that SAML2 certificates could be stored in CERT RRs.
 Further research need to be done to establish exactly how this could be accomplished.
 With CERT RR it's possible to store the certificate in it's full format, only a hash of it or just a url to the location where it's stored\cite[ch. 2.1]{rfc:4398}.
 What would be suitable for SAML2 certificates and is this really a viable solution for the identity federation scheme?
 
-\subsection{How to use NAPTR RRs to find the correct SAML2 certificate}
+\subsection{How to locate the correct certificate in DNS}
 In section \ref{subsec:matching-dilemma} "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403} is mentioned as a possible solution to the "matching problem".
 How does an entitiy that has recieved a signed metadata file locate the correct certificate within the Domain Name System?
 
