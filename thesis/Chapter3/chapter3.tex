@@ -33,9 +33,9 @@ allow an individual to see their tax account, both the business as well the peop
 "Skatteverket" sends an attribute request to "Bolagsverket" that will answer this request 
 with a "ticket" containing information that allows or disallows the individual to see his/her tax account \cite[p.~284]{pdf:SOU}.
 
-Outside the SAML standard, the identity federation can also have a federation provider. It is possible to have an identity federation both 
-with and without a federation provider. 
-The federation provider provides digitally signed aggregated metadata \cite[p.~3]{pdf:Skolfederation}. 
+Outside the SAML standard, the identity federation can also have a federation operator. It is possible to have an identity federation both 
+with and without a federation operator. 
+The federation operator provides digitally signed aggregated metadata \cite[p.~3]{pdf:Skolfederation}. 
 "Metadata defines a way to express and share configuration information between SAML parties.
 For instance, an entity's supported SAML bindings, operational roles (IDP, SP, etc), identifier information,
 supporting identity attributes, and key information for encryption and signing can be expressed using SAML
@@ -44,12 +44,12 @@ The key information refers to the shared certificates (public keys) that are use
 messages between the entities.
 With that said every service provider and identity provider holds the shared certificates between each other within its metadata. 
 
-The need of a federation provider grows as the amount of service- and identity providers grows,
-since it provides that every service- and identity provider can turn to the federation provider to make sure the metadata is up to date 
+The need of a federation operator grows as the amount of service- and identity providers grows,
+since it provides that every service- and identity provider can turn to the federation operatior to make sure the metadata is up to date 
 instead of having to turn to each other. 
-The only thing is that the service- and identity providers has to keep track of a shared certificate with the federation provider, 
-meanwhile, the federation provider provides them with a metadata file containing every ones certificates.
-A federation provider also provides a unity between the entities in the federation. This unity can be used so that every entity share 
+The only thing is that the service- and identity providers has to keep track of a shared certificate with the federation operator, 
+meanwhile, the federation operator provides them with a metadata file containing every ones certificates.
+A federation operator also provides a unity between the entities in the federation. This unity can be used so that every entity share 
 administration, has the same technical set up and so on.
 
 \subsection{The technical side of an identity federation}
@@ -85,7 +85,7 @@ Encrypted messages can only be decrypted with a secret key, in public key crypto
 decrypt messages. 
 However if one key is used to encrypt the message only the other key can decrypt it, which make publication of the public key 
 possible while keeping the private key secret. 
-Additionally, if Alice and Bob has shared a key-pair, Alice can encrypt the private message with the public key and only Bob 
+Additionally, if Alice and Bob has shared keys, Alice can encrypt the private message with the public key and only Bob 
 with the private key can decrypt the message.
 
 The possibility that someone has made changes to the message still exist since the public key is public. 
