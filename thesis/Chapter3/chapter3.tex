@@ -104,6 +104,15 @@ Furthermore, Alice needs to know that the shared public key is with Bob as well 
 really was signed by Alice's private key. With a certificate that validates the other's identity, confirms the public key and
 is signed by a Certificate Authority (CA), Alice can be sure she is talking to Bob and vice versa.
 
+\subsubsection{Certificates and security}
+Certificates are not secure in themselves the security is built on cryptographic algorithms and most often on public-key cryptography also called asymmetric cryptography.
+Cryptography is about analysing and breaking ciphers, it provides secure communication between the message sender and receiver. 
+Cryptographic algorithms uses keys to protect data, in public-key cryptography a public encryption key and a private (secret) decryption key is used.\cite[p.~252]{book:computer-security}
+
+The RSA algorithm has become almost synonymous with public key cryptography according to Computer Networking, A top down approach\cite[p.~726]{book:computer-networking}.
+This book also informs that RSA uses arithmetic modulo-n operations as well as it describes how the recipient generates his/her private and public RSA key.
+RSA is secure since there are no known algorithms that quickly can factor large prime numbers and the larger the generated prime numbers are, the more secure the keys become.
+
 \subsection{Certificates in SAML}
 
 Saml2int \cite{website:saml2int} describes an Interoperable SAML V2.0 Web Browser SSO Deployment Profile that is based on 
