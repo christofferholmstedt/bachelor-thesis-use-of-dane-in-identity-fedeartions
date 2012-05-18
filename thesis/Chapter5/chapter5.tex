@@ -22,6 +22,15 @@ This is to make sure that both the channel that the communication is taking part
 DANE may be used, instead of, or as an addition to current procedures.
 
 \subsection{How DANE can be implemented in Shibboleth}
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=1]{Figures/dane-impl.png}
+\end{center}
+\caption{Four steps corresponding to the requests/responses vital to the DANE Trust Engine.
+\label{ch5:dane-impl}}
+\end{figure}
+
+
 To start of at the right level we need to restate that DANE as of today, has no standard nor draft available outside the topic of TLS or S/MIME communication.
 What we set out to implement is more of a proof-of-concept that when/if there is a standard available for SAML certificates, or perhaps certificates in general, our implementation might be a solution to build upon.
 It's also important to remember that we have only looked at the identity provider software out of all computer programs available under the Shibboleth name.
@@ -32,13 +41,12 @@ After some digging it became clear that it would be a trust engine extension tha
 
 % TODO: Is this the right way to go?
 Our DANE trust engine is intended to be configured from the standard xml-configuration files. 
-The trust engine recieves the metadata as argument and then requests a CERT RR from the domain name system with the DNSSEC flags set. 
+The trust engine recieves the metadata as argument (Step 1 and 2 in figure \ref{ch5:dane-impl}) and then requests a CERT RR from the domain name system with the DNSSEC flags set (Step 3 in the same figure). 
 If the reponse comes back without DNSSEC flags set the information is not to be trusted otherwise it will compare the certificate retrieved with the one supplied as argument.
 Depending on the outcome of that comparison the trust engine will either confirm or dismiss trust for the metadata.
 
 Due to time constraints and limited previous knowledge in Java/Spring Framework we were unable to finish the implementation in time.
 Installation and configuration guides are available in appendix \ref{appA} as well as references to our code available online.
-% Insert image
 
 % Why do we give credentials as input from the configuration file? Kommer inte det finnas i Metadatan som vi jämför med CERT RR.
 %It's worth mentioning that (1) signing of cert rr possible? (2) perhaps better implementations directly witin OpenSSL or OpenSAML.
