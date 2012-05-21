@@ -153,7 +153,7 @@ dpkg-reconfigure slapd
 	Move old database? ... Yes
 	Allow LDAPv2 Protocol? ... No
 
-#### LDAPSearch for danetest.se
+##### LDAPSearch for danetest.se
 	ldapsearch -x -b dc=danetest,dc=se
 
 ##### Deleting LDAP and if ldap_add: Insufficient access (50) occur
