@@ -15,7 +15,7 @@
 ##### Save JAVA_HOME as sudo-command by adding to file:  sudo vim /etc/sudoers  
 	Defaults        env_keep += "JAVA_HOME"
 
-###### Restart ther terminal to recieve new environment variables.
+Restart ther terminal to recieve new environment variables.
 
 
 
@@ -278,7 +278,7 @@ sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
 ### Attribute resolver
 
 ##### Open and edit file: 
-sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
+sudo vim /opt/shibboleth-idp/conf/attribute-resolver.xml
 
 	# Delete and add between Attribute definition and Data connectors
 	
