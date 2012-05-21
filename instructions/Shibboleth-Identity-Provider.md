@@ -4,28 +4,34 @@
 
 ### Dependencies
 
-Install dependencies: sudo apt-get install unzip default-jre
+##### Install dependencies: 
+sudo apt-get install unzip default-jre
 
-Open file to set environment variables:  sudo vim /etc/profile 
+##### Open file to set environment variables:  
+sudo vim /etc/profile 
 
-Set the vironment variables to:  export JAVA_HOME=/usr/lib/jvm/java-6-openjdk/jre/
+##### Set the environment variables to:  
+export JAVA_HOME=/usr/lib/jvm/java-6-openjdk/jre/
 
 ##### Save JAVA_HOME as sudo-command by adding to file:  sudo vim /etc/sudoers  
 Defaults        env_keep += "JAVA_HOME"
 
-Restart ther terminal to recieve new environment variables.
+##### Restart ther terminal to recieve new environment variables.
 
 
 
 ### The Shibboleth IdP software
 
-Install wget: sudo apt-get install wget
+##### Install wget: 
+sudo apt-get install wget
 
-Fetch Shibboleth IdP zip:  wget http://www.shibboleth.net/downloads/identity-provider/2.3.5/shibboleth-identityprovider-2.3.6-bin.zip
+##### Fetch Shibboleth IdP zip:  
+wget http://www.shibboleth.net/downloads/identity-provider/2.3.5/shibboleth-identityprovider-2.3.6-bin.zip
 
-Unzip the Shibboleth IdP:  sudo unzip -d /opt shibboleth-identityprovider-2.3.6-bin.zip
+##### Unzip the Shibboleth IdP:  
+sudo unzip -d /opt shibboleth-identityprovider-2.3.6-bin.zip
 
-Change mode on the software:  sudo chmod -R 755 /opt/shibboleth-identityprovider-2.3.6
+##### Change mode on the software:  sudo chmod -R 755 /opt/shibboleth-identityprovider-2.3.6
 
 ##### Create symbolic link so that /opt/shibboleth-identityprovider-2.3.6 is the same as  /opt/shibboleth-identityprovider: 
 sudo ln -s /opt/shibboleth-identityprovider-2.3.6 /opt/shibboleth-identityprovider
@@ -34,7 +40,8 @@ sudo ln -s /opt/shibboleth-identityprovider-2.3.6 /opt/shibboleth-identityprovid
 
 
 ### Tomcat
-Install tomcat6:  sudo apt-get install tomcat6
+##### Install tomcat6:  
+sudo apt-get install tomcat6
 
 ##### Copy tomcat6 library to shibboleth-indentityprovider/lib:  
 sudo cp /usr/share/tomcat6/lib/servlet-api.jar /opt/shibboleth-identityprovider/lib/
@@ -44,34 +51,43 @@ sudo cp /usr/share/tomcat6/lib/servlet-api.jar /opt/shibboleth-identityprovider/
 
 ### Install Shibboleth IdP
 
-Go to the right catalog:  cd /opt/shibboleth-identityprovider
+##### Go to shibboleth-identityprovider catalog:  
+cd /opt/shibboleth-identityprovider
 
-Run:  sudo env IdPCertLifetime=3 ./install.sh -Didp.home.input="/opt/shibboleth-idp" -Didp.hostname.input="idp1.danetest.se" -Didp.keystore.pass="123456"
+##### Run:  
+sudo env IdPCertLifetime=3 ./install.sh -Didp.home.input="/opt/shibboleth-idp" -Didp.hostname.input="idp1.danetest.se" -Didp.keystore.pass="123456"
 
 
 
 
 ### Tomcat continue
 
-Remove default tomcat application:  sudo mv /var/lib/tomcat6/webapps/ROOT /opt/disabled.tomcat6.webapps.ROOT
+##### Remove default tomcat application:  
+sudo mv /var/lib/tomcat6/webapps/ROOT /opt/disabled.tomcat6.webapps.ROOT
 
-Create directory to copy tomcat files to:  sudo mkdir /usr/share/tomcat6/endorsed
+##### Create directory to copy tomcat files to:  
+sudo mkdir /usr/share/tomcat6/endorsed
 
 ##### Copy files from the shibboleth-identityprovider to the new tomcat directory: 
 sudo cp /opt/shibboleth-identityprovider/endorsed/* /usr/share/tomcat6/endorsed/
 
 ##### Configure tomcat by adding to file:  sudo vim /etc/default/tomcat6 
 JAVA_OPTS="${JAVA_OPTS} -Djava.endorsed.dirs=/usr/share/tomcat6/endorsed"
+
 AUTHBIND=yes
 
-Fetch dependency to /usr/share/tomcat6/lib/:  sudo wget -O /usr/share/tomcat6/lib/tomcat6-dta-ssl-1.0.0.jar http://shibboleth.internet2.edu/downloads/maven2/edu/internet2/middleware/security/tomcat6/tomcat6-dta-ssl/1.0.0/tomcat6-dta-ssl-1.0.0.jar
+##### Fetch dependency to /usr/share/tomcat6/lib/:  
+sudo wget -O /usr/share/tomcat6/lib/tomcat6-dta-ssl-1.0.0.jar http://shibboleth.internet2.edu/downloads/maven2/edu/internet2/middleware/security/tomcat6/tomcat6-dta-ssl/1.0.0/tomcat6-dta-ssl-1.0.0.jar
 
 
 
 
 ### Create SSL certficates
-CN = idp1.danetest.se, OU = IT, O = Exjobb, L = Stockholm, ST = Stockholm, C = SE
+##### Run: 
 sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shibboleth-idp/credentials/https.jks
+
+###### CN = idp1.danetest.se, OU = IT, O = Exjobb, L = Stockholm, ST = Stockholm, C = SE
+
 
 
 
@@ -89,12 +105,13 @@ sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shib
 ### Tomcat continue
 
 ##### Make sure tomcat starts the IdP service by adding to file: sudo vim /var/lib/tomcat6/conf/Catalina/localhost/idp.xml
-<Context docBase="/opt/shibboleth-idp/war/idp.war" 
+
+<code><Context docBase="/opt/shibboleth-idp/war/idp.war" 
 	privileged="true" 
 	antiResourceLocking="false" 
 	antiJARLocking="false" 
 	unpackWAR="false" 
-	swallowOutput="true" />
+	swallowOutput="true" /></code>
 
 ##### Make sure tomcat listens to the rigt ports by commenting out other connectors and adding new to file:  sudo vim /etc/tomcat6/server.xml  
 <Connector port="443" 
