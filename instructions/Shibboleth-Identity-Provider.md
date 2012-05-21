@@ -16,7 +16,7 @@ export JAVA_HOME=/usr/lib/jvm/java-6-openjdk/jre/
 ##### Save JAVA_HOME as sudo-command by adding to file:  sudo vim /etc/sudoers  
 Defaults        env_keep += "JAVA_HOME"
 
-##### Restart ther terminal to recieve new environment variables.
+###### Restart ther terminal to recieve new environment variables.
 
 
 
@@ -106,12 +106,12 @@ sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shib
 
 ##### Make sure tomcat starts the IdP service by adding to file: sudo vim /var/lib/tomcat6/conf/Catalina/localhost/idp.xml
 
-<code><Context docBase="/opt/shibboleth-idp/war/idp.war" 
+<pre><code><Context docBase="/opt/shibboleth-idp/war/idp.war" 
 	privileged="true" 
 	antiResourceLocking="false" 
 	antiJARLocking="false" 
 	unpackWAR="false" 
-	swallowOutput="true" /></code>
+	swallowOutput="true" /></code></pre>
 
 ##### Make sure tomcat listens to the rigt ports by commenting out other connectors and adding new to file:  sudo vim /etc/tomcat6/server.xml  
 <Connector port="443" 
