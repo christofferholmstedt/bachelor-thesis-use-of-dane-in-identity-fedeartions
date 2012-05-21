@@ -10,7 +10,7 @@ Open file to set environment variables:  sudo vim /etc/profile
 
 Set the vironment variables to:  export JAVA_HOME=/usr/lib/jvm/java-6-openjdk/jre/
 
-######## Save JAVA_HOME as sudo-command by adding to file:  sudo vim /etc/sudoers  
+###### Save JAVA_HOME as sudo-command by adding to file:  sudo vim /etc/sudoers  
 Defaults        env_keep += "JAVA_HOME"
 
 Restart ther terminal to recieve new environment variables.
@@ -27,7 +27,7 @@ Unzip the Shibboleth IdP:  sudo unzip -d /opt shibboleth-identityprovider-2.3.6-
 
 Change mode on the software:  sudo chmod -R 755 /opt/shibboleth-identityprovider-2.3.6
 
-######## Create symbolic link so that /opt/shibboleth-identityprovider-2.3.6 is the same as  /opt/shibboleth-identityprovider: 
+###### Create symbolic link so that /opt/shibboleth-identityprovider-2.3.6 is the same as  /opt/shibboleth-identityprovider: 
 sudo ln -s /opt/shibboleth-identityprovider-2.3.6 /opt/shibboleth-identityprovider
 
 
@@ -36,7 +36,7 @@ sudo ln -s /opt/shibboleth-identityprovider-2.3.6 /opt/shibboleth-identityprovid
 #### Tomcat
 Install tomcat6:  sudo apt-get install tomcat6
 
-######## Copy tomcat6 library to shibboleth-indentityprovider/lib:  
+###### Copy tomcat6 library to shibboleth-indentityprovider/lib:  
 sudo cp /usr/share/tomcat6/lib/servlet-api.jar /opt/shibboleth-identityprovider/lib/
 
 
@@ -57,10 +57,10 @@ Remove default tomcat application:  sudo mv /var/lib/tomcat6/webapps/ROOT /opt/d
 
 Create directory to copy tomcat files to:  sudo mkdir /usr/share/tomcat6/endorsed
 
-######## Copy files from the shibboleth-identityprovider to the new tomcat directory: 
+###### Copy files from the shibboleth-identityprovider to the new tomcat directory: 
 sudo cp /opt/shibboleth-identityprovider/endorsed/* /usr/share/tomcat6/endorsed/
 
-######## Configure tomcat by adding to file:  sudo vim /etc/default/tomcat6 
+###### Configure tomcat by adding to file:  sudo vim /etc/default/tomcat6 
 JAVA_OPTS="${JAVA_OPTS} -Djava.endorsed.dirs=/usr/share/tomcat6/endorsed"
 AUTHBIND=yes
 
@@ -88,7 +88,7 @@ sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shib
 
 #### Tomcat continue
 
-######## Make sure tomcat starts the IdP service by adding to file: sudo vim /var/lib/tomcat6/conf/Catalina/localhost/idp.xml
+###### Make sure tomcat starts the IdP service by adding to file: sudo vim /var/lib/tomcat6/conf/Catalina/localhost/idp.xml
 <Context docBase="/opt/shibboleth-idp/war/idp.war" 
 	privileged="true" 
 	antiResourceLocking="false" 
@@ -96,7 +96,7 @@ sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shib
 	unpackWAR="false" 
 	swallowOutput="true" />
 
-######## Make sure tomcat listens to the rigt ports by commenting out other connectors and adding new to file:  sudo vim /etc/tomcat6/server.xml  
+###### Make sure tomcat listens to the rigt ports by commenting out other connectors and adding new to file:  sudo vim /etc/tomcat6/server.xml  
 <Connector port="443" 
 	protocol="org.apache.coyote.http11.Http11Protocol" 
 	SSLEnabled="true" 
@@ -119,10 +119,12 @@ sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shib
 
 
 
-##### Login handler
+#### Login handler
+
 Open and edit file: sudo vim /opt/shibboleth-idp/conf/handler.xml
-Comment out:  <ph:LoginHandler xsi:type="ph:RemoteUser"> 
-Comment in:  <ph:LoginHandler xsi:type="ph:UsernamePassword">
+
+* Comment out:  <ph:LoginHandler xsi:type="ph:RemoteUser"> 
+* Comment in:  <ph:LoginHandler xsi:type="ph:UsernamePassword">
 
 
 
@@ -131,19 +133,19 @@ Comment in:  <ph:LoginHandler xsi:type="ph:UsernamePassword">
 
 Open and edit file:  sudo vim /opt/shibboleth-idp/conf/relying-party.xml
 
-######## Below   <!-- Relying Party Configuration --> edit/add so that it says 
+###### Below   <!-- Relying Party Configuration --> edit/add so that it says 
 <rp:AnonymousRelyingParty provider="https://idp1.danetest.se/idp/shibboleth" defaultSigningCredentialRef="IdPCredential"/>
 <rp:DefaultRelyingParty provider="https://idp1.danetest.se/idp/shibboleth" defaultSigningCredentialRef="IdPCredential"
 nameIDFormatPrecedence="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent urn:oasis:names:tc:SAML:2.0:nameid-format:transient" >
 
-######## Change encryptAssertions="conditional" to "never" in all ProfileConfiguration that is between what is mentioned above and </rp:DefaultRelyingParty>
+###### Change encryptAssertions="conditional" to "never" in all ProfileConfiguration that is between what is mentioned above and </rp:DefaultRelyingParty>
 Example: <rp:ProfileConfiguration 	xsi:type="saml:SAML2ArtifactResolutionProfile"  
 					signResponses="never" 
 					signAssertions="always"  
 					encryptAssertions="never" 
 					encryptNameIds="never"/>
 
-######## Below <!-- Metadata Configuration --> and above <!-- Security Configuration --> edit so that this is what is inbetween
+###### Below <!-- Metadata Configuration --> and above <!-- Security Configuration --> edit so that this is what is inbetween
 <metadata:MetadataProvider id="ShibbolethMetadata" xsi:type="metadata:ChainingMetadataProvider">
 	<metadata:MetadataProvider id="URLMD" 
 		xsi:type="metadata:FileBackedHTTPMetadataProvider" metadataURL="http://md.danetest.se/md/danetest.xml" 
@@ -156,7 +158,7 @@ Example: <rp:ProfileConfiguration 	xsi:type="saml:SAML2ArtifactResolutionProfile
 	</metadata:MetadataProvider>    
 </metadata:MetadataProvider>
 
-######## Below <! Security Configuration --> and  <!-- DO NOT EDIT BELOW THIS POINT --> edit/add so that it says
+###### Below <! Security Configuration --> and  <!-- DO NOT EDIT BELOW THIS POINT --> edit/add so that it says
 <security:Credential id="IdPCredential" xsi:type="security:X509Filesystem">                                                           
          <security:PrivateKey>/opt/shibboleth-idp/credentials/idp.key</security:PrivateKey>
          <security:Certificate>/opt/shibboleth-idp/credentials/idp.crt</security:Certificate>
@@ -175,7 +177,7 @@ Example: <rp:ProfileConfiguration 	xsi:type="saml:SAML2ArtifactResolutionProfile
 
 Open and edit file: sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
 
-######## Below the attribute filer policy for transient ID delete all and add
+###### Below the attribute filer policy for transient ID delete all and add
 <!-- Release persistent ID to anyone -->
 <afp:AttributeFilterPolicy id="releasePersistentIdToAnyone">
         <afp:PolicyRequirementRule xsi:type="basic:ANY"/>
@@ -228,11 +230,13 @@ afp:AttributeRule attributeID="SAML_mail">
 	<afp:PermitValueRule xsi:type="basic:ANY" />
 </afp:AttributeRule>
 
+
+
 #### Attribute resolver
 
 Open and edit file: sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
 
-########Delete and add between Attribute definition and Data connectors
+######Delete and add between Attribute definition and Data connectors
 <resolver:DataConnector id="staticAttributes" xsi:type="dc:Static">
 	<dc:Attribute id="postalAddress">
 		<dc:Value>.SE Box 7399 SE-10391 Stockholm Sweden</dc:Value>
@@ -304,9 +308,9 @@ Open and edit file: sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
 /var/lib/tomcat6/logs and /opt/shibboleth-idp/logs
 
 ###### Restart tomcat
-sudo service tomcat6 stop
-sudo service tomcat6 start
+* sudo service tomcat6 stop
+* sudo service tomcat6 start
 
 ###### Re-run install script for IdP (answer no on configuration question)
-cd /opt/shibboleth-identityprovider
-sudo ./install.sh -Didp.home.input="/opt/shibboleth-idp"
+* cd /opt/shibboleth-identityprovider
+* sudo ./install.sh -Didp.home.input="/opt/shibboleth-idp"
