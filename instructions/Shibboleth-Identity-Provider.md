@@ -139,7 +139,8 @@
 
 ### Login handler
 
-##### Open and edit file: sudo vim /opt/shibboleth-idp/conf/handler.xml
+##### Open and edit file: 
+sudo vim /opt/shibboleth-idp/conf/handler.xml
 
 	# Comment out the RemoteUser section:	
 	<ph:LoginHandler xsi:type="ph:RemoteUser"> 
@@ -152,7 +153,8 @@
 
 ### Relying party
 
-##### Open and edit file:  sudo vim /opt/shibboleth-idp/conf/relying-party.xml
+##### Open and edit file:  
+sudo vim /opt/shibboleth-idp/conf/relying-party.xml
 
 	# Below   <!-- Relying Party Configuration --> edit/add so that it says 
 	
@@ -213,7 +215,8 @@
 
 ### Attribute filter
 
-##### Open and edit file: sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
+##### Open and edit file: 
+sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
 
 	# Below the attribute filer policy for transient ID delete all and add
 
@@ -273,7 +276,8 @@
 
 ### Attribute resolver
 
-##### Open and edit file: sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
+##### Open and edit file: 
+sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
 
 	# Delete and add between Attribute definition and Data connectors
 	
@@ -330,7 +334,8 @@
 	
 ### Authenticate User
 
-##### Open and edit so that ShibUserAuth is as below in file: sudo vim /opt/shibboleth-idp/conf/login.config
+##### Open and edit so that ShibUserAuth is as below in file: 
+sudo vim /opt/shibboleth-idp/conf/login.config
 
 		ShibUserPassAuth {
         		edu.vt.middleware.ldap.jaas.LdapLoginModule required
