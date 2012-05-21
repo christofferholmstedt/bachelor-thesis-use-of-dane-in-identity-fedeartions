@@ -17,7 +17,7 @@ The question is, how can the first certificate exchange be made securely?
 One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
 With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
-information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
+information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him/her
 to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
@@ -60,14 +60,14 @@ The first solution that comes into mind is that it might be possible to publish 
 This would mean that when a requesting entity (service provider, identity provider or any other entity) needs to update the metadata about all other entities it connects to the federation operator and downloads the metadata.
 At the same time the requesting entity sends out a DNS lookup (with DNSSEC active) for a corresponding CERT RR.
 When both the metadata and the CERT RR is retrieved, a comparison can be made and confirm or dismiss the validity of the metadata.
-This is done in step 3 and 4 in figure \ref{ch4:saml2certsascertrr}.
+This is done after step 3 and 4 in figure \ref{ch4:saml2certsascertrr}.
 
 A problem that still exists with this approach is how will each entity transmit metadata about itself to the federation operator and how will the metadata be validated by the federation operator (Step 1 and 2 in figure \ref{ch4:saml2certsascertrr}).
 To keep building on the same solution each entity would have to publish respective certificate as a CERT RR themselves in their own domain zone.
 They would also need to sign their own metadata which is not the case in current standards. 
 Now the initial upload of metadata from an entity to the federation operator could be intitated, perhaps through a web interface, with or without some "Pretty Good Privacy" (PGP) solution e.g. OpenPGP\cite{rfc:2440}.
 % TODO: Add use cases from registry->registrar in DNS and how it is used their.
-The federation operator than fetches the metadata as well as the corresponding CERT RR from the entity and if it's the correct signature on it the federation operator can publish it with the metadata from all other entities.
+The federation operator then fetches the metadata as well as the corresponding CERT RR from the entity and if it's the correct signature on it the federation operator can publish it with the metadata from all other entities.
 Within one cache interval all entities will now fetch the complete updated metadata from the federation operator.
 
 \begin{figure}[ht]
@@ -120,8 +120,8 @@ When the metadata is recieved the federation operator can publish it with the me
 \subsubsection{Publishing SAML2 certificate as CERT RR, is it viable?}
 \label{subsec:saml2-certs-in-cert-rr}
 Earlier in this chapter the question arose if it is practical to store SAML2 certificates in the Domain Name System.
-As this is out of scope of this report further investigations has to be done in this area.
-For further discussions it's assumed that it's a viable solution to store SAML2 certificates in the Domain Name System as CERT RRs.
+Due to time constraints this is out of scope of this report and further investigations has to be done in this area.
+For further discussions in this report it's assumed that it's a viable solution to store SAML2 certificates in the Domain Name System as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
 It's often the simple solutions that are the best ones but would it be worth it to use TLSA validated connection for the https communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
@@ -161,7 +161,7 @@ This means that somekind of general algorithm/solution is required to locate the
 One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}.
 Exactly how this could be done is out of the scope of this report.
 
-The main issue in this section on how to find the "right" certificate if it's decided upon to publish SAML2 certificates within the Domain Name System was originally formulated by Leif Johansson (SUNET).
+The main issue and possible solution in this section was originally introduced by Leif Johansson (SUNET).
 
 \section{How DANE can be implemented in Shibboleth} 
 DANE as a technology is on the way to becoming a standard within TLS communication and sooner or later also for S/MIME.
@@ -180,7 +180,7 @@ The "Metadata Provider" extension point is the part in the identity provider tha
 An example to this is the "File Backed HTTP Metadata Provider", it basiclly fetches the metadata from an URL ones and stores a cache locally on the server.
 
 The second extension possiblity was a "Metadata Filter" extension.
-An example to this one is the "Required Valid Until" which checks some arguments in the retrieved metadata if the metadata has a "valid until" argument set not to far into the future.
+An example to this one is the "Required Valid Until" which checks some arguments in the retrieved metadata if the metadata has a "valid until" argument set not to far in to the future.
 
 Third and fourth extension type that might have worked for the purpose of a DANE implementation are the "Security Policy" and "Security Policy Rule" extension types.
 Both these relates to security concerning invidual messages between service and identity providers and not the initial loading of metadata, which in the end ruled these out as viable solutions.

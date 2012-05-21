@@ -6,7 +6,7 @@ We were tasked specifically to look at the data integrity part of SAML2, how X.5
 Our conclussion is that as soon as the initial configuration for each entity in an identity federation is done and all 
 entities are up and running, data integrity is as secure as the public/private key cryptography scheme.
 However, the difficulty is still in the initial setup, how to decide who to trust when you don't trust anyone online. 
-As well as emergency key rollower, when the key one day becomes invalid. 
+As well as emergency key rollover, when the key one day unexpectedly becomes invalid. 
 Procedures for this is as of today not specified in any detail, it's up to each federation to decide on their own.
 Common practice is as said in earlier chapters to share key or certificate information in some out-of-band way e.g. meeting in person or call each other.
 We belive that it is this initial sharing of information that would benefit the most if it could be done solely over the internet and it's possible if we put trust in the DNSSEC infrastructure.
@@ -19,7 +19,6 @@ Furthermore, our belief is that within future SAML specifications and/or when es
 Future agreements should include requirements that TLS with TLSA validation is used when sharing metadata.
 Another requirement should be to publish the certificates within the DNS/DNSSEC infrastructure.
 This is to make sure that both the channel that the communication is taking part over is secure as well as the data stored on the webserver accessed is the proper one e.g. if downloading a certificate over a HTTPS connection.
-DANE may be used, instead of, or as an addition to current procedures.
 
 \subsection{How DANE can be implemented in Shibboleth}
 \begin{figure}[ht]
@@ -34,7 +33,7 @@ DANE may be used, instead of, or as an addition to current procedures.
 To start of at the right level we need to restate that DANE as of today, has no standard nor draft available outside the topic of TLS or S/MIME communication.
 What we set out to implement is more of a proof-of-concept that when/if there is a standard available for SAML certificates, or perhaps certificates in general, our implementation might be a solution to build upon.
 It's also important to remember that we have only looked at the identity provider software out of all computer programs available under the Shibboleth name.
-When/If DANE would be implemented into Shibboleth, development has to be made to all parts that consume metadata.
+When/If DANE would be implemented into Shibboleth, development has to be made to all parts that publish and consume metadata.
 
 We started out focusing on developing a metadatafilter extension for Shibboleth.
 After some digging it became clear that it would be a trust engine extension that was better suited for our purpose.
@@ -73,7 +72,7 @@ What would be suitable for SAML2 certificates and is this really a viable soluti
 
 \subsection{How to locate the correct certificate in DNS}
 In section \ref{subsec:matching-dilemma} "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403} is mentioned as a possible solution to the "matching problem".
-How does an entitiy that has recieved a signed metadata file locate the correct certificate within the Domain Name System?
+How does an entity that has recieved a signed metadata file locate the correct certificate within the Domain Name System?
 
 %\section{Temporary section }
 %DISCUSSION Your conclusions, where you link your findings to your theories and purpose,
