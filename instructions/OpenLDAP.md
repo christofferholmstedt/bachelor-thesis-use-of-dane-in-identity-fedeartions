@@ -133,7 +133,8 @@ sudo vim /etc/ldap/slapd.d/new_temp_file.ldif
 	homeDirectory: /home/adam
 	mail: adam.brown@adambrown.com
 
-### Add the new user to the database sudo ldapadd -x -D cn=admin,dc=danetest,dc=se -W -f new_temp_file.ldif 
+### Add the new user to the database 
+	sudo ldapadd -x -D cn=admin,dc=danetest,dc=se -W -f new_temp_file.ldif 
 
 
 ### Can come in handy, maybe 
