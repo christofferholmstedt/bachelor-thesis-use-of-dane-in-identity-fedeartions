@@ -5,7 +5,7 @@
 ### Dependencies
 
 ##### Install dependencies: 
-sudo apt-get install unzip default-jre
+	sudo apt-get install unzip default-jre
 
 ##### Open file to set environment variables:  sudo vim /etc/profile 
 
@@ -22,29 +22,29 @@ sudo apt-get install unzip default-jre
 ### The Shibboleth IdP software
 
 ##### Install wget: 
-sudo apt-get install wget
+	sudo apt-get install wget
 
 ##### Fetch Shibboleth IdP zip:  
-wget http://www.shibboleth.net/downloads/identity-provider/2.3.5/shibboleth-identityprovider-2.3.6-bin.zip
+	wget http://www.shibboleth.net/downloads/identity-provider/2.3.5/shibboleth-identityprovider-2.3.6-bin.zip
 
 ##### Unzip the Shibboleth IdP:  
-sudo unzip -d /opt shibboleth-identityprovider-2.3.6-bin.zip
+	sudo unzip -d /opt shibboleth-identityprovider-2.3.6-bin.zip
 
 ##### Change mode on the software:  
-sudo chmod -R 755 /opt/shibboleth-identityprovider-2.3.6
+	sudo chmod -R 755 /opt/shibboleth-identityprovider-2.3.6
 
 ##### Create symbolic link so that /opt/shibboleth-identityprovider-2.3.6 is the same as  /opt/shibboleth-identityprovider: 
-sudo ln -s /opt/shibboleth-identityprovider-2.3.6 /opt/shibboleth-identityprovider
+	sudo ln -s /opt/shibboleth-identityprovider-2.3.6 /opt/shibboleth-identityprovider
 
 
 
 
 ### Tomcat
 ##### Install tomcat6:  
-sudo apt-get install tomcat6
+	sudo apt-get install tomcat6
 
 ##### Copy tomcat6 library to shibboleth-indentityprovider/lib:  
-sudo cp /usr/share/tomcat6/lib/servlet-api.jar /opt/shibboleth-identityprovider/lib/
+	sudo cp /usr/share/tomcat6/lib/servlet-api.jar /opt/shibboleth-identityprovider/lib/
 
 
 
@@ -63,29 +63,29 @@ sudo cp /usr/share/tomcat6/lib/servlet-api.jar /opt/shibboleth-identityprovider/
 ### Tomcat continue
 
 ##### Remove default tomcat application:  
-sudo mv /var/lib/tomcat6/webapps/ROOT /opt/disabled.tomcat6.webapps.ROOT
+	sudo mv /var/lib/tomcat6/webapps/ROOT /opt/disabled.tomcat6.webapps.ROOT
 
 ##### Create directory to copy tomcat files to:  
-sudo mkdir /usr/share/tomcat6/endorsed
+	sudo mkdir /usr/share/tomcat6/endorsed
 
 ##### Copy files from the shibboleth-identityprovider to the new tomcat directory: 
-sudo cp /opt/shibboleth-identityprovider/endorsed/* /usr/share/tomcat6/endorsed/
+	sudo cp /opt/shibboleth-identityprovider/endorsed/* /usr/share/tomcat6/endorsed/
 
 ##### Configure tomcat by adding to file:  sudo vim /etc/default/tomcat6 
 	JAVA_OPTS="${JAVA_OPTS} -Djava.endorsed.dirs=/usr/share/tomcat6/endorsed"
 	AUTHBIND=yes
 
 ##### Fetch dependency to /usr/share/tomcat6/lib/:  
-sudo wget -O /usr/share/tomcat6/lib/tomcat6-dta-ssl-1.0.0.jar http://shibboleth.internet2.edu/downloads/maven2/edu/internet2/middleware/security/tomcat6/tomcat6-dta-ssl/1.0.0/tomcat6-dta-ssl-1.0.0.jar
+	sudo wget -O /usr/share/tomcat6/lib/tomcat6-dta-ssl-1.0.0.jar http://shibboleth.internet2.edu/downloads/maven2/edu/internet2/middleware/security/tomcat6/tomcat6-dta-ssl/1.0.0/tomcat6-dta-ssl-1.0.0.jar
 
 
 
 
 ### Create SSL certficates
-##### Run: 
-sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shibboleth-idp/credentials/https.jks
+	# Run: 
+	sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shibboleth-idp/credentials/https.jks
 
-###### CN = idp1.danetest.se, OU = IT, O = Exjobb, L = Stockholm, ST = Stockholm, C = SE
+	# CN = idp1.danetest.se, OU = IT, O = Exjobb, L = Stockholm, ST = Stockholm, C = SE
 
 
 
@@ -139,7 +139,7 @@ sudo keytool -genkey -keysize 2048 -keyalg RSA -alias tomcat -keystore /opt/shib
 
 ### Login handler
 
-Open and edit file: sudo vim /opt/shibboleth-idp/conf/handler.xml
+##### Open and edit file: sudo vim /opt/shibboleth-idp/conf/handler.xml
 
 	# Comment out the RemoteUser section:	
 	<ph:LoginHandler xsi:type="ph:RemoteUser"> 
@@ -152,7 +152,7 @@ Open and edit file: sudo vim /opt/shibboleth-idp/conf/handler.xml
 
 ### Relying party
 
-Open and edit file:  sudo vim /opt/shibboleth-idp/conf/relying-party.xml
+##### Open and edit file:  sudo vim /opt/shibboleth-idp/conf/relying-party.xml
 
 	# Below   <!-- Relying Party Configuration --> edit/add so that it says 
 	
@@ -165,7 +165,7 @@ Open and edit file:  sudo vim /opt/shibboleth-idp/conf/relying-party.xml
 
 	# Change encryptAssertions="conditional" to "never" in all ProfileConfiguration that is between what is mentioned above and </rp:DefaultRelyingParty>
 
-Example:
+	# Example:
  
 	<rp:ProfileConfiguration 	xsi:type="saml:SAML2ArtifactResolutionProfile"  
 					signResponses="never" 
@@ -213,8 +213,7 @@ Example:
 
 ### Attribute filter
 
-##### Open and edit file: 
-sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
+##### Open and edit file: sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
 
 	# Below the attribute filer policy for transient ID delete all and add
 
@@ -274,8 +273,7 @@ sudo vim /opt/shibboleth-idp/conf/attribute-filter.xml
 
 ### Attribute resolver
 
-##### Open and edit file: 
-sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
+##### Open and edit file: sudo pico /opt/shibboleth-idp/conf/attribute-resolver.xml
 
 	# Delete and add between Attribute definition and Data connectors
 	
