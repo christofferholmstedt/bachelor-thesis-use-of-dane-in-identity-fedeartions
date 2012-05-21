@@ -112,7 +112,8 @@
 		unpackWAR="false" 
 		swallowOutput="true" /></code></pre>
 
-##### Make sure tomcat listens to the rigt ports by commenting out other connectors and adding new to file:  sudo vim /etc/tomcat6/server.xml  
+##### Make sure tomcat listens to the rigt ports by commenting out other connectors and adding new to file:  
+sudo vim /etc/tomcat6/server.xml  
 
 	<Connector port="443" 
 		protocol="org.apache.coyote.http11.Http11Protocol" 
