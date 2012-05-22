@@ -1,58 +1,58 @@
 ## Guide on how to install Shibbboleth Identity Provider on Ubuntu, demands internet access.
 
-#### Install Apache
+### Install Apache
 	sudo apt-get install apache2
 
-#### Install Shibboleth SP
-* sudo apt-get install build-essential
-* wget http://www.shibboleth.net/downloads/log4shib/latest/log4shib-1.0.4.tar.gz
-* wget http://apache.dataphone.se/xerces/c/3/sources/xerces-c-3.1.1.tar.gz
-* wget http://apache.dataphone.se/santuario/c-library/xml-security-c-1.6.1.tar.gz
-* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/xmltooling-1.4.2.tar.gz
-* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/opensaml-2.4.3.tar.gz
-* wget http://www.shibboleth.net/downloads/service-provider/latest/shibboleth-sp-2.4.3.tar.gz
-* tar -xzf log4shib-1.0.4.tar.gz
-* tar -xzf xerces-c-3.1.1.tar.gz
-* tar -xzf xml-security-c-1.6.1.tar.gz
-* tar -xzf xmltooling-1.4.2.tar.gz
-* tar -xzf opensaml-2.4.3.tar.gz
-* tar -xzf shibboleth-sp-2.4.3.tar.gz
-* cd log4shib-1.0.4
-* ./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
-* make
-* sudo make install
-* cd ../xerces-c-3.1.1
-* ./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
-* make
-* sudo make install
-* cd ../xml-security-c-1.6.1
-* sudo apt-get install libssl-dev pkg-config
-* ./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
-* make
-* sudo make install
-* cd ../xmltooling-1.4.2
-* sudo apt-get install libcurl3 libcurl3-dev
-* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
-* make
-* sudo make install
-* cd ../opensaml-2.4.3
-* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
-* make
-* sudo make install
-* cd ../shibboleth-2.4.3
-* sudo apt-get install apache2-threaded-dev
-* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
-* make
-* sudo make install
+### Install Shibboleth SP
+	* sudo apt-get install build-essential
+	* wget http://www.shibboleth.net/downloads/log4shib/latest/log4shib-1.0.4.tar.gz
+	* wget http://apache.dataphone.se/xerces/c/3/sources/xerces-c-3.1.1.tar.gz
+	* wget http://apache.dataphone.se/santuario/c-library/xml-security-c-1.6.1.tar.gz
+	* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/xmltooling-1.4.2.tar.gz
+	* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/opensaml-2.4.3.tar.gz
+	* wget http://www.shibboleth.net/downloads/service-provider/latest/shibboleth-sp-2.4.3.tar.gz
+	* tar -xzf log4shib-1.0.4.tar.gz
+	* tar -xzf xerces-c-3.1.1.tar.gz
+	* tar -xzf xml-security-c-1.6.1.tar.gz
+	* tar -xzf xmltooling-1.4.2.tar.gz
+	* tar -xzf opensaml-2.4.3.tar.gz
+	* tar -xzf shibboleth-sp-2.4.3.tar.gz
+	* cd log4shib-1.0.4
+	* ./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
+	* make
+	* sudo make install
+	* cd ../xerces-c-3.1.1
+	* ./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
+	* make
+	* sudo make install
+	* cd ../xml-security-c-1.6.1
+	* sudo apt-get install libssl-dev pkg-config
+	* ./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
+	* make
+	* sudo make install
+	* cd ../xmltooling-1.4.2
+	* sudo apt-get install libcurl3 libcurl3-dev
+	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
+	* make
+	* sudo make install
+	* cd ../opensaml-2.4.3
+	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
+	* make
+	* sudo make install
+	* cd ../shibboleth-2.4.3
+	* sudo apt-get install apache2-threaded-dev
+	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
+	* make
+	* sudo make install
 
-#### Apche2
+### Apche2
 
-##### Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
+#### Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
 
-###### Create new directory to hold the keys within:
+##### Create new directory to hold the keys within:
 	sudo mkdir /etc/apache2/keys
 
-###### Go to the new directory
+##### Go to the new directory
 cd /etc/apache2/keys
 	* sudo openssl genrsa -des3 -out server.key 2048
 	* sudo cp server.key server.key.orig
@@ -60,10 +60,10 @@ cd /etc/apache2/keys
 	* sudo openssl req -out server.csr -key server.key -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
 	* sudo openssl req -x509 -nodes -sha256 -key server.key -out server.crt -days 365 -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
 
-###### Set the rights for the keys
+##### Set the rights for the keys
 	sudo chmod -R 640 /etc/apache2/keys/
 
-###### Edit the ports to listen to 
+##### Edit the ports to listen to 
 sudo vim /etc/apache2/ports.conf
 
 	# Change to: 
@@ -78,13 +78,13 @@ sudo vim /etc/apache2/ports.conf
 	# Add:  
 	"Listen [fc00::1]:443"
 
-###### Edit /opt/shibboleth-sp/etc/shibboleth/apache22.config
+##### Edit /opt/shibboleth-sp/etc/shibboleth/apache22.config
 sudo vim /opt/shibboleth-sp/etc/shibboleth/apache22.config
 	
 	# Remove the tag:
 	<Location /secure>
 
-###### Edit /etc/apache2/httpd.conf
+##### Edit /etc/apache2/httpd.conf
 sudo vim /etc/apache2/httpd.conf
 
 	# Add: 
@@ -96,19 +96,19 @@ sudo vim /etc/apache2/httpd.conf
 		RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 	</VirtualHost>
 
-###### Activate mudules
+##### Activate mudules
 	sudo a2enmod rewrite ssl
 
 
-#### The webpage
+### The webpage
 
-###### Remove default webpage
+##### Remove default webpage
 	sudo rm /etc/apache2/sites-enabled/000-default
 
-###### Create config file (danetest.se) for the webpage
+##### Create config file (danetest.se) for the webpage
 	sudo vim /etc/apache2/sites-enabled/danetest.se
 
-###### Add to danetest.se
+##### Add to danetest.se
 	<VirtualHost *:443>
 		ServerName sp1.danetest.se
 		ServerAdmin hostmaster@danetest.se
@@ -154,21 +154,21 @@ sudo vim /etc/apache2/httpd.conf
 		</Location>
 	</VirtualHost>
 
-#### Create testpage
+### Create testpage
 
-###### Create directory to sp1.danetest.se 
+##### Create directory to sp1.danetest.se 
 
 	sudo mkdir /var/www/sp1.danetest.se
 
-###### Create directory to sp1.danetest/sp1
+##### Create directory to sp1.danetest/sp1
 
 	sudo mkdir /var/www/sp1.danetest/sp1
 
-###### Create file printenv.cgi:
+##### Create file printenv.cgi:
 
 	sudo vim /var/www/sp1.danetest.se/sp1/printenv.cgi
 
-###### Add to perl-sctipt to the file: 
+##### Add to perl-sctipt to the file: 
 	#!/usr/bin/perl
 
 	my @entitlements = split(';', $ENV{'SAML_eduPersonEntitlement'});
@@ -279,15 +279,15 @@ sudo vim /etc/apache2/httpd.conf
 	}
 
 
-###### Make the script runnable
+##### Make the script runnable
 	sudo chmod +x /var/www/skolfed/sp1/printenv.cgi	
 
-#### Create CSS for the webpage
+### Create CSS for the webpage
 
-###### Create page.css file
+##### Create page.css file
 	sudo vim /var/www/page.css
 
-###### Add to the page.css file
+##### Add to the page.css file
 	html,body { margin: 0; padding: 0; font-size: 12px; }
 	body { background-color: #eee; font-family: helvetica,arial,sans-serif; line-height: 18px; }
 	#page { width: 930px; margin: 0 auto; }
@@ -307,12 +307,12 @@ sudo vim /etc/apache2/httpd.conf
 
 
 
-#### shibboleth2.xml
+### shibboleth2.xml
 
-###### Open the shibboleth2.xml file
+##### Open the shibboleth2.xml file
 	sudo vim /opt/shibboleth-sp/etc/shibboleth/shibboleth2.xml
 	
-###### Edit the shibboleth2.xml file
+##### Edit the shibboleth2.xml file
 	
  	<ApplicationDefaults 
                         id="default" 
@@ -348,12 +348,12 @@ sudo vim /etc/apache2/httpd.conf
 
 
 
-#### attribute-map.xml
+### attribute-map.xml
 
-###### Open attribute-map.xml
+##### Open attribute-map.xml
 	sudo vim /opt/shibboleth-sp/etc/shibboleth/attribute-map.xml
 	
-###### Edit attribute-map.xml
+##### Edit attribute-map.xml
 	<Attribute name="urn:mace:dir:attribute-def:mail" id="SAML_mail"/>
 	<Attribute name="urn:oid:0.9.2342.19200300.100.1.3" id="SAML_mail"/>
 
@@ -524,12 +524,12 @@ sudo vim /etc/apache2/httpd.conf
 
 
 
-#### attribute-policy.xml
+### attribute-policy.xml
 
-###### Open attribute-policy.xml
+##### Open attribute-policy.xml
 	sudo vim /opt/shibboleth-sp/etc/shibboleth/attribute-policy.xml
 	
-###### Set right names to the attributes
+##### Set right names to the attributes
 	
 	# Remove:
 	"affiliation"
@@ -551,6 +551,6 @@ sudo vim /etc/apache2/httpd.conf
 	
 
 
-#### Start Shibboleth
+### Start Shibboleth
 	sudo /opt/shibboleth-sp/sbin/shibd -f &
 
