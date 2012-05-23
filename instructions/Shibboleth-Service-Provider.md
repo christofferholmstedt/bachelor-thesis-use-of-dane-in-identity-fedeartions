@@ -53,7 +53,9 @@
 	sudo mkdir /etc/apache2/keys
 
 ##### Go to the new directory
+
 cd /etc/apache2/keys
+	
 	* sudo openssl genrsa -des3 -out server.key 2048
 	* sudo cp server.key server.key.orig
 	* sudo openssl rsa -in server.key.orig -out server.key
@@ -63,7 +65,7 @@ cd /etc/apache2/keys
 ##### Set the rights for the keys
 	sudo chmod -R 640 /etc/apache2/keys/
 
-##### Edit the ports to listen to 
+<!---( ##### Edit the ports to listen to 
 sudo vim /etc/apache2/ports.conf
 
 	# Change to: 
@@ -77,7 +79,7 @@ sudo vim /etc/apache2/ports.conf
 	
 	# Add:  
 	"Listen [fc00::1]:443"
-
+)--->
 ##### Edit /opt/shibboleth-sp/etc/shibboleth/apache22.config
 sudo vim /opt/shibboleth-sp/etc/shibboleth/apache22.config
 	
