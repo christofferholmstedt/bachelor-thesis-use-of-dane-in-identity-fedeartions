@@ -7,7 +7,8 @@ This repository (BachelorThesis) has our report in LaTeX as well as some install
 * https://github.com/sopber-8/BachelorThesis
 * https://github.com/christofferholmstedt/BachelorThesis
 
-To get our report in a readable PDF we have used "pdflatex" on Ubuntu 11.10 and 12.04. It should be enough to download and install package "texlive". Be aware this "texlive" package is big so it might take some time to install.
+To get our report in a readable PDF we have used "pdflatex" on Ubuntu 11.10 and 12.04. It should be enough to download and install package "texlive".
+Be aware this "texlive" package is big so it might take some time to install. (Test installation on clean 12.04 virtual machine the 24th of may 2012 required download 240MB of archives and it would take 414MB extra disk space after installation.)
 
     # Instructions for Ubuntu 11.10 and Ubuntu 12.04 LTS
 
