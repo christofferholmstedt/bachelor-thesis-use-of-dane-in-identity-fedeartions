@@ -24,9 +24,11 @@ Be aware this "texlive" package is big so it might take some time to install. (T
 
     # Generate our report
     pdflatex thesis.tex
-    bibtex thesis.tex
+    bibtex thesis.aux
     pdflatex thesis.tex
     pdflatex thesis.tex
+
+(These steps were tested on a virtual machine of Ubuntu 12.04 LTS the 24th of May 2012)
 
 ### Our DANE implementation
 The DANE implementation in the Shibboleth Identity Provider is as of the 21th of May 2012 still work in progress. For the latest details about the implementation please visit the project.
