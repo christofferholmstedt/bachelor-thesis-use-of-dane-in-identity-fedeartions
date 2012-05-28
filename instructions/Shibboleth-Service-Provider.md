@@ -13,7 +13,9 @@ These instructions have been tested on a Virtual Machine of Ubuntu 12.04 LTS the
 	sudo apt-get install apache2
 
 ### Install Shibboleth SP
-First step is to install all dependencies aswell as Shibboleth Service Provider software. At time of writing these instructions the versions mentioned below are the latest stable that we have used. Before downloading please visit respective page to confirm that those are the latest versions available.
+First step is to install all dependencies aswell as Shibboleth Service Provider software.
+At time of writing these instructions, the versions mentioned below are the latest stable that we have used.
+Before downloading please visit respective page to confirm that those are the latest versions available.
 
     # Install build tools
 	sudo apt-get install build-essential
@@ -34,48 +36,49 @@ First step is to install all dependencies aswell as Shibboleth Service Provider 
 	tar -xzf opensaml-2.4.3.tar.gz
 	tar -xzf shibboleth-sp-2.4.3.tar.gz
 	
-    # Install log4shib
+###### Install log4shib
     cd log4shib-1.0.4
 	./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
 	make
 	sudo make install
 
-    # Install xerces
+###### Install xerces
 	cd ../xerces-c-3.1.1
 	./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
 	make
 	sudo make install
 	
-    # Install XML Security
+###### Install XML Security
     cd ../xml-security-c-1.6.1
 	sudo apt-get install libssl-dev pkg-config
 	./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
 	make
 	sudo make install
 	
-    # Install XML Tooling
+###### Install XML Tooling
     cd ../xmltooling-1.4.2
 	sudo apt-get install libcurl3 libcurl3-dev
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
 	make
 	sudo make install
 
-    # Install OpenSAML
+###### Install OpenSAML
     cd ../opensaml-2.4.3
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
 	make
 	sudo make install
 	
-    # Install Shibboleth
+###### Install Shibboleth
     cd ../shibboleth-2.4.3
 	sudo apt-get install apache2-threaded-dev
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
 	make
 	sudo make install
 
-### Apache2
+### Configuring Apache2
+For this setup we will use a self-signed certificate for all SSL/TLS connections made to the HTTP server
 
-#### Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
+Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
 
 ##### Create new directory to hold the keys within:
 	sudo mkdir /etc/apache2/keys
