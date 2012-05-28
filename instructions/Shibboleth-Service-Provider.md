@@ -1,4 +1,6 @@
-## Guide on how to install Shibbboleth Identity Provider on Ubuntu
+## Guide on how to install Shibbboleth Service Provider on Ubuntu
+Shibboleth Service Provider 2.4.3 on Ubuntu 12.04 LTS
+
 ### Some background
 This guide is originally from Rickard Bellgrim (Certezza AB, Sweden) and released under Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0). For more information about the license please visit http://creativecommons.org/licenses/by-sa/3.0/
 
@@ -36,33 +38,38 @@ Before downloading please visit respective page to confirm that those are the la
 	tar -xzf opensaml-2.4.3.tar.gz
 	tar -xzf shibboleth-sp-2.4.3.tar.gz
 	
-###### Install log4shib
+###### Install dependency log4shib
     cd log4shib-1.0.4
 	./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
 	make
 	sudo make install
 
-###### Install xerces
+###### Install dependency xerces
 	cd ../xerces-c-3.1.1
 	./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
 	make
 	sudo make install
 	
-###### Install XML Security
-    cd ../xml-security-c-1.6.1
+###### Install dependency XML Security
+    #Installation of prerequisites
 	sudo apt-get install libssl-dev pkg-config
+
+    cd ../xml-security-c-1.6.1
 	./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
 	make
 	sudo make install
 	
-###### Install XML Tooling
+###### Install dependency XML Tooling
+    # Installation of prerequisites
+    sudo apt-get install libcurl3 libcurl3-dev
+    (apt-get installation will select 'libcurl4-openssl-dev' instead of 'libcurl3-dev'. We havent looked in to what effects this have, but it works.)
+    
     cd ../xmltooling-1.4.2
-	sudo apt-get install libcurl3 libcurl3-dev
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
 	make
 	sudo make install
 
-###### Install OpenSAML
+###### Install dependency OpenSAML
     cd ../opensaml-2.4.3
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
 	make
