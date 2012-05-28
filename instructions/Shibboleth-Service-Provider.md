@@ -38,19 +38,19 @@ Before downloading please visit respective page to confirm that those are the la
 	tar -xzf opensaml-2.4.3.tar.gz
 	tar -xzf shibboleth-sp-2.4.3.tar.gz
 	
-###### Install dependency log4shib
+###### 1. Install dependency log4shib
     cd log4shib-1.0.4
 	./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
 	make
 	sudo make install
 
-###### Install dependency xerces
+###### 2. Install dependency xerces
 	cd ../xerces-c-3.1.1
 	./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
 	make
 	sudo make install
 	
-###### Install dependency XML Security
+###### 3. Install dependency XML Security
     #Installation of prerequisites
 	sudo apt-get install libssl-dev pkg-config
 
@@ -59,25 +59,28 @@ Before downloading please visit respective page to confirm that those are the la
 	make
 	sudo make install
 	
-###### Install dependency XML Tooling
+###### 4. Install dependency XML Tooling
     # Installation of prerequisites
     sudo apt-get install libcurl3 libcurl3-dev
-    (apt-get installation will select 'libcurl4-openssl-dev' instead of 'libcurl3-dev'. We havent looked in to what effects this have, but it works.)
+    (apt-get installation will select 'libcurl4-openssl-dev' instead of 'libcurl3-dev'.
+    We havent looked in to what effects this have, but it works.)
     
     cd ../xmltooling-1.4.2
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
 	make
 	sudo make install
 
-###### Install dependency OpenSAML
+###### 5. Install dependency OpenSAML
     cd ../opensaml-2.4.3
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
 	make
 	sudo make install
 	
-###### Install Shibboleth
+###### 6. Install Shibboleth
+	# Installation of prerequisites
+    sudo apt-get install apache2-threaded-dev
+
     cd ../shibboleth-2.4.3
-	sudo apt-get install apache2-threaded-dev
 	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
 	make
 	sudo make install
@@ -85,19 +88,23 @@ Before downloading please visit respective page to confirm that those are the la
 ### Configuring Apache2
 For this setup we will use a self-signed certificate for all SSL/TLS connections made to the HTTP server
 
-Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
-
 ##### Create new directory to hold the keys within:
 	sudo mkdir /etc/apache2/keys
 
 ##### Go to the new directory
 
-cd /etc/apache2/keys
+    cd /etc/apache2/keys
+
+    # Generate server keyfile
+	sudo openssl genrsa -des3 -out server.key 2048
+
+    # Make a backup of the key
+	sudo cp server.key server.key.orig
+
+    # Remove password on key file
+	sudo openssl rsa -in server.key.orig -out server.key
 	
-	* sudo openssl genrsa -des3 -out server.key 2048
-	* sudo cp server.key server.key.orig
-	* sudo openssl rsa -in server.key.orig -out server.key
-	* sudo openssl req -out server.csr -key server.key -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
+    * sudo openssl req -out server.csr -key server.key -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
 	* sudo openssl req -x509 -nodes -sha256 -key server.key -out server.crt -days 365 -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
 
 ##### Set the rights for the keys
