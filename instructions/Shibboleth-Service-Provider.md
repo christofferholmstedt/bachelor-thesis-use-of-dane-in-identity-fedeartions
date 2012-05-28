@@ -1,68 +1,113 @@
-## Guide on how to install Shibbboleth Identity Provider on Ubuntu, demands internet access.
+## Guide on how to install Shibbboleth Service Provider on Ubuntu
+Shibboleth Service Provider 2.4.3 on Ubuntu 12.04 LTS
 
-### Install Apache
+### Some background
+This guide is originally from Rickard Bellgrim (Certezza AB, Sweden) and released under Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0). For more information about the license please visit http://creativecommons.org/licenses/by-sa/3.0/
+
+These instructions have been tested on a Virtual Machine of Ubuntu 12.04 LTS the 28th of May 2012.
+
+### Requirements
+
+ * Internet connectivity.
+ * A {sub}domain to use for the Service Provider.
+
+### Install Apache HTTP Server
 	sudo apt-get install apache2
 
 ### Install Shibboleth SP
-	* sudo apt-get install build-essential
-	* wget http://www.shibboleth.net/downloads/log4shib/latest/log4shib-1.0.4.tar.gz
-	* wget http://apache.dataphone.se/xerces/c/3/sources/xerces-c-3.1.1.tar.gz
-	* wget http://apache.dataphone.se/santuario/c-library/xml-security-c-1.6.1.tar.gz
-	* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/xmltooling-1.4.2.tar.gz
-	* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/opensaml-2.4.3.tar.gz
-	* wget http://www.shibboleth.net/downloads/service-provider/latest/shibboleth-sp-2.4.3.tar.gz
-	* tar -xzf log4shib-1.0.4.tar.gz
-	* tar -xzf xerces-c-3.1.1.tar.gz
-	* tar -xzf xml-security-c-1.6.1.tar.gz
-	* tar -xzf xmltooling-1.4.2.tar.gz
-	* tar -xzf opensaml-2.4.3.tar.gz
-	* tar -xzf shibboleth-sp-2.4.3.tar.gz
-	* cd log4shib-1.0.4
-	* ./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
-	* make
-	* sudo make install
-	* cd ../xerces-c-3.1.1
-	* ./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
-	* make
-	* sudo make install
-	* cd ../xml-security-c-1.6.1
-	* sudo apt-get install libssl-dev pkg-config
-	* ./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
-	* make
-	* sudo make install
-	* cd ../xmltooling-1.4.2
-	* sudo apt-get install libcurl3 libcurl3-dev
-	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
-	* make
-	* sudo make install
-	* cd ../opensaml-2.4.3
-	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
-	* make
-	* sudo make install
-	* cd ../shibboleth-2.4.3
-	* sudo apt-get install apache2-threaded-dev
-	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
-	* make
-	* sudo make install
+First step is to install all dependencies aswell as Shibboleth Service Provider software.
+At time of writing these instructions, the versions mentioned below are the latest stable that we have used.
+Before downloading please visit respective page to confirm that those are the latest versions available.
 
-### Apche2
+    # Install build tools
+	sudo apt-get install build-essential
 
-#### Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
+    # Download source packages for all dependencies
+    wget http://www.shibboleth.net/downloads/log4shib/latest/log4shib-1.0.4.tar.gz
+	wget http://apache.dataphone.se/xerces/c/3/sources/xerces-c-3.1.1.tar.gz
+	wget http://apache.dataphone.se/santuario/c-library/xml-security-c-1.6.1.tar.gz
+	wget http://www.shibboleth.net/downloads/c++-opensaml/latest/xmltooling-1.4.2.tar.gz
+	wget http://www.shibboleth.net/downloads/c++-opensaml/latest/opensaml-2.4.3.tar.gz
+	wget http://www.shibboleth.net/downloads/service-provider/latest/shibboleth-sp-2.4.3.tar.gz
+
+    # Unpackge
+	tar -xzf log4shib-1.0.4.tar.gz
+	tar -xzf xerces-c-3.1.1.tar.gz
+	tar -xzf xml-security-c-1.6.1.tar.gz
+	tar -xzf xmltooling-1.4.2.tar.gz
+	tar -xzf opensaml-2.4.3.tar.gz
+	tar -xzf shibboleth-sp-2.4.3.tar.gz
+	
+###### 1. Install dependency log4shib
+    cd log4shib-1.0.4
+	./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
+	make
+	sudo make install
+
+###### 2. Install dependency xerces
+	cd ../xerces-c-3.1.1
+	./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
+	make
+	sudo make install
+	
+###### 3. Install dependency XML Security
+    #Installation of prerequisites
+	sudo apt-get install libssl-dev pkg-config
+
+    cd ../xml-security-c-1.6.1
+	./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
+	make
+	sudo make install
+	
+###### 4. Install dependency XML Tooling
+    # Installation of prerequisites
+    sudo apt-get install libcurl3 libcurl3-dev
+    (apt-get installation will select 'libcurl4-openssl-dev' instead of 'libcurl3-dev'.
+    We havent looked in to what effects this have, but it works.)
+    
+    cd ../xmltooling-1.4.2
+	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
+	make
+	sudo make install
+
+###### 5. Install dependency OpenSAML
+    cd ../opensaml-2.4.3
+	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
+	make
+	sudo make install
+	
+###### 6. Install Shibboleth
+	# Installation of prerequisites
+    sudo apt-get install apache2-threaded-dev
+
+    cd ../shibboleth-2.4.3
+	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
+	make
+	sudo make install
+
+### Configuring Apache2
+For this setup we will use a self-signed certificate for all SSL/TLS connections made to the HTTP server
 
 ##### Create new directory to hold the keys within:
 	sudo mkdir /etc/apache2/keys
 
 ##### Go to the new directory
 
-cd /etc/apache2/keys
-	
-	* sudo openssl genrsa -des3 -out server.key 2048
-	* sudo cp server.key server.key.orig
-	* sudo openssl rsa -in server.key.orig -out server.key
-	* sudo openssl req -out server.csr -key server.key -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
-	* sudo openssl req -x509 -nodes -sha256 -key server.key -out server.crt -days 365 -subj "/CN=federera.iis.se/OU=IT/O=Internet Infrastructure Foundation/L=Stockholm/ST=Stockholm/C=SE" -new
+    cd /etc/apache2/keys
 
-##### Set the rights for the keys
+    # Generate server keyfile
+	sudo openssl genrsa -des3 -out server.key 2048
+
+    # Make a backup of the key
+	sudo cp server.key server.key.orig
+
+    # Remove password on key file
+	sudo openssl rsa -in server.key.orig -out server.key
+	
+	# Generate a self-signed certificate
+    sudo openssl req -x509 -nodes -sha256 -key server.key -out server.crt -days 365 -new
+
+    # Set the rights for the keys
 	sudo chmod -R 640 /etc/apache2/keys/
 
 <!---( ##### Edit the ports to listen to 
@@ -79,7 +124,6 @@ sudo vim /etc/apache2/ports.conf
 	
 	# Add:  
 	"Listen [fc00::1]:443"
-)--->
 ##### Edit /opt/shibboleth-sp/etc/shibboleth/apache22.config
 sudo vim /opt/shibboleth-sp/etc/shibboleth/apache22.config
 	
@@ -97,40 +141,56 @@ sudo vim /etc/apache2/httpd.conf
 		RewriteCond %{SERVER_PORT} !^443$
 		RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
 	</VirtualHost>
+)--->
 
 ##### Activate mudules
 	sudo a2enmod rewrite ssl
-
+    sudo service apache2 restart
 
 ### The webpage
 
 ##### Remove default webpage
-	sudo rm /etc/apache2/sites-enabled/000-default
+    sudo a2dissite 000-default
+    sudo service apache2 reload 
 
-##### Create config file (danetest.se) for the webpage
-	sudo vim /etc/apache2/sites-enabled/danetest.se
+##### Create config file for your domain
+{your domain} is from here on to be interpreted as "your domain" for example if you will use "subdomain.domain.tld" as location for your service provider that should replace {your domain}.
 
-##### Add to danetest.se
+    # Create your configuration file for your domain
+	sudo vim /etc/apache2/sites-available/{your domain}
+    
+    or copy the example file supplied for HTTPS connections
+    sudo cp /etc/apache2/sites-available/default-ssl /etc/apache2/sites-available/{your domain}
+
+    # As an example on what you should replace {your domain} with this is what we used
+    sudo vim /etc/apache2/sites-available/sp1.danetest.se
+
+    or copy the example file supplied for HTTPS connections
+    sudo cp /etc/apache2/sites-available/default-ssl /etc/apache2/sites-available/sp1.danetest.se
+
+(Their will be no further examples in this guide, remeber do change {your domain} to what you use.
+
+##### Configure your newly created HTTPS entrance point 
 	<VirtualHost *:443>
-		ServerName sp1.danetest.se
-		ServerAdmin hostmaster@danetest.se
+		ServerName {your domain}
+		ServerAdmin {your emailadress} 
 		UseCanonicalName On
 
-		DocumentRoot /var/www/sp1.danetest.se/
+		DocumentRoot /var/www/{your domain}/
 
 		<Directory />
 			Options FollowSymLinks
 			AllowOverride None
 		</Directory>
 
-		<Directory /var/www/sp1.danetest.se/>
+		<Directory /var/www/{your domain}/>
 			Options Indexes FollowSymLinks MultiViews
 			AllowOverride None
 			Order allow,deny
 			allow from all
 		</Directory>
 
-		<Directory /var/www/sp1.danetest.se/sp1>
+		<Directory /var/www/{your domain}/sp1>
 			Options +Indexes FollowSymLinks +ExecCGI
 			DirectoryIndex printenv.cgi
 			AddHandler cgi-script .cgi
@@ -151,26 +211,26 @@ sudo vim /etc/apache2/httpd.conf
 			require            valid-user
 
 			ShibRequestSetting applicationId default
-			# TODO Kontrollera entityID nedanför
-			ShibRequestSetting entityID https://idp1.danetest.se/idp/shibboleth
+			ShibRequestSetting entityID {EntityID of your IDP} 
 		</Location>
 	</VirtualHost>
 
+Now it is time to make it available.
+    sudo a2ensite {your domain}
+    sudo service apache2 reload
+
 ### Create testpage
 
-##### Create directory to sp1.danetest.se 
-
-	sudo mkdir /var/www/sp1.danetest.se
+##### Create web-directory to sp1.danetest.se 
+	sudo mkdir /var/www/{your domain}
 
 ##### Create directory to sp1.danetest/sp1
-
-	sudo mkdir /var/www/sp1.danetest/sp1
+	sudo mkdir /var/www/{your domain}/sp1
 
 ##### Create file printenv.cgi:
+	sudo vim /var/www/{your domain}/sp1/printenv.cqi
 
-	sudo vim /var/www/sp1.danetest.se/sp1/printenv.cgi
-
-##### Add to perl-sctipt to the file: 
+##### Add this perl-sctipt to the file: 
 	#!/usr/bin/perl
 
 	my @entitlements = split(';', $ENV{'SAML_eduPersonEntitlement'});
@@ -282,7 +342,7 @@ sudo vim /etc/apache2/httpd.conf
 
 
 ##### Make the script runnable
-	sudo chmod +x /var/www/skolfed/sp1/printenv.cgi	
+	sudo chmod +x /var/www/{your domain}/sp1/printenv.cgi	
 
 ### Create CSS for the webpage
 
@@ -307,8 +367,6 @@ sudo vim /etc/apache2/httpd.conf
 	table td { font-size: 12px; border-top: 1px solid #ddd; padding: 5px; padding-right: 10px;
 		   border-left: 1px solid #ccc; margin: 0; }
 
-
-
 ### shibboleth2.xml
 
 ##### Open the shibboleth2.xml file
@@ -318,8 +376,8 @@ sudo vim /etc/apache2/httpd.conf
 	
  	<ApplicationDefaults 
                         id="default" 
-                        entityID="https://sp1.danetest.se/sp1/shibboleth"
-                        homeURL="https://sp1.danetest.se/sp1/"
+                        entityID="https://{your domain}/sp1/shibboleth"
+                        homeURL="https://{your domain}/sp1/"
                         REMOTE_USER="SAML_eduPersonPrincipalName SAML_persistentId">
 	
  	<Sessions 
@@ -335,22 +393,22 @@ sudo vim /etc/apache2/httpd.conf
               		SAML2 SAML1
             	</SSO>
         
-	<Errors supportContact="christoffer.holmstedt@gmail.com"
+	<Errors supportContact="{your emailadress}"
             logoLocation="/shibboleth-sp/logo.jpg"
             styleSheet="/shibboleth-sp/main.css"/>
 	
 	<MetadataProvider 
                 type="XML" 
-                uri="http://md.danetest.se/md/danetestPretty.xml"
-                backingFilePath="/opt/shibboleth-sp/var/xml/idp1-metadata.xml" 
+                uri="{Link to your metadata file e.g. URL to md.yourdomain.tld}"
+                backingFilePath="/opt/shibboleth-sp/var/xml/metadata.xml" 
                 reloadInterval="7200"
                 disregardSslCertificate="true">
         </MetadataProvider>
-	
-
-
 
 ### attribute-map.xml
+It is now time to define all available attributes that will be used in your identity federations.
+The list below is just copied from "skolfederation.se" testing set up in the beginning of april 2012.
+For further information please refer to the official documentation about how to do this.
 
 ##### Open attribute-map.xml
 	sudo vim /opt/shibboleth-sp/etc/shibboleth/attribute-map.xml
