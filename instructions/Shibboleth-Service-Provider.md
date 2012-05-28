@@ -1,51 +1,79 @@
-## Guide on how to install Shibbboleth Identity Provider on Ubuntu, demands internet access.
+## Guide on how to install Shibbboleth Identity Provider on Ubuntu
+### Some background
+This guide is originally from Rickard Bellgrim (Certezza AB, Sweden) and released under Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0). For more information about the license please visit http://creativecommons.org/licenses/by-sa/3.0/
 
-### Install Apache
+These instructions have been tested on a Virtual Machine of Ubuntu 12.04 LTS the 28th of May 2012.
+
+### Requirements
+
+ * Internet connectivity.
+ * A {sub}domain to use for the Service Provider.
+
+### Install Apache HTTP Server
 	sudo apt-get install apache2
 
 ### Install Shibboleth SP
-	* sudo apt-get install build-essential
-	* wget http://www.shibboleth.net/downloads/log4shib/latest/log4shib-1.0.4.tar.gz
-	* wget http://apache.dataphone.se/xerces/c/3/sources/xerces-c-3.1.1.tar.gz
-	* wget http://apache.dataphone.se/santuario/c-library/xml-security-c-1.6.1.tar.gz
-	* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/xmltooling-1.4.2.tar.gz
-	* wget http://www.shibboleth.net/downloads/c++-opensaml/latest/opensaml-2.4.3.tar.gz
-	* wget http://www.shibboleth.net/downloads/service-provider/latest/shibboleth-sp-2.4.3.tar.gz
-	* tar -xzf log4shib-1.0.4.tar.gz
-	* tar -xzf xerces-c-3.1.1.tar.gz
-	* tar -xzf xml-security-c-1.6.1.tar.gz
-	* tar -xzf xmltooling-1.4.2.tar.gz
-	* tar -xzf opensaml-2.4.3.tar.gz
-	* tar -xzf shibboleth-sp-2.4.3.tar.gz
-	* cd log4shib-1.0.4
-	* ./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
-	* make
-	* sudo make install
-	* cd ../xerces-c-3.1.1
-	* ./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
-	* make
-	* sudo make install
-	* cd ../xml-security-c-1.6.1
-	* sudo apt-get install libssl-dev pkg-config
-	* ./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
-	* make
-	* sudo make install
-	* cd ../xmltooling-1.4.2
-	* sudo apt-get install libcurl3 libcurl3-dev
-	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
-	* make
-	* sudo make install
-	* cd ../opensaml-2.4.3
-	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
-	* make
-	* sudo make install
-	* cd ../shibboleth-2.4.3
-	* sudo apt-get install apache2-threaded-dev
-	* ./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
-	* make
-	* sudo make install
+First step is to install all dependencies aswell as Shibboleth Service Provider software. At time of writing these instructions the versions mentioned below are the latest stable that we have used. Before downloading please visit respective page to confirm that those are the latest versions available.
 
-### Apche2
+    # Install build tools
+	sudo apt-get install build-essential
+
+    # Download source packages for all dependencies
+    wget http://www.shibboleth.net/downloads/log4shib/latest/log4shib-1.0.4.tar.gz
+	wget http://apache.dataphone.se/xerces/c/3/sources/xerces-c-3.1.1.tar.gz
+	wget http://apache.dataphone.se/santuario/c-library/xml-security-c-1.6.1.tar.gz
+	wget http://www.shibboleth.net/downloads/c++-opensaml/latest/xmltooling-1.4.2.tar.gz
+	wget http://www.shibboleth.net/downloads/c++-opensaml/latest/opensaml-2.4.3.tar.gz
+	wget http://www.shibboleth.net/downloads/service-provider/latest/shibboleth-sp-2.4.3.tar.gz
+
+    # Unpackge
+	tar -xzf log4shib-1.0.4.tar.gz
+	tar -xzf xerces-c-3.1.1.tar.gz
+	tar -xzf xml-security-c-1.6.1.tar.gz
+	tar -xzf xmltooling-1.4.2.tar.gz
+	tar -xzf opensaml-2.4.3.tar.gz
+	tar -xzf shibboleth-sp-2.4.3.tar.gz
+	
+    # Install log4shib
+    cd log4shib-1.0.4
+	./configure --disable-static --disable-doxygen --prefix=/opt/shibboleth-sp
+	make
+	sudo make install
+
+    # Install xerces
+	cd ../xerces-c-3.1.1
+	./configure --prefix=/opt/shibboleth-sp --disable-netaccessor-libcurl
+	make
+	sudo make install
+	
+    # Install XML Security
+    cd ../xml-security-c-1.6.1
+	sudo apt-get install libssl-dev pkg-config
+	./configure --without-xalan --disable-static --prefix=/opt/shibboleth-sp --with-xerces=/opt/shibboleth-sp
+	make
+	sudo make install
+	
+    # Install XML Tooling
+    cd ../xmltooling-1.4.2
+	sudo apt-get install libcurl3 libcurl3-dev
+	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
+	make
+	sudo make install
+
+    # Install OpenSAML
+    cd ../opensaml-2.4.3
+	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp -C
+	make
+	sudo make install
+	
+    # Install Shibboleth
+    cd ../shibboleth-2.4.3
+	sudo apt-get install apache2-threaded-dev
+	./configure --with-log4shib=/opt/shibboleth-sp --prefix=/opt/shibboleth-sp
+	make
+	sudo make install
+
+### Apache2
 
 #### Create a self-signed certificate. TODO if you want CA signed: Send CSR below and change the crt. 
 
