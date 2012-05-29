@@ -10,7 +10,10 @@ Therefore we prefer to give links to the official documentation.
 To be able to use "DANE" in its current form DNS and DNSSEC are prerequisites.
 Bind9 is for basic DNS functionality.
 OpenDNSSEC is to sign the unsigned zone-files.
-SoftHSM is used by OpenDNSSEC to store the keys used for sigining.
+SoftHSM is used by OpenDNSSEC to store the keys used for signing.
+
+http://www.isc.org/software/bind (Bind)
+http://www.opendnssec.org/ (OpenDNSSEC and SoftHSM)
 
 ##### Federation Operator (Metadata aggregator)
 It's possible to set up a test environment without the federation operator but for us we wanted to simulate how it works in most federations here in Sweden.
@@ -21,9 +24,14 @@ To be able to parse and sign XML files some scripts were used. More about that i
 ##### Shibboleth Identity Provider
 Self-explanatory, to set up an identityfederation you need at least one IdP.
 
+https://wiki.shibboleth.net/confluence/display/SHIB2/Home
+
 ##### OpenLDAP
 Used as credential storage by the Shibboleth Identity Provider software.
+
+http://www.openldap.org/
 
 ##### Shibboleth Service Provider
 Self-explanatory, to set up an identityfederation you need at least one SP.
 
+https://wiki.shibboleth.net/confluence/display/SHIB2/Home
