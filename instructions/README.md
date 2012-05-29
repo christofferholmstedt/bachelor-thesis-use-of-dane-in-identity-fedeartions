@@ -4,6 +4,8 @@ The instructions available in this directory is for you to be able to follow our
 This is not a complete guide on how to get Shibboleth and the other software used fully operational.
 Therefore we prefer to give links to the official documentation.
 
+We have used Ubuntu 11.10 and 12.04 so the instructions are for those distributions.
+
 #### What's the purpose with each software?
 
 ##### Bind9, OpenDNSSEC, SoftHSM
