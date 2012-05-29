@@ -12,8 +12,8 @@ Bind9 is for basic DNS functionality.
 OpenDNSSEC is to sign the unsigned zone-files.
 SoftHSM is used by OpenDNSSEC to store the keys used for signing.
 
-http://www.isc.org/software/bind (Bind)
-http://www.opendnssec.org/ (OpenDNSSEC and SoftHSM)
+* http://www.isc.org/software/bind (Bind)
+* http://www.opendnssec.org/ (OpenDNSSEC and SoftHSM)
 
 ##### Federation Operator (Metadata aggregator)
 It's possible to set up a test environment without the federation operator but for us we wanted to simulate how it works in most federations here in Sweden.
