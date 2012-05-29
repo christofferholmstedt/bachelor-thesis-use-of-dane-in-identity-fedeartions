@@ -168,7 +168,7 @@ sudo vim /etc/apache2/httpd.conf
     or copy the example file supplied for HTTPS connections
     sudo cp /etc/apache2/sites-available/default-ssl /etc/apache2/sites-available/sp1.danetest.se
 
-(Their will be no further examples in this guide, remeber do change {your domain} to what you use.
+(Their will be no further examples in this guide, remember do change {your domain} to what you use.
 
 ##### Configure your newly created HTTPS entrance point 
 	<VirtualHost *:443>
@@ -216,6 +216,7 @@ sudo vim /etc/apache2/httpd.conf
 	</VirtualHost>
 
 Now it is time to make it available.
+
     sudo a2ensite {your domain}
     sudo service apache2 reload
 
@@ -231,6 +232,8 @@ Now it is time to make it available.
 	sudo vim /var/www/{your domain}/sp1/printenv.cqi
 
 ##### Add this perl-sctipt to the file: 
+This perl script is orginally from Rickard Bellgrim (Certezza AB).
+
 	#!/usr/bin/perl
 
 	my @entitlements = split(';', $ENV{'SAML_eduPersonEntitlement'});
