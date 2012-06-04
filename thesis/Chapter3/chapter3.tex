@@ -60,11 +60,11 @@ HTTP Artifact bindings".
 In more technical terms the SP-initiated web SSO scenario is in the SAML Profiles document \cite[p.~15]{pdf:oasis-open-profiles} described as the client (principal) sends an HTTP request via an HTTP user agent asking to access a protected resource at the service provider.
 The client is not authenticated and therefore the service provider obtains with the authentication request protocol the location to the identity provider. The service provider then issues an "AuthnRequest" message that the user agent deliver to the identity provider through an HTTP redirect, post or artifact binding.
 At the identity provider the client is identified through some back-end engine with user credentials.
-The identity provider then issues a "Response" message that the user agent deliver to the SP through HTTP post or artifact binding.
+The identity provider then issues a "Response" message that the user agent deliver to the service provider through HTTP post or artifact binding.
 This message holds at least one authentication assertion as well as attributes that describes the user or it may hold an error.
 Depending on the response message the client will receive access to the service provider or not.
 \section{Certificates}
-\subsection{Certificates in general}
+\subsection{X.509 certificates}
 
 This section describes how certificates are used to send a private message from Alice to Bob, the technical steps from encryption 
 of the message to the validation of trust.
@@ -129,8 +129,8 @@ In addition, if service providers does not use TLS/SSL as recommended, then the 
 \section{DNS-Based Authentication of Named Entities} 
 \subsection{In general}
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
-It's introduced with the informational RFC6394 document \cite{rfc:6394} describing some use cases and some parts specified in more detail in the Internet-Draft "The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)" \cite{rfc:draft-dane}.
-After the specfication for TLS communication, S/MIME is up next, which will describe how to map an emailaddress to a resource record.
+It's introduced with the informational RFC6394 document \cite{rfc:6394} describing some use cases and some parts specified in more detail in the Internet-Draft \emph{"The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"} \cite{rfc:draft-dane}.
+After the specification for TLS communication, S/MIME is up next, which will describe how to map an emailaddress to a resource record.
 Exactly how this will work and which resource record type that must be used is not yet clear according the to the draft \cite{rfc:draft-smime}.
 Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 

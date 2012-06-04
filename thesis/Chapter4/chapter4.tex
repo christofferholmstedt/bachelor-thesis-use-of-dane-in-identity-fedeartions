@@ -7,10 +7,10 @@
 %Messages sent between entities depend on the data integrity being held.
 Messages sent between entities within the identity federations depends on the data integrity being held.
 However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
-The SAML metadata document talks about various mechanisms \emph{"to aid in establishing trust in the accuracy and legitimacy of metadata,
+The SAML metadata document says \emph{"...to aid in establishing trust in the accuracy and legitimacy of metadata,
 including use of XML signatures, SSL/TLS server authentication, and DNS signatures.
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
-before relying on it"} \cite[p.~29]{pdf:oasis-open-metadata}.
+before relying on it."} \cite[p.~29]{pdf:oasis-open-metadata}.
 
 With that said, after the first certificate exchange has been made a trust relationship is built and the data integrity is up and running. 
 The question is, how can the first certificate exchange be made securely? 
@@ -24,14 +24,14 @@ When it is confirmed that it came from the receiver, the certificate sender send
 Furthermore, the communication standard described in SAML could be more strict.
 That involves the first certificate exchange just mentioned. 
 Another example is the certificate itself, the SAML bindings document says  
-that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says that 
-\emph{"in the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
+that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
+\emph{"In the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
 that it contain the appropriate public key. 
 Specifically, the certificate may be expired, not yet valid, carry critical or non-critical extensions or usage flags, and contain 
 any subject or issuer. 
 The use of the certificate structure is merely a matter of notational convenience to communicate a key and has no semantics in this 
 profile apart from that. 
-However, it is RECOMMENDED that certificates be unexpired"} \cite[p.~11]{pdf:oasis-open-metadata-profile}. 
+However, it is RECOMMENDED that certificates be unexpired."} \cite[p.~11]{pdf:oasis-open-metadata-profile}. 
 
 By changing the SAML documents guidelines in general to be less open for interpretation it could improve the security. 
 For example to not recommend that the certificates has not expired, but express that they should or must not be expired. 
@@ -96,6 +96,7 @@ Is it not possible to just use the TLSA RR with TLS certificates as it is and no
 \subsubsection{Only use TLS (with TLSA RR)}
 \label{subsec:only-tlsa-rr-with-tls}
 Let's start with the question would it be enough within identity federations to only use TLS with TLSA and not to publish any SAML certificates?
+
 The solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
 Instead of publishing SAML2 certificates in the Domain Name System it might be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
 
