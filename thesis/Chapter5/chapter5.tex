@@ -1,18 +1,18 @@
 \section{Our conclussions}
 \subsection{Identity federations with SAML2 and DANE}
 We started out with the task to identify where we could improve security within idenitity federations.
-We were tasked specifically to look at the data integrity part of SAML2, how X.509 certificates are used and how it would be possible to improve security with the help of DNS-Based Authentication of Named Entities.
+We specifically looked into the data integrity part of SAML2, how X.509 certificates are used and how it would be possible to improve security with the help of DNS-Based Authentication of Named Entities.
 
 Our conclussion is that as soon as the initial configuration for each entity in an identity federation is done and all 
 entities are up and running, data integrity is as secure as the public/private key cryptography scheme.
 However, the difficulty is still in the initial setup, how to decide who to trust when you don't trust anyone online. 
-As well as emergency key rollover, when the key one day unexpectedly becomes invalid. 
+As well as building trust when performing an emergency key rollover, when the key one day unexpectedly becomes invalid. 
 Procedures for this is as of today not specified in any detail, it's up to each federation to decide on their own.
 Common practice is as said in earlier chapters to share key or certificate information in some out-of-band way e.g. meeting in person or call each other.
 We belive that it is this initial sharing of information that would benefit the most if it could be done solely over the internet and it's possible if we put trust in the DNSSEC infrastructure.
 
 DANE is one way to go and is a valid solution for identity federations.
-However, exactly how to store SAML2 certificates and how to retrieve the correct certificate for each validation of metadata is still an open question we haven't been able to reach that far.
+However, exactly how to store SAML2 certificates and how to retrieve the correct certificate for each validation of metadata is still an open question since we haven't been able to reach that far.
 We have listed some solutions such as using CERT resource records and perhaps locating the correct certificate with "Dynamic Delegation Discovery System (DDDS)" procedures.
 
 Furthermore, our belief is that within future SAML specifications and/or when establishing new federations, more strict rules concerning metadata must be agreed upon to secure the data integrity of the metadata.
