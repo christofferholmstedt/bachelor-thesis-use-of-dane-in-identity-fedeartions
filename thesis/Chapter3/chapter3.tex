@@ -98,8 +98,9 @@ is signed by a Certificate Authority (CA), Alice can be sure she is talking to B
 
 \subsubsection{Certificates and security}
 Certificates are not secure in themselves the security is built on cryptographic algorithms and most often on public-key cryptography as in the example above.
-Cryptography is about analysing and breaking ciphers, it provides secure communication between the message sender and receiver. 
-Cryptographic algorithms uses keys to protect data, in public-key cryptography a public encryption key and a private (secret) decryption key is used. \cite[p.~252]{book:computer-security}
+%\emph{"Cryptanalysis is about analysing and breaking ciphers"} \cite[p.~252]{book:computer-security}.
+%It provides secure communication between the message sender and receiver. 
+Cryptographic algorithms, which is a part of cryptanalysis, uses keys to protect data, in public-key cryptography a public encryption key and a private (secret) decryption key is used. \cite[p.~252]{book:computer-security}
 
 The RSA algorithm has become almost synonymous with public key cryptography according to Computer Networking, A top down approach \cite[p.~726]{book:computer-networking}.
 This book also informs that RSA uses arithmetic modulo-n operations as well as it describes how the recipient generates his/her private and public RSA key.
@@ -162,7 +163,7 @@ The domain owner now has full control of which TLS certificates are the valid on
 
 \subsection{An example}
 How DANE works in detail for TLS communication is specified in the Internet-Draft earlier mentioned \cite{rfc:draft-dane} but to be able to follow later reasoning a short presentation will be given here.
-Let's take an example, Alice wants to get hold of some resource from Bob that needs to be protected so only Alice and Bob knows about it and noone tampers with it while in transit.
+Let's take an example, Alice wants to get hold of some resource from Bob that needs to be protected so only Alice and Bob knows about it and nobody tampers with it while in transit.
 This is where TLS comes into play.
 Alice initiate a TLS handshake as a TLS client with Bob which in this example is acting as TLS server. 
 Everything works fine and with TLS they setup a secure channel between themselves.
@@ -175,7 +176,7 @@ Everything works fine and with TLS they setup a secure channel between themselve
 \end{figure}
 
 
-But hold on, how does Alice know that she is communicating with "the" Bob she believes it is or is it someone else that is trying to fake the identity of "the" Bob?
+Hold on, how does Alice know that she is communicating with "the" Bob she believes it is or is it someone else that is trying to fake the identity of "the" Bob?
 To perhaps give a better explanation figure \ref{ch3:daneWithAndWithoutDane} describe this dilemma.
 
 In the initial TLS handshake Alice retrieves a server certificate that she needs to validate with a third party, a CA.
@@ -205,7 +206,7 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
 
 \section{How DANE can be implemented in Shibboleth}
-Shibboleth is not a single computer program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts in the package.
+Shibboleth is not a single computer program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts.
 As dependency for the identity provider and service provider software, Opensaml exist both in Java and C++.
 Other projects are a centralized discovery service, embedded discovery service and  metadata aggregator among others.
 Even if Shibboleth can be viewed as a software package, all parts can and usually are installed seperately on different machines.
