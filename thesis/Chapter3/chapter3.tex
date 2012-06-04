@@ -9,7 +9,7 @@ When the user is verified he/she is redirected back to "antagning.se" with an ap
 
 An identity federation can be based on different standards.
 The identity federation used in the thesis work testing environment is based on OASIS Security Assertion Markup Language (SAML 2.0) \cite{pdf:oasis-open-core,pdf:oasis-open-metadata,pdf:oasis-open-metadata-profile,pdf:oasis-open-bindings,pdf:oasis-open-profiles,pdf:oasis-open-glossary,pdf:oasis-open}. 
-The SAML technical overvew \cite[p.~8]{pdf:oasis-open} describes SAML as an XML-based framework both for
+The SAML technical overview \cite[p.~8]{pdf:oasis-open} describes SAML as an XML-based framework both for
 describing and exchanging security information between business partners online.    
 
 \begin{figure}[ht]
@@ -41,8 +41,8 @@ The key information refers to the shared certificates (public keys) that are use
 messages between the entities.
 With that said every service provider and identity provider holds the shared certificates between each other within its metadata. 
 
-The need of a federation operator grows as the amount of service- and identity providers grows,
-since it provides that every service- and identity provider can turn to the federation operator to make sure the metadata is up to date 
+The need of a federation operator grows as the amount of service- and identity providers increase,
+since it is easier to turn to the federation operator to make sure the metadata is up to date 
 instead of having to turn to each other. 
 The only thing is that the service- and identity providers has to keep track of a shared certificate with the federation operator, 
 meanwhile, the federation operator provides them with a metadata file containing all certificates within the federation.
@@ -51,18 +51,18 @@ administration, has the same technical set up and so on.
 
 \subsection{The technical side of an identity federation}
 The example with "antagning.se" is in SAML referred to as a SP-initiated web SSO  \cite[p.~12]{pdf:oasis-open}, 
-where SSO stands for Single Sign-On. SSO is when it is possible to sign in at one place and use that identification at other places as well. 
+where SSO stands for Single Sign-On and SP for Service Provider. SSO is when it is possible to sign in at one place and use that identification at other places as well. 
 
 SP-initiated web SSO uses The Web Browser SSO Profile \cite[p.~14]{pdf:oasis-open-profiles} that says that "to implement this scenario,
 a profile of the SAML Authentication Request protocol is used, in conjunction with the HTTP Redirect, HTTP POST and
 HTTP Artifact bindings".
 
-In more technical terms the SP-initiated web SSO scenario is in the SAML Profiles document \cite[p.~15]{pdf:oasis-open-profiles} described as the client (principal) sends an HTTP request via an HTTP user agent asking to access a protected resource at the SP.
-The client is not authenticated and therefore the SP obtains with the authentication request protocol the location to the IdP. The SP then issues an "AuthnRequest" message that the user agent deliver to the IdP through an HTTP redirect, post or artifact binding.
-At the IdP the client is identified through some back-end engine with user credentials.
-The IdP then issues a "Response" message that the user agent deliver to the SP through HTTP post or artifact binding.
+In more technical terms the SP-initiated web SSO scenario is in the SAML Profiles document \cite[p.~15]{pdf:oasis-open-profiles} described as the client (principal) sends an HTTP request via an HTTP user agent asking to access a protected resource at the service provider.
+The client is not authenticated and therefore the service provider obtains with the authentication request protocol the location to the identity provider. The service provider then issues an "AuthnRequest" message that the user agent deliver to the identity provider through an HTTP redirect, post or artifact binding.
+At the identity provider the client is identified through some back-end engine with user credentials.
+The identity provider then issues a "Response" message that the user agent deliver to the SP through HTTP post or artifact binding.
 This message holds at least one authentication assertion as well as attributes that describes the user or it may hold an error.
-Depending on the response message the client will receive access to the SP or not.
+Depending on the response message the client will receive access to the service provider or not.
 \section{Certificates}
 \subsection{Certificates in general}
 
@@ -84,7 +84,7 @@ The possibility that someone has made changes to the message still exist since t
 "Message digest" even called one-way function or hash function can be used to guarantee that the message has not changed. 
 Message digest creates a short, fixed-length representation of the message about to be sent and sends the message and
 the summary to Bob.
-Then when Bob receives the message he makes a summary as well and compares it with Alice's.
+Then, when Bob receives the message he makes a summary as well and compares it with Alice's.
 
 In addition, the message digest has to be securely sent as well, which is made possible with digital signatures. A digital signature
 is made by the private key by encrypting a digest of the message and other information as well, sequence number for example.
