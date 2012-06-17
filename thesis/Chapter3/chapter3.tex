@@ -1,5 +1,8 @@
 \section{Identity federations}
 \subsection{What is an identity federation?}
+It is important to know what an identity federation is to be able to answer the first question about the security mechanism used to achieve data integrity. 
+%the security mechanism used to achieve data integrity in an identity federation and specifically the use of X.509 certificates.
+
 A simple identity federation example is when signing in to "antagning.se". 
 The user visits "antagning.se", needs to visit "my pages", to do so he/she presses "Log in". 
 Assuming the user is already studying in Sweden perhaps at Lule\r{a} University of Technology he/she 
@@ -63,9 +66,11 @@ At the identity provider the client is identified through some back-end engine w
 The identity provider then issues a "Response" message that the user agent deliver to the service provider through HTTP post or artifact binding.
 This message holds at least one authentication assertion as well as attributes that describes the user or it may hold an error.
 Depending on the response message the client will receive access to the service provider or not.
-\section{Certificates}
-\subsection{X.509 certificates}
 
+\section{Certificates}
+The first question is specifically focused on X.509 certificates and therefore it is essential to find out more about certificates.
+
+\subsection{X.509 certificates}
 This section describes how certificates are used to send a private message from Alice to Bob, the technical steps from encryption 
 of the message to the validation of trust.
 The example is based on the introduction on SSL/TLS from the Apache Foundation \cite{website:ssl_intro}.
@@ -96,7 +101,8 @@ Furthermore, Alice needs to know that the shared public key is with Bob as well 
 really was signed by Alice's private key. With a certificate that validates the other's identity, confirms the public key and
 is signed by a Certificate Authority (CA), Alice can be sure she is talking to Bob and vice versa.
 
-\subsubsection{Certificates and security}
+%\subsubsection{Certificates and security}
+\subsection{Certificates and security}
 Certificates are not secure in themselves the security is built on cryptographic algorithms and most often on public-key cryptography as in the example above.
 %\emph{"Cryptanalysis is about analysing and breaking ciphers"} \cite[p.~252]{book:computer-security}.
 %It provides secure communication between the message sender and receiver. 
@@ -127,6 +133,8 @@ In addition, if service providers does not use TLS/SSL as recommended, then the 
 %sends the key encrypted to the service provider completing the handshake. 
 
 \section{DNS-Based Authentication of Named Entities} 
+The second question, whether or not DANE can be used to improve the security for an identity federation. To be able to answer, more knowledge about DANE is needed.
+
 \subsection{In general}
 DANE, DNS-based Authentication of Named Entities, is as of writing still a new concept and technology.
 It's introduced with the informational RFC6394 document \cite{rfc:6394} describing some use cases and some parts specified in more detail in the Internet-Draft \emph{"The DNS-Based Authentication of Named Entities (DANE) Protocol for Transport Layer Security (TLS)"} \cite{rfc:draft-dane}.
@@ -206,6 +214,8 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
 
 \section{How DANE can be implemented in Shibboleth}
+The section is connected to the third question and it provides information about both Shibboleth and DANE.
+
 Shibboleth is not a single computer program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts.
 As dependency for the identity provider and service provider software, Opensaml exist both in Java and C++.
 Other projects are a centralized discovery service, embedded discovery service and  metadata aggregator among others.
