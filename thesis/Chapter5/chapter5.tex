@@ -1,7 +1,6 @@
 \section{Our conclusions}
 \subsection{Identity federations with SAML2 and DANE}
-We started out with the task to identify where we could improve security within idenitity federations.
-We specifically looked into the data integrity part of SAML2, how X.509 certificates are used and how it would be possible to improve security with the help of DNS-Based Authentication of Named Entities.
+We started out with the first two questions, we specifically looked into the data integrity part of SAML2 and how X.509 certificates are used. 
 
 Our conclussion is that as soon as the initial configuration for each entity in an identity federation is done and all 
 entities are up and running, data integrity is as secure as the public/private key cryptography scheme.
@@ -21,6 +20,8 @@ Another requirement should be to publish the certificates within the DNS/DNSSEC 
 This is to make sure that both the channel that the communication is taking part over is secure as well as the data stored on the webserver accessed is the proper one e.g. if downloading a certificate over a HTTPS connection.
 
 \subsection{How DANE can be implemented in Shibboleth}
+This part includes our conclusion to question three and four.
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[scale=1]{Figures/dane-impl.png}
