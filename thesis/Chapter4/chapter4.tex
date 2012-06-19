@@ -55,6 +55,10 @@ Is it the correct federation operator the trusting entities connect to or is it 
 
 As of now the trust must be made in some out-of-band way e.g. a simple download of the federation operator's certificate and then confirm it's the correct one via telephone, email communcation between administrators or meet in person.
 This is not very practical when the federation grows bigger with tenths or hundreds of service- and identity providers or is it the only way?
+
+The reasoning that follows is to answer the second question listed under "Problem area" in the beginning.
+The main idea is to use DANE as a concept where all parties can put trust in the DNS and DNSSEC infrastructure.
+
 \subsection{How to publish certificates}
 \subsubsection{SAML2 certificate as CERT resource record}
 \label{subsec:saml2-certificate-as-tlsa}
