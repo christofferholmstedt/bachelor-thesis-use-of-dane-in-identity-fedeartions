@@ -6,7 +6,8 @@ To log in to most of these services the required credentials are often username 
 %which is deemed as a low assurance level \cite[p.~244]{pdf:SOU}.
 %This has its pros and cons, though in the end, the above mentioned services might not need higher assurance level.
 
-Services that require somekind of proof that the user behind the keyboard really is the person he/she says he/she is, are lagging behind in the online era.
+%Services that require somekind of proof that the user behind the keyboard really is the person he/she says he/she is, are lagging behind in the online era.
+Services that require somekind of proof that the user behind the keyboard really is the person he or she says he or she is, are lagging behind in the online era.
 A solution to this problem is "BankID" which was introduced in 2003 \cite{website:bankid-about} in Sweden.
 Other solutions comes from Nordea, SEB, Telia, Posten and Steria \cite[p.~256]{pdf:SOU}.
 All listed solutions have their pros and cons and a new solution is in the horizon.
@@ -14,7 +15,7 @@ A new solution is being built upon the concept of identity federations \cite[p.~
 
 One major identity federation that exists in Sweden today is SWAMID, it's for students in higher education and is run by SUNET.
 Another one is "Skolfederation.se" which is planned to go into production during 2013.
-"Skolfederation.se" is for pupils/parents and teachers in compulsary primary and secondary school run by .SE and SUNET. 
+"Skolfederation.se" is for pupils, parents and teachers in compulsary primary and secondary school run by .SE and SUNET. 
 Other federations that soon will come in to production is "E-legitimationsn{\"a}mden" \cite{website:elegnamnd} and "V\r{a}rd, h{\"a}lsa, omsorg" according to .SE.  
 
 An identity federation does not have the goal to increase security and therefore will probably continue to use the same authentication mechanism that has been used before e.g. username and password. 
@@ -62,16 +63,16 @@ As stated above this project will be about DANE and identity federations and as 
 This is also the case with DANE and identity federations.
 
 Within an identity federation there are four main entities which are clients, service providers, identity providers and in most cases a federation operator.
-All entities might communicate with each other over different protocols and communication schemes.
+All entities may communicate with each other over different protocols and communication schemes.
 In this project the main focus has been on communication over HTTPS.
 
 A firm delimitation in this report is that of excluding how Transport Layer Security (TLS) and Secure Sockets Layer (SSL) works in detail and why it's deemed as a secure way for transmission between two hosts.
-Some parts in the report will touch the topic of the TLS/SSL handshaking process but will not go into further detail.
+Some parts in the report will touch the topic of the TLS or SSL handshaking process but will not go into further detail.
 The focus in this report is on the actual data that is being transmitted (SAML2 requests and responses) and how it's deemed secure. 
 
 Another delimitation is made concerning DANE, DNS and DNSSEC.
-DANE uses DNSSEC and DNS as an underlying technology and security schemes/protocols.
-As the focus is on DANE, issues that might exist with DNS and DNSSEC in general is not discussed in this report.
+DANE uses DNSSEC and DNS as an underlying technology and security schemes or protocols.
+As the focus is on DANE, issues that may exist with DNS and DNSSEC in general is not discussed in this report.
 
 
 %The other main part in this report is the one concerning DANE, DNS and DNSSEC.
