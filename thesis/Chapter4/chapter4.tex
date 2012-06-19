@@ -10,7 +10,7 @@ This section evaluates the security in identity federations with the first quest
 Messages sent between entities within the identity federations depends on the data integrity being held.
 However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
 The SAML metadata document says \emph{"...to aid in establishing trust in the accuracy and legitimacy of metadata,
-including use of XML signatures, SSL/TLS server authentication, and DNS signatures.
+including use of XML signatures, TLS or SSL server authentication, and DNS signatures.
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
 before relying on it."} \cite[p.~29]{pdf:oasis-open-metadata}.
 
@@ -19,14 +19,14 @@ The question is, how can the first certificate exchange be made securely?
 One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
 With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
-information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him/her
+information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
 to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
 Furthermore, the communication standard described in SAML could be more strict.
 That involves the first certificate exchange just mentioned. 
 Another example is the certificate itself, the SAML bindings document says  
-that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
+that the bindings which use TLS or SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
 \emph{"In the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
 that it contain the appropriate public key. 
 Specifically, the certificate may be expired, not yet valid, carry critical or non-critical extensions or usage flags, and contain 
@@ -44,7 +44,7 @@ The Online Certificate Status Protocol (OCSP) \cite{rfc:6277} could be used to p
 
 \section{How to combine identity federations and DANE}
 As stated earlier it's possible to divide federations into two categories, those with a federation operator and those without.
-In the analysis that has been done the solution with a federation operator is the most probable and viable setup in the long run, it's basically much easier to scale, both technically and non-technically.
+The solution with a federation operator is the most probable and viable setup in the long run, it's basically much easier to scale, both technically and non-technically.
 It's with this configuration in mind the following evaluation has been made.
 
 %TODO: (1) Kontrollera att det finns information om båda kategorierna av federationer.
@@ -143,7 +143,7 @@ So in the end the question boils down to if the communication is secure to the c
 \begin{center}
 \includegraphics[scale=1]{Figures/bestOfTwoWorlds.png}
 \end{center}
-\caption{Three validation checks divided into 6 different requests/responses.
+\caption{Three validation checks divided into 6 different requests or responses.
 Step 1 and 2 is the initial communication when the TLS communication is established with TLSA.
 Step 3 and 4 is when local policy demands that the certificate recieved within the metadata has to be validated that it chains to a CA.
 Step 5 and 6 is the last validation step when the Service Provider requests corresponding CERT reosource records from the federation operator and checks that the certificate used to sign the metadata is available as a CERT RR.
@@ -156,12 +156,12 @@ Step 5 and 6 is the last validation step when the Service Provider requests corr
 The last section was about how to distribute the certificate within the Domain Name System and if it's necessary or not.
 The CERT RR is mentioned as a possible solution and there might be several other solutions as well.
 If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published as well in the Domain Name System.
-With a single or just a few certificates that signs several metadata files for the federation operator it's relatively easy to publish the certificates in the Domain Name System and fetch all certificates based on the domain/subdomain.
+With a single or just a few certificates that signs several metadata files for the federation operator it's relatively easy to publish the certificates in the Domain Name System and fetch all certificates based on the domain or subdomain.
 Though it would put an unwanted limit that the federation operator is only allowed to use a few certificates per DNS zone.
 Of course it would work with several hundred certificates but it wouldn't be a very good solution.
 This is because each time some entity would check if one specific certificate is the correct one the requesting entity would have to download all certificates through the Domain Name System and then one by one try to match them against the certificate used in the fetched metadata file.
 
-This means that somekind of general algorithm/solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
+This means that somekind of general algorithm or solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
 One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}.
 Exactly how this could be done is out of the scope of this report.
 

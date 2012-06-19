@@ -4,11 +4,11 @@ It is important to know what an identity federation is to be able to answer the 
 %the security mechanism used to achieve data integrity in an identity federation and specifically the use of X.509 certificates.
 
 A simple identity federation example is when signing in to "antagning.se". 
-The user visits "antagning.se", needs to visit "my pages", to do so he/she presses "Log in". 
-Assuming the user is already studying in Sweden perhaps at Lule\r{a} University of Technology he/she 
+The user visits "antagning.se", needs to visit "my pages", to do so he or she presses "Log in". 
+Assuming the user is already studying in Sweden perhaps at Lule\r{a} University of Technology he or she 
 can select this university among the listed universities. 
-The user has made his/her choice and is redirected to the selected university's student portal and is identified through the university.
-When the user is verified he/she is redirected back to "antagning.se" with an approval message.
+The user has made his or her choice and is redirected to the selected university's student portal and is identified through the university.
+When the user is verified he or she is redirected back to "antagning.se" with an approval message.
 
 An identity federation can be based on different standards.
 The identity federation used in the thesis work testing environment is based on OASIS Security Assertion Markup Language (SAML 2.0) \cite{pdf:oasis-open-core,pdf:oasis-open-metadata,pdf:oasis-open-metadata-profile,pdf:oasis-open-bindings,pdf:oasis-open-profiles,pdf:oasis-open-glossary,pdf:oasis-open}. 
@@ -32,7 +32,7 @@ The Discovery Service (Disco) is where the user could chose from several univers
 Furthermore, SAML also specifies the Attribute Authority (AA) that provides 
 a "ticket" containing information about the user from a third party perspective.
 A theoretical AA example is "Bolagsverket" (Swedish Companies Registration Office).
-"Skatteverket" (Swedish Tax Agency) wants to allow individuals to see their business' tax account and sends an attribute request to "Bolagsverket" that will answer this request with a "ticket" containing information that allows or disallows the individual to see his/her tax account \cite[p.~284]{pdf:SOU}.
+"Skatteverket" (Swedish Tax Agency) wants to allow individuals to see their business' tax account and sends an attribute request to "Bolagsverket" that will answer this request with a "ticket" containing information that allows or disallows the individual to see his or her tax account \cite[p.~284]{pdf:SOU}.
 
 Outside of the SAML standard, the identity federation can also have a Federation Operator (FO). It is possible to have an identity federation both with and without a federation operator. 
 The federation operator provides digitally signed aggregated metadata \cite[p.~3]{pdf:Skolfederation}. 
@@ -73,7 +73,7 @@ The first question is specifically focused on X.509 certificates and therefore i
 \subsection{X.509 certificates}
 This section describes how certificates are used to send a private message from Alice to Bob, the technical steps from encryption 
 of the message to the validation of trust.
-The example is based on the introduction on SSL/TLS from the Apache Foundation \cite{website:ssl_intro}.
+The example is based on the introduction on TLS or SSL from the Apache Foundation \cite{website:ssl_intro}.
 %Alice and Bob with the help of a signed certificates and is based on\cite{website:ssl_intro}. 
 
 Public key cryptography algorithm transforms a message from Alice in to a private (encrypted) message to Bob, 
@@ -109,7 +109,7 @@ Certificates are not secure in themselves the security is built on cryptographic
 Cryptographic algorithms, which is a part of cryptanalysis, uses keys to protect data, in public-key cryptography a public encryption key and a private (secret) decryption key is used. \cite[p.~252]{book:computer-security}
 
 The RSA algorithm has become almost synonymous with public key cryptography according to Computer Networking, A top down approach \cite[p.~726]{book:computer-networking}.
-This book also informs that RSA uses arithmetic modulo-n operations as well as it describes how the recipient generates his/her private and public RSA key.
+This book also informs that RSA uses arithmetic modulo-n operations as well as it describes how the recipient generates his or her private and public RSA key.
 RSA is secure since there are no known algorithms that quickly can factor large prime numbers and the larger the generated prime numbers are, the more secure the keys become.
 
 \subsection{Certificates in SAML}
@@ -121,8 +121,8 @@ Furthermore, it addresses the content, exchange and processing of SAML messages.
 For example in the Saml2int profile \cite{website:saml2int}, the service provider should at endpoint protect response 
 messages using Transport Secure Layer (TLS) or Secure Sockets Layer (SSL)  and identity providers should do the same when receiving 
 authentication request. 
-However, if an identity provider does not use TLS/SSL, XML Encryption should be used and in its response message return an encrypted assertion. 
-In addition, if service providers does not use TLS/SSL as recommended, then the service providers metadata should include a suitable key descriptor for XML Encryption.
+However, if an identity provider does not use TLS or SSL, XML Encryption should be used and in its response message return an encrypted assertion. 
+In addition, if service providers does not use TLS or SSL as recommended, then the service providers metadata should include a suitable key descriptor for XML Encryption.
 
 %A TLS/SSL handshake example adapted to the identity federation influenced by \cite{website:ssl_explained}.
 %The client initiates the handshake by connecting to the service provider with TLS/SSL on port 443. 
@@ -143,13 +143,13 @@ Exactly how this will work and which resource record type that must be used is n
 Make note that these Internet-Drafts from the Internet Engineering Task Force (IETF) is still "work in progress" as they are still drafts and may change.
 
 The problem that DANE tries to solve is the current issue with Certificate Authorities (CAs) where anyone of them may give out a certificate for any domain name.
-It might not be likely that a CA loses its private key but might sign a certificate with information that is not correct or the CA might sign a key that is intended for signing/encrypting emails but is then used in other settings.
+It might not be likely that a CA loses its private key but might sign a certificate with information that is not correct or the CA might sign a key that is intended for signing or encrypting emails but is then used in other settings.
 %It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is then used for something else.
 
 %A hacker that gets hold of the private key of a CA would get the ability to create a new signed certificate for any domain of his/her choice.
-A hacker that gets hold of a perfectly valid certificate from a well-known CA for a domain he/she doesn't own will be able to lure unexpected visitor to a fake site with TLS/SSL active.
+A hacker that gets hold of a perfectly valid certificate from a well-known CA for a domain he or she doesn't own will be able to lure unexpected visitor to a fake site with TLS or SSL active.
 As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
-The domain name matches the common name in the certificate and it's signed by one of all trusted/well-known CAs.
+The domain name matches the common name in the certificate and it's signed by one of all trusted or well-known CAs.
 This is where DANE comes in as a solution.
 
 \begin{figure}[ht]
@@ -162,7 +162,7 @@ This is where DANE comes in as a solution.
 The following explanation is also presented in figure \ref{ch3:daneWithTlsa}.
 If the client connecting to the false server could get some information about which certificate is the true one to use, the client would know that the false certificate is a false one and not to trust it.
 In short, this works by trusting the DNSSEC infrastructure and the owner of a domain name can publish a TLSA DNS resource record (for TLS communication) which tells the client which certificate is the correct one to use.
-If the hacker tried the same attack with DANE fully operational he/she would not succeed cause the client would know that the false certificate from the hacker (fake server) is actually a false one.
+If the hacker tried the same attack with DANE fully operational he or she would not succeed cause the client would know that the false certificate from the hacker (fake server) is actually a false one.
 %This is what happens in figure \ref{ch3:daneWithTlsa} when the client can compare the server certificate (recieved in step 2) with the TLSA resource record (recieved in step 4).
 The client would in this case immidiately drop all established connections, if any, and never initiate a new TLS connection.
 
@@ -190,8 +190,8 @@ To perhaps give a better explanation figure \ref{ch3:daneWithAndWithoutDane} des
 In the initial TLS handshake Alice retrieves a server certificate that she needs to validate with a third party, a CA.
 This is a certificate from Bob that is signed by his CA of choice, which basically says that the CA in question has confirmed, in some out-of-band way, that it's the true Bob, Alice is communicating with.
 
-In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server/domain owner to limit which certificates that is allowed to be used for his domain.
-A hacker with a certificate for Bob's domain signed by any well-known CA will be able to set up his/her valid TLS server in the name of Bob.
+In this scenario, similiar to the scenario with the "hacker" above, there is no way for Bob as server or domain owner to limit which certificates that is allowed to be used for his domain.
+A hacker with a certificate for Bob's domain signed by any well-known CA will be able to set up his or her valid TLS server in the name of Bob.
 Alice will then never know if it really is "the" Bob she is communicating with next time.
 
 To prevent this Bob can publish TLSA DNS resource records (TLSA RRs)\cite[ch. 2]{rfc:draft-dane} with either the full certificate or a hash value of it.
@@ -214,7 +214,7 @@ TLSA resource records is a new DNS record type that is still not approved as a s
 % (2) With DANE it will still be possible to hack a CA and create false certificate for any domain but with DANE the additional check can be made through the DNS system and the zone owner/administrator has the last say when it comes to which certificates that are the true ones.
 
 \section{How DANE can be implemented in Shibboleth}
-The section is connected to the third question and it provides information about both Shibboleth and DANE.
+This section is connected to the third and fourth question and it provides information about both Shibboleth and DANE.
 
 Shibboleth is not a single computer program, it's more of a software package consisting of an identity provider written in java and a service provider written in C++ as the main parts.
 As dependency for the identity provider and service provider software, Opensaml exist both in Java and C++.

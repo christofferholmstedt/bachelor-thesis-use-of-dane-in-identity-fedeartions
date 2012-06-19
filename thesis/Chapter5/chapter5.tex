@@ -1,10 +1,9 @@
 \section{Our conclusions}
 \subsection{Identity federations with SAML2 and DANE}
-We started out with the task to identify where we could improve security within idenitity federations.
-We specifically looked into the data integrity part of SAML2, how X.509 certificates are used and how it would be possible to improve security with the help of DNS-Based Authentication of Named Entities.
+We started out with the first two questions, we specifically looked into the data integrity part of SAML2 and how X.509 certificates are used. 
 
 Our conclussion is that as soon as the initial configuration for each entity in an identity federation is done and all 
-entities are up and running, data integrity is as secure as the public/private key cryptography scheme.
+entities are up and running, data integrity is as secure as the public or private key cryptography scheme.
 However, the difficulty is still in the initial setup, how to decide who to trust when you don't trust anyone online. 
 As well as building trust when performing an emergency key rollover, when the key one day unexpectedly becomes invalid. 
 Procedures for this is as of today not specified in any detail, it's up to each federation to decide on their own.
@@ -15,25 +14,27 @@ DANE is one way to go and is a valid solution for identity federations.
 However, exactly how to store SAML2 certificates and how to retrieve the correct certificate for each validation of metadata is still an open question since we haven't been able to reach that far.
 We have listed some solutions such as using CERT resource records and perhaps locating the correct certificate with "Dynamic Delegation Discovery System (DDDS)" procedures.
 
-Furthermore, our belief is that within future SAML specifications and/or when establishing new federations, more strict rules concerning metadata must be agreed upon to secure the data integrity of the metadata.
+Furthermore, our belief is that within future SAML specifications and when establishing new federations, more strict rules concerning metadata must be agreed upon to secure the data integrity of the metadata.
 Future agreements should include requirements that TLS with TLSA validation is used when sharing metadata.
-Another requirement should be to publish the certificates within the DNS/DNSSEC infrastructure.
+Another requirement should be to publish the certificates within the DNS or DNSSEC infrastructure.
 This is to make sure that both the channel that the communication is taking part over is secure as well as the data stored on the webserver accessed is the proper one e.g. if downloading a certificate over a HTTPS connection.
 
 \subsection{How DANE can be implemented in Shibboleth}
+This part includes our conclusion to question three and four.
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[scale=1]{Figures/dane-impl.png}
 \end{center}
-\caption{Four steps corresponding to the requests/responses vital to the DANE Trust Engine.
+\caption{Four steps corresponding to the requests or responses vital to the DANE Trust Engine.
 \label{ch5:dane-impl}}
 \end{figure}
 
 
 To start of at the right level we need to restate that DANE as of today, has no standard nor draft available outside the topic of TLS or S/MIME communication.
-What we set out to implement is more of a proof-of-concept that when/if there is a standard available for SAML certificates, or perhaps certificates in general, our implementation might be a solution to build upon.
+What we set out to implement is more of a proof-of-concept that when or if there is a standard available for SAML certificates, or perhaps certificates in general, our implementation might be a solution to build upon.
 It's also important to remember that we have only looked at the identity provider software out of all computer programs available under the Shibboleth name.
-When/If DANE would be implemented into Shibboleth, development has to be made to all parts that publish and consume metadata.
+When or if DANE would be implemented into Shibboleth, development has to be made to all parts that publish and consume metadata.
 
 We started out focusing on developing a metadatafilter extension for Shibboleth.
 After some digging it became clear that it would be a trust engine extension that was better suited for our purpose.
@@ -44,7 +45,7 @@ The trust engine recieves the metadata as argument (Step 1 and 2 in figure \ref{
 If the reponse comes back without DNSSEC flags set the information is not to be trusted otherwise it will compare the certificate retrieved with the one supplied as argument.
 Depending on the outcome of that comparison the trust engine will either confirm or dismiss trust for the metadata.
 
-Due to time constraints and limited previous knowledge in Java/Spring Framework we were unable to finish the implementation in time.
+Due to time constraints and limited previous knowledge in Java and Spring Framework we were unable to finish the implementation in time.
 Installation and configuration guides are available in appendix \ref{appA} as well as references to our code available online.
 
 % Why do we give credentials as input from the configuration file? Kommer inte det finnas i Metadatan som vi jämför med CERT RR.
