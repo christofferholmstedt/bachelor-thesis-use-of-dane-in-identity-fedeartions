@@ -6,15 +6,18 @@ To log in to most of these services the required credentials are often username 
 %which is deemed as a low assurance level \cite[p.~244]{pdf:SOU}.
 %This has its pros and cons, though in the end, the above mentioned services might not need higher assurance level.
 
-Services that require somekind of proof that the user behind the keyboard really is the person he/she says he/she is, are lagging behind in the online era.
+%Services that require somekind of proof that the user behind the keyboard really is the person he/she says he/she is, are lagging behind in the online era.
+Services that require somekind of proof that the user behind the keyboard really is the person he or she says he or she is, are lagging behind in the online era.
 A solution to this problem is "BankID" which was introduced in 2003 \cite{website:bankid-about} in Sweden.
 Other solutions comes from Nordea, SEB, Telia, Posten and Steria \cite[p.~256]{pdf:SOU}.
-All listed solutions have their pros and cons and a new solution is in the horizon.
-A new solution will be built upon the concept of identity federations \cite[p.~23]{pdf:SOU}.
+%All listed solutions have their pros and cons and a new solution is in the horizon.
+%A new solution is being built upon the concept of identity federations \cite[p.~23]{pdf:SOU}, \cite{website:elegnamnd}.
+All listed solutions have their pros and cons and a new solution is being built upon the concept of identity federations \cite[p.~23]{pdf:SOU}, \cite{website:elegnamnd}.
 
-One major identity federation that exists in Sweden today is SWAMID, it's for students in higher education and is run by SUNET.
+
+One major identity federation that exists in Sweden today is SWAMID. SWAMID is for students in higher education and is run by SUNET.
 Another one is "Skolfederation.se" which is planned to go into production during 2013.
-"Skolfederation.se" is for pupils/parents and teachers in compulsary primary and secondary school run by .SE and SUNET. 
+"Skolfederation.se" is for pupils, parents and teachers in compulsary primary and secondary school run by .SE and SUNET. 
 Other federations that soon will come in to production is "E-legitimationsn{\"a}mden" \cite{website:elegnamnd} and "V\r{a}rd, h{\"a}lsa, omsorg" according to .SE.  
 
 An identity federation does not have the goal to increase security and therefore will probably continue to use the same authentication mechanism that has been used before e.g. username and password. 
@@ -27,15 +30,23 @@ However, the federation provides user friendliness since the user only has to ha
 %In our thesis we dig deeper into the identity federation and examine how DNS-Based Authentication of Named Entities (DANE) 
 %\cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} can be used to improve the security in identity federations.
 
-\section{Problem description}
-The subject of the thesis is divided into smaller subsection. 
+\section{Problem area}
+%The subject of the thesis is divided into smaller subsections. 
+The work of the thesis is divided into the following questions:
 \\\\
-- An analysis of the security mechanism used to achieve data integrity in an identity federation and specifically the use of X.509 certificates.
+%- An analysis of the security mechanism used to achieve data integrity in an identity federation and specifically the use of X.509 certificates.
+1. In an identity federation and specifically the use of X.509 certificates,
+is it possible to improve the security mechanism used to achive data integrity?
 \\\\
-- Two separate evaluations one about the possibility to use DANE to improve the security for an identity federation
-and another one concern the possibility to implement support for DANE in the open source software package Shibboleth.
+%- Two separate evaluations one about the possibility to use DANE to improve the security for an identity federation
+%and another one concern the possibility to implement support for DANE in the open source software package Shibboleth.
+2. Can DANE be used to improve the security for an identity federation? 
 \\\\
-- Implementation of DANE in Shibboleth, simpleSAMLphp or equivalent software to improve the security for an identity federation.
+3. Is it possible to implement support for DANE in the open source software package Shibboleth? 
+\\\\
+%- Implementation of DANE in Shibboleth, simpleSAMLphp or equivalent software to improve the security for an identity federation.
+4. Implemention of DANE in Shibboleth, simpleSAMLphp or equivalent software to improve the security for an identity federation. Is it possible?
+If it is possible, implement.
 
 %Firstly, an analysis of the security mechanism used to achieve data integrity in an identity federation and 
 %specifically the use of X.509 certificates.
@@ -45,16 +56,18 @@ and another one concern the possibility to implement support for DANE in the ope
 %the security for an identity federation.
 
 \section{Purpose}
-The purpose with this thesis is to show that DNS-Based Authentication of Named Entities (DANE) \cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} can be used to improve security for identity federations.
-In the same time proving DNS Security Extension (DNSSEC) \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} useful, since DANE is 
-depending on the use of DNSSEC.
+DNS-Based Authentication of Named Entities (DANE) \cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} is a concept where the goal is to put trust in the Domain Name System (DNS) and its security extension (DNSSEC) \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} infrastructure as a common trusted authority.
+It is currently being standardized for different protocols through the DANE working group within the Internet Engineering Task Force (IETF).
+
+The purpose with this thesis is to show that DANE can be used to improve security for identity federations.
+In the same time proving DNSSEC useful, since DANE is depending on the use of DNSSEC.
 
 \section{Project delimitations}
 As stated above this project will be about DANE and identity federations and as with most, if not all implementation of different protocols and standards, a lot of underlying technology is used.
 This is also the case with DANE and identity federations.
 
 Within an identity federation there are four main entities which are clients, service providers, identity providers and in most cases a federation operator.
-All entities might communicate with each other over different protocols and communication schemes.
+All entities may communicate with each other over different protocols and communication schemes.
 In this project the main focus has been on communication over HTTPS.
 
 A firm delimitation in this report is that of excluding how Transport Layer Security (TLS) and Secure Sockets Layer (SSL) works in detail and why it's deemed as a secure way for transmission between two hosts.
@@ -62,8 +75,8 @@ Some parts in the report will touch the topic of the TLS/SSL handshaking process
 The focus in this report is on the actual data that is being transmitted (SAML2 requests and responses) and how it's deemed secure. 
 
 Another delimitation is made concerning DANE, DNS and DNSSEC.
-DANE uses DNSSEC and DNS as an underlying technology and security schemes/protocols.
-As the focus is on DANE, issues that might exist with DNS and DNSSEC in general is not discussed in this report.
+DANE uses DNSSEC and DNS as an underlying technology and security schemes or protocols.
+As the focus is on DANE, issues that may exist with DNS and DNSSEC in general is not discussed in this report.
 
 
 %The other main part in this report is the one concerning DANE, DNS and DNSSEC.

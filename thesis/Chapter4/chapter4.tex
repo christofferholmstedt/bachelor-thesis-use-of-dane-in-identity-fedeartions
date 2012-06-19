@@ -5,10 +5,14 @@
 %certificates within the metadata file.
 
 %Messages sent between entities depend on the data integrity being held.
-Messages sent between entities within the identity federations depends on the data integrity being held.
-However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
+This section evaluates the security in identity federations with the first question from "Problem area" in mind.
+
+%Messages sent between entities within the identity federations depends on the data integrity being held.
+%However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
+One of the most difficult parts in the identity federation is setting up SAML's initial trust relationship between entities. 
+The first exchanging of keys.
 The SAML metadata document says \emph{"...to aid in establishing trust in the accuracy and legitimacy of metadata,
-including use of XML signatures, SSL/TLS server authentication, and DNS signatures.
+including use of XML signatures, TLS/SSL server authentication, and DNS signatures.
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
 before relying on it."} \cite[p.~29]{pdf:oasis-open-metadata}.
 
@@ -16,9 +20,8 @@ With that said, after the first certificate exchange has been made a trust relat
 The question is, how can the first certificate exchange be made securely? 
 One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
-With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
-information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him/her
-to confirm the message sender and key used in the PGP message.
+When using PGP, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
+information to the certificate sender. The certificate sender decrypts the message and finds out the receivers phonenumber and calls him or her to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
 Furthermore, the communication standard described in SAML could be more strict.
@@ -42,7 +45,7 @@ The Online Certificate Status Protocol (OCSP) \cite{rfc:6277} could be used to p
 
 \section{How to combine identity federations and DANE}
 As stated earlier it's possible to divide federations into two categories, those with a federation operator and those without.
-In the analysis that has been done the solution with a federation operator is the most probable and viable setup in the long run, it's basically much easier to scale, both technically and non-technically.
+The solution with a federation operator is the most probable and viable setup in the long run, it's basically much easier to scale, both technically and non-technically.
 It's with this configuration in mind the following evaluation has been made.
 
 %TODO: (1) Kontrollera att det finns information om båda kategorierna av federationer.
@@ -53,6 +56,10 @@ Is it the correct federation operator the trusting entities connect to or is it 
 
 As of now the trust must be made in some out-of-band way e.g. a simple download of the federation operator's certificate and then confirm it's the correct one via telephone, email communcation between administrators or meet in person.
 This is not very practical when the federation grows bigger with tenths or hundreds of service- and identity providers or is it the only way?
+
+The reasoning that follows is to answer the second question listed under "Problem area" in the beginning.
+The main idea is to use DANE as a concept where all parties can trust the DNS and DNSSEC infrastructure.
+
 \subsection{How to publish certificates}
 \subsubsection{SAML2 certificate as CERT resource record}
 \label{subsec:saml2-certificate-as-tlsa}
@@ -87,17 +94,17 @@ After each response that includes a certificate in some form another request is 
 % TODO: What is a cache interval?
 % TODO: What is a domain zone?
 
-New questions arises here, is it practical to store SAML2 certificates in the Domain Name System as a CERT RR 
-or are there better alternatives?
+New questions arises here, is it practical to store SAML2 certificates in the Domain Name System as a CERT RR or are there better alternatives?
 The second question that comes to mind is more related to DANE.
 If CERT RRs is used as stated above it would require DNSSEC otherwise its value would be of no use.
+This would require that all entities within an identity federation implement and operate DNSSEC for their own DNS zone.
 Is it not possible to just use the TLSA RR with TLS certificates as it is and not introduce another layer that CERT RRs would become within the same system (DNS and DNSSEC)?
 
 \subsubsection{Only use TLS (with TLSA RR)}
 \label{subsec:only-tlsa-rr-with-tls}
 Let's start with the question would it be enough within identity federations to only use TLS with TLSA and not to publish any SAML certificates?
 
-The solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
+Following the reasoning from the previous subsection "SAML2 certificate as CERT resource record" the solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
 Instead of publishing SAML2 certificates in the Domain Name System it might be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
 
 This would mean that when a new entity, let's say a service provider, joins a federation the service provider must send its metadata to the federation operator.
@@ -125,7 +132,7 @@ Due to time constraints this is out of scope of this report and further investig
 For further discussions in this report it's assumed that it's a viable solution to store SAML2 certificates in the Domain Name System as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
-It's often the simple solution that is the best one but would it be worth it to use TLSA validated connection for the HTTPS communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
+Would it be worth it to use TLSA validated connection for the HTTPS communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
 
 To simplify the view an argument could be made that the validity check on the SAML2 certficate downloaded over the HTTPS secure channel and then verified against the CERT RR is just another safety check within the same "layer" as the secure channel was established in.
 The reason for this is that the TLS connection is validated first with information from the DNSSEC infrastructure, when requesting the TLSA RR.
@@ -141,7 +148,7 @@ So in the end the question boils down to if the communication is secure to the c
 \begin{center}
 \includegraphics[scale=1]{Figures/bestOfTwoWorlds.png}
 \end{center}
-\caption{Three validation checks divided into 6 different requests/responses.
+\caption{Three validation checks divided into 6 different requests or responses.
 Step 1 and 2 is the initial communication when the TLS communication is established with TLSA.
 Step 3 and 4 is when local policy demands that the certificate recieved within the metadata has to be validated that it chains to a CA.
 Step 5 and 6 is the last validation step when the Service Provider requests corresponding CERT reosource records from the federation operator and checks that the certificate used to sign the metadata is available as a CERT RR.
@@ -154,12 +161,12 @@ Step 5 and 6 is the last validation step when the Service Provider requests corr
 The last section was about how to distribute the certificate within the Domain Name System and if it's necessary or not.
 The CERT RR is mentioned as a possible solution and there might be several other solutions as well.
 If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published as well in the Domain Name System.
-With a single or just a few certificates that signs several metadata files for the federation operator it's relatively easy to publish the certificates in the Domain Name System and fetch all certificates based on the domain/subdomain.
+With a single or just a few certificates that signs several metadata files for the federation operator it's relatively easy to publish the certificates in the Domain Name System and fetch all certificates based on the domain or subdomain.
 Though it would put an unwanted limit that the federation operator is only allowed to use a few certificates per DNS zone.
 Of course it would work with several hundred certificates but it wouldn't be a very good solution.
 This is because each time some entity would check if one specific certificate is the correct one the requesting entity would have to download all certificates through the Domain Name System and then one by one try to match them against the certificate used in the fetched metadata file.
 
-This means that somekind of general algorithm/solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
+This means that somekind of general algorithm or solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
 One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}.
 Exactly how this could be done is out of the scope of this report.
 
