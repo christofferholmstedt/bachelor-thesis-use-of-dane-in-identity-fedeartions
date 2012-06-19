@@ -5,12 +5,14 @@
 %certificates within the metadata file.
 
 %Messages sent between entities depend on the data integrity being held.
-This section evaluates the security in identity federations with the first question from problem area in mind.
+This section evaluates the security in identity federations with the first question from "Problem area" in mind.
 
-Messages sent between entities within the identity federations depends on the data integrity being held.
-However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
+%Messages sent between entities within the identity federations depends on the data integrity being held.
+%However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
+One of the most difficult parts in the identity federation is setting up SAML's initial trust relationship between entities. 
+The first exchanging of keys.
 The SAML metadata document says \emph{"...to aid in establishing trust in the accuracy and legitimacy of metadata,
-including use of XML signatures, TLS or SSL server authentication, and DNS signatures.
+including use of XML signatures, TLS/SSL server authentication, and DNS signatures.
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
 before relying on it."} \cite[p.~29]{pdf:oasis-open-metadata}.
 
@@ -18,15 +20,14 @@ With that said, after the first certificate exchange has been made a trust relat
 The question is, how can the first certificate exchange be made securely? 
 One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
-With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
-information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
-to confirm the message sender and key used in the PGP message.
+When using PGP, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
+information to the certificate sender. The certificate sender decrypts the message and finds out the receivers phonenumber and calls him or her to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
 Furthermore, the communication standard described in SAML could be more strict.
 That involves the first certificate exchange just mentioned. 
 Another example is the certificate itself, the SAML bindings document says  
-that the bindings which use TLS or SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
+that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
 \emph{"In the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
 that it contain the appropriate public key. 
 Specifically, the certificate may be expired, not yet valid, carry critical or non-critical extensions or usage flags, and contain 
