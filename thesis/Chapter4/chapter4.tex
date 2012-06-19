@@ -131,7 +131,7 @@ Due to time constraints this is out of scope of this report and further investig
 For further discussions in this report it's assumed that it's a viable solution to store SAML2 certificates in the Domain Name System as CERT RRs.
 
 \subsubsection{Using the best of two worlds}
-It's often the simple solution that is the best one but would it be worth it to use TLSA validated connection for the HTTPS communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
+Would it be worth it to use TLSA validated connection for the HTTPS communication together with the SAML2 certificates in CERT RRs as explained in earlier sections?
 
 To simplify the view an argument could be made that the validity check on the SAML2 certficate downloaded over the HTTPS secure channel and then verified against the CERT RR is just another safety check within the same "layer" as the secure channel was established in.
 The reason for this is that the TLS connection is validated first with information from the DNSSEC infrastructure, when requesting the TLSA RR.
