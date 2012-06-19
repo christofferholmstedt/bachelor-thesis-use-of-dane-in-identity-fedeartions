@@ -7,10 +7,12 @@
 %Messages sent between entities depend on the data integrity being held.
 This section evaluates the security in identity federations with the first question from problem area in mind.
 
-Messages sent between entities within the identity federations depends on the data integrity being held.
-However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
+%Messages sent between entities within the identity federations depends on the data integrity being held.
+%However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
+One of the most difficult parts in the identity federation is setting up SAML's initial trust relationship between entities. 
+The first exchanging of keys.
 The SAML metadata document says \emph{"...to aid in establishing trust in the accuracy and legitimacy of metadata,
-including use of XML signatures, TLS or SSL server authentication, and DNS signatures.
+including use of XML signatures, TLS/SSL server authentication, and DNS signatures.
 Regardless of the mechanism(s) used, relying parties SHOULD have some means by which to establish trust in metadata information
 before relying on it."} \cite[p.~29]{pdf:oasis-open-metadata}.
 
@@ -26,7 +28,7 @@ When it is confirmed that it came from the receiver, the certificate sender send
 Furthermore, the communication standard described in SAML could be more strict.
 That involves the first certificate exchange just mentioned. 
 Another example is the certificate itself, the SAML bindings document says  
-that the bindings which use TLS or SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
+that the bindings which use TLS/SSL has to authenticate clients using X.509 certificate \cite[p.~8]{pdf:oasis-open-bindings} and the metadata profile document says
 \emph{"In the case of an X.509 certificate, there are no requirements as to the content of the certificate apart from the requirement 
 that it contain the appropriate public key. 
 Specifically, the certificate may be expired, not yet valid, carry critical or non-critical extensions or usage flags, and contain 

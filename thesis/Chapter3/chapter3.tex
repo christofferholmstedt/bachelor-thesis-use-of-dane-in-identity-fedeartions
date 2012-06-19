@@ -73,7 +73,7 @@ The first question is specifically focused on X.509 certificates and therefore i
 \subsection{X.509 certificates}
 This section describes how certificates are used to send a private message from Alice to Bob, the technical steps from encryption 
 of the message to the validation of trust.
-The example is based on the introduction on TLS or SSL from the Apache Foundation \cite{website:ssl_intro}.
+The example is based on the introduction on TLS/SSL from the Apache Foundation \cite{website:ssl_intro}.
 %Alice and Bob with the help of a signed certificates and is based on\cite{website:ssl_intro}. 
 
 Public key cryptography algorithm transforms a message from Alice in to a private (encrypted) message to Bob, 
@@ -121,8 +121,8 @@ Furthermore, it addresses the content, exchange and processing of SAML messages.
 For example in the Saml2int profile \cite{website:saml2int}, the service provider should at endpoint protect response 
 messages using Transport Secure Layer (TLS) or Secure Sockets Layer (SSL)  and identity providers should do the same when receiving 
 authentication request. 
-However, if an identity provider does not use TLS or SSL, XML Encryption should be used and in its response message return an encrypted assertion. 
-In addition, if service providers does not use TLS or SSL as recommended, then the service providers metadata should include a suitable key descriptor for XML Encryption.
+However, if an identity provider does not use TLS/SSL, XML Encryption should be used and in its response message return an encrypted assertion. 
+In addition, if service providers does not use TLS/SSL as recommended, then the service providers metadata should include a suitable key descriptor for XML Encryption.
 
 %A TLS/SSL handshake example adapted to the identity federation influenced by \cite{website:ssl_explained}.
 %The client initiates the handshake by connecting to the service provider with TLS/SSL on port 443. 
@@ -147,7 +147,7 @@ It might not be likely that a CA loses its private key but might sign a certific
 %It might not be likely that a CA signs a certificate that doesn't come from the true owner of a domain name though the CA might be hacked and lose their private key or the CA might sign a key that should be used for signing emails but is then used for something else.
 
 %A hacker that gets hold of the private key of a CA would get the ability to create a new signed certificate for any domain of his/her choice.
-A hacker that gets hold of a perfectly valid certificate from a well-known CA for a domain he or she doesn't own will be able to lure unexpected visitor to a fake site with TLS or SSL active.
+A hacker that gets hold of a perfectly valid certificate from a well-known CA for a domain he or she doesn't own will be able to lure unexpected visitor to a fake site with TLS/SSL active.
 As the model with CAs works today where they can sign any domain name and the more common webbrowsers (Mozilla Firefox, Microsoft Internet Explorer, Google Chrome) trust most of these CAs, the certificate from the hacker will give clients connecting to the server with the false certificate a "false-positive".
 The domain name matches the common name in the certificate and it's signed by one of all trusted or well-known CAs.
 This is where DANE comes in as a solution.
