@@ -5,7 +5,7 @@
 %certificates within the metadata file.
 
 %Messages sent between entities depend on the data integrity being held.
-This section evaluates the security in identity federations with the first question from problem area in mind.
+This section evaluates the security in identity federations with the first question from "Problem area" in mind.
 
 %Messages sent between entities within the identity federations depends on the data integrity being held.
 %However, the most difficult part is setting up SAML's initial trust relationship between entities, the first exchanging of keys.
@@ -20,9 +20,8 @@ With that said, after the first certificate exchange has been made a trust relat
 The question is, how can the first certificate exchange be made securely? 
 One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
-With this solution, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
-information to the certificate sender, that decrypts the message. Finds out the receivers phonenumber and calls him or her
-to confirm the message sender and key used in the PGP message.
+When using PGP, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
+information to the certificate sender. The certificate sender decrypts the message and finds out the receivers phonenumber and calls him or her to confirm the message sender and key used in the PGP message.
 When it is confirmed that it came from the receiver, the certificate sender sends the certificate to the receiver.
 
 Furthermore, the communication standard described in SAML could be more strict.
