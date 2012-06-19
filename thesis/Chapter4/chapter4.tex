@@ -93,17 +93,17 @@ After each response that includes a certificate in some form another request is 
 % TODO: What is a cache interval?
 % TODO: What is a domain zone?
 
-New questions arises here, is it practical to store SAML2 certificates in the Domain Name System as a CERT RR 
-or are there better alternatives?
+New questions arises here, is it practical to store SAML2 certificates in the Domain Name System as a CERT RR or are there better alternatives?
 The second question that comes to mind is more related to DANE.
 If CERT RRs is used as stated above it would require DNSSEC otherwise its value would be of no use.
+This would require that all entities within an identity federation implement and operate DNSSEC for their own DNS zone.
 Is it not possible to just use the TLSA RR with TLS certificates as it is and not introduce another layer that CERT RRs would become within the same system (DNS and DNSSEC)?
 
 \subsubsection{Only use TLS (with TLSA RR)}
 \label{subsec:only-tlsa-rr-with-tls}
 Let's start with the question would it be enough within identity federations to only use TLS with TLSA and not to publish any SAML certificates?
 
-The solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
+Following the reasoning from the previous subsection "SAML2 certificate as CERT resource record" the solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
 Instead of publishing SAML2 certificates in the Domain Name System it might be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
 
 This would mean that when a new entity, let's say a service provider, joins a federation the service provider must send its metadata to the federation operator.
