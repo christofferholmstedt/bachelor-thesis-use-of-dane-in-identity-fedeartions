@@ -18,7 +18,7 @@ before relying on it."} \cite[p.~29]{pdf:oasis-open-metadata}.
 
 With that said, after the first certificate exchange has been made a trust relationship is built and the data integrity is up and running. 
 The question is, how can the first certificate exchange be made securely? 
-One solution might be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
+One solution may be a third party, a CA or the use of DNSSEC or maybe both to validates that the certificates is the right ones.
 Another one could be to use Pretty Good Privacy (PGP)  \cite{rfc:2440} to sign or encrypt the certificate before transmission.
 When using PGP, the soon to be certificate receiver first sends a PGP encrypted message containing its contact
 information to the certificate sender. The certificate sender decrypts the message and finds out the receivers phonenumber and calls him or her to confirm the message sender and key used in the PGP message.
@@ -57,13 +57,13 @@ Is it the correct federation operator the trusting entities connect to or is it 
 As of now the trust must be made in some out-of-band way e.g. a simple download of the federation operator's certificate and then confirm it's the correct one via telephone, email communcation between administrators or meet in person.
 This is not very practical when the federation grows bigger with tenths or hundreds of service- and identity providers or is it the only way?
 
-The reasoning that follows is to answer the second question listed under "Problem area" in the beginning.
+The reasoning that follows tries to answer the second question listed under "Problem area" in the beginning.
 The main idea is to use DANE as a concept where all parties can trust the DNS and DNSSEC infrastructure.
 
 \subsection{How to publish certificates}
 \subsubsection{SAML2 certificate as CERT resource record}
 \label{subsec:saml2-certificate-as-tlsa}
-The first solution that comes into mind is that it might be possible to publish the federation operator's certificate in the Domain Name System and more specifically as a CERT RR\cite{rfc:4398}.
+The first solution that comes into mind is that it may be possible to publish the federation operator's certificate in the Domain Name System and more specifically as a CERT RR\cite{rfc:4398}.
 This would mean that when a requesting entity (service provider, identity provider or any other entity) needs to update the metadata about all other entities it connects to the federation operator and downloads the metadata.
 At the same time the requesting entity sends out a DNS lookup (with DNSSEC active) for a corresponding CERT RR.
 When both the metadata and the CERT RR is retrieved, a comparison can be made and confirm or dismiss the validity of the metadata.
@@ -105,10 +105,10 @@ Is it not possible to just use the TLSA RR with TLS certificates as it is and no
 Let's start with the question would it be enough within identity federations to only use TLS with TLSA and not to publish any SAML certificates?
 
 Following the reasoning from the previous subsection "SAML2 certificate as CERT resource record" the solution is already at the point where all entities within a federation needs to sign their own zone with DNSSEC as an underlying infrastructure.
-Instead of publishing SAML2 certificates in the Domain Name System it might be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
+Instead of publishing SAML2 certificates in the Domain Name System it may be possible to just use TLS with TLSA RRs and deem that all the information communicated between any two entities is valid as long as it's over TLS that has been established with TLSA RRs procedures.
 
 This would mean that when a new entity, let's say a service provider, joins a federation the service provider must send its metadata to the federation operator.
-As an example the administrator for the service provider might visit a webpage over HTTPS (with validity check for TLSA RR) to initiate the transfer of metadata, step 1 in figure \ref{ch4:onlyUseTLS}.
+As an example the administrator for the service provider may visit a webpage over HTTPS (with validity check for TLSA RR) to initiate the transfer of metadata, step 1 in figure \ref{ch4:onlyUseTLS}.
 The federation operator then opens a new connection over HTTPS (with validity check for TLSA RR) for the metadata from the service provider, step 2 in figure \ref{ch4:onlyUseTLS}.
 This request, from the federation operator back to the service provider, that initiated the communication the first time is to make sure that the metadata that is fetched is from the right service provider. 
 When the metadata is recieved the federation operator can publish it with the metadata for all other entities, step 3 in \ref{ch4:onlyUseTLS}
@@ -140,7 +140,7 @@ The second validation is made depending on the TLSA RR information and local pol
 The third validation would be when the SAML2 certificate is compared against the CERT RR available within the DNSSEC infrastructure.
 
 As noted the first and the third validation are both trusting the DNSSEC infrastructure, and therefore the combination of both using TLS with TLSA and SAML2 certificate with CERT RRs would at first glance not add any extra benefits.
-Though under some circumstances someone might be able to hack into a webserver for some entity and change the certificate used for SAML2 signing.
+Though under some circumstances someone may be able to hack into a webserver for some entity and change the certificate used for SAML2 signing.
 Common production setup is to put the DNS servers on seperate instances than the webserver and if only the webserver is compromised the third validation check against the CERT RR would in this case fail.
 So in the end the question boils down to if the communication is secure to the correct host, is this enough to trust everything that the host sends?
 
@@ -159,7 +159,7 @@ Step 5 and 6 is the last validation step when the Service Provider requests corr
 \subsection{How to locate the correct certificate in DNS}
 \label{subsec:matching-dilemma}
 The last section was about how to distribute the certificate within the Domain Name System and if it's necessary or not.
-The CERT RR is mentioned as a possible solution and there might be several other solutions as well.
+The CERT RR is mentioned as a possible solution and there may be several other solutions as well.
 If it's decided upon that a TLSA validated TLS connection is not enough to trust the data that is being sent the SAML2 certificates must be published as well in the Domain Name System.
 With a single or just a few certificates that signs several metadata files for the federation operator it's relatively easy to publish the certificates in the Domain Name System and fetch all certificates based on the domain or subdomain.
 Though it would put an unwanted limit that the federation operator is only allowed to use a few certificates per DNS zone.
@@ -167,7 +167,7 @@ Of course it would work with several hundred certificates but it wouldn't be a v
 This is because each time some entity would check if one specific certificate is the correct one the requesting entity would have to download all certificates through the Domain Name System and then one by one try to match them against the certificate used in the fetched metadata file.
 
 This means that somekind of general algorithm or solution is required to locate the correct certificate published in the Domain Name System when an entity recieves a signed metadata file.
-One way of doing this might be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}.
+One way of doing this may be with the "Dynamic Delegation Discovery System (DDDS)"\cite{rfc:3401,rfc:3402,rfc:3403,rfc:3404} and the NAPTR resource record\cite{rfc:3403}.
 Exactly how this could be done is out of the scope of this report.
 
 The main issue and possible solution in this section was originally introduced by Leif Johansson (SUNET).
