@@ -1,5 +1,5 @@
 \section{Background}
-In todays society more and more information is shared through internet.
+In todays society more and more information is shared on the Internet.
 A lot of the communication consist of sharing pictures, stories and information with friends and family.
 The online websites that allow and promote these services are often very easy to use and especially easy to register a new account for.
 To log in to most of these services the required credentials are often username and password. 
@@ -7,7 +7,7 @@ To log in to most of these services the required credentials are often username 
 %This has its pros and cons, though in the end, the above mentioned services might not need higher assurance level.
 
 %Services that require somekind of proof that the user behind the keyboard really is the person he/she says he/she is, are lagging behind in the online era.
-Services that require somekind of proof that the user behind the keyboard really is the person he or she says he or she is, are lagging behind in the online era.
+Services that require somekind of proof that the user behind the keyboard really is the person she says she is, are lagging behind in the online era.
 A solution to this problem is "BankID" which was introduced in 2003 \cite{website:bankid-about} in Sweden.
 Other solutions comes from Nordea, SEB, Telia, Posten and Steria \cite[p.~256]{pdf:SOU}.
 %All listed solutions have their pros and cons and a new solution is in the horizon.
@@ -15,8 +15,8 @@ Other solutions comes from Nordea, SEB, Telia, Posten and Steria \cite[p.~256]{p
 All listed solutions have their pros and cons and a new solution is being built upon the concept of identity federations \cite[p.~23]{pdf:SOU}, \cite{website:elegnamnd}.
 
 
-One major identity federation that exists in Sweden today is SWAMID. SWAMID is for students in higher education and is run by SUNET.
-Another one is "Skolfederation.se" which is planned to go into production during 2013.
+One major identity federation that exists in Sweden today is SWAMID. SWAMID is for students in higher education and is operated by SUNET.
+Another one is "Skolfederation.se" \cite{website:skolfed} which is planned to go into production during 2013.
 "Skolfederation.se" is for pupils, parents and teachers in compulsary primary and secondary school run by .SE and SUNET. 
 Other federations that soon will come in to production is "E-legitimationsn{\"a}mden" \cite{website:elegnamnd} and "V\r{a}rd, h{\"a}lsa, omsorg" according to .SE.  
 
@@ -56,8 +56,8 @@ If it is possible, implement.
 %the security for an identity federation.
 
 \section{Purpose}
-DNS-Based Authentication of Named Entities (DANE) \cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} is a concept where the goal is to put trust in the Domain Name System (DNS) and its security extension (DNSSEC) \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} infrastructure as a common trusted authority.
-It is currently being standardized for different protocols through the DANE working group within the Internet Engineering Task Force (IETF).
+DNS-Based Authentication of Named Entities (DANE) \cite{rfc:6394,rfc:draft-dane,rfc:draft-smime} is a concept where the goal is to put trust in the Domain Name System (DNS) and its security extension (DNSSEC) \cite{rfc:4033,rfc:4034,rfc:4035,rfc:5011} as a common trusted authority.
+It is currently being standardized for different protocols through the DANE working group \cite{website:dane-wg} within the Internet Engineering Task Force (IETF).
 
 The purpose with this thesis is to show that DANE can be used to improve security for identity federations.
 In the same time proving DNSSEC useful, since DANE is depending on the use of DNSSEC.
@@ -75,7 +75,7 @@ Some parts in the report will touch the topic of the TLS/SSL handshaking process
 The focus in this report is on the actual data that is being transmitted (SAML2 requests and responses) and how it's deemed secure. 
 
 Another delimitation is made concerning DANE, DNS and DNSSEC.
-DANE uses DNSSEC and DNS as an underlying technology and security schemes or protocols.
+DANE uses DNS and DNSSEC as an underlying technology and security schemes.
 As the focus is on DANE, issues that may exist with DNS and DNSSEC in general is not discussed in this report.
 
 

@@ -2,7 +2,7 @@ For this project git together with github has been used for revision control.
 To be able to keep the installation and configuration instructions up to date even after this report has gone into print we have decided to write a summary of all used software in this appendix and then put all concrete instructions on github.
 
 As git is a distributed version control system there is no specific repository that is our "master" that we can link to.
-Due to this both of our repositories could be used but to not flood this appendix with redundent/"duplicate" links all links in this appendix will be to the repository available under Christoffer's github account.
+Due to this both of our repositories could be used but to not flood this appendix with duplicate links all links in this appendix will be to the repository available under Christoffer's github account.
 
 This report in LaTeX as well as all of our instructions are available at \\
 \url{https://github.com/christofferholmstedt/BachelorThesis}
@@ -21,16 +21,16 @@ If a Hardware Security Module is not available SoftHSM can be used for this, als
 For user authentication on the identity provider server we have used OpenLDAP \cite{website:openldap}.
 Complete installation and configuration instructions are available at our github repository.
 
-\section{Shibboleth Service/Identity Provider}
-We installed the service- and identity provider software on different virtual machines to better be able to mimic a production setup.
+\section{Shibboleth Service and Identity Provider}
+We installed the Service and Identity provider software on different virtual machines to better be able to mimic a production setup.
 It should be possible to install them on the same machine but as the service provider use Apache HTTP Server and the identity provider use Apache Tomcat some complications may arise concerning the configuration on which webserver should listen on which ports.
 
 Complete installation and configuration instructions are available at our github repository.
 
 \section{Federation Operator - Metadata Aggregator}
-One of the Federation Operator technical purposes is to collect, combine and share the metadata from and to respective service/identity provider.
+One of the Federation Operator technical purposes is to collect, combine and share the metadata from and to respective Service and Identity provider.
 For our testing environment we downloaded the metadata from respective provider to the federation operator.
-We then got help from Leif Johansson (SUNET) who provided us with a link to the scripts that is used to sign the metadata for identity federation "Skolfederationen".
+We then got help from Leif Johansson (SUNET) who provided us with a link to the scripts that is used to sign the metadata for identity federation "Skolfederation.se".
 
 More information is available at the github repository mentioned above.
 
